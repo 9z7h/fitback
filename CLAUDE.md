@@ -66,3 +66,16 @@ npm run lint     # ESLint
 
 - 단계별 진행, 각 단계 후 사용자 확인. 크로스플랫폼 분기는 `Platform.OS` / `.web.tsx` / `.native.tsx`.
 - Expo v56 공식 문서 우선(AGENTS.md). 상세 모델·결정 이력·검증 갭은 `docs/architecture.md` 참조.
+
+## 하네스: FitBack 개발 에이전트 팀
+
+**목표:** 화면(FE)·데이터/ROI 로직(BE)·검증(QA)을 분리된 에이전트로 처리해 카파시 4원칙(수술적 변경·단계별 확인)을 지키며 개발한다.
+
+**트리거:** 기능 추가·버그 수정·리팩토링 등 코드 작업 요청 시 `fitback-harness` 스킬을 사용하라. 단순 질문·설명 요청은 직접 응답 가능.
+
+**변경 이력:**
+| 날짜 | 변경 내용 | 대상 | 사유 |
+|------|----------|------|------|
+| 2026-07-27 | 초기 구성 (fitback-frontend/backend/qa 에이전트 + 오케스트레이터) | 전체 | 하네스 신규 구축 요청 |
+| 2026-07-27 | fitback-design 에이전트 추가 (구현 후 디자인 품질 검수) | agents/fitback-design.md, skills/fitback-design-review, skills/fitback-harness | 디자인 에이전트 추가 요청 |
+| 2026-07-27 | fitback-ralph-backlog 스킬 추가 (ralph-loop 연동, 저위험 백로그 무인 반복 처리, Phase4에 사전승인 게이트 예외 명시) | skills/fitback-ralph-backlog, skills/fitback-harness | 무인 루프 엔지니어링 통합 요청 |

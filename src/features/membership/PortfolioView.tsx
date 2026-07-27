@@ -14,6 +14,9 @@ import {
 } from '@/features/membership/portfolio';
 import { daysUntil, type Membership } from '@/features/membership/useMemberships';
 
+/** 인세권 잔여 횟수 임박 기준(홈 만료 임박 배너와 동일, 0회 소진 포함). */
+const URGENT_SESSIONS = 5;
+
 export interface PortfolioItem {
   m: Membership;
   value: PortfolioValue;
@@ -120,8 +123,13 @@ function Stat({ label, value }: { label: string; value: string }) {
 export function MembershipPortfolioCard({ item, onPress }: { item: PortfolioItem; onPress?: () => void }) {
   const { m, value, expired } = item;
   const d = daysUntil(m.endDate);
-  const expiring = !expired && m.status === 'expiring';
   const isSession = m.type === 'session';
+  const dateUrgent = !expired && m.status === 'expiring';
+  // 인세권은 날짜 여유가 있어도 남은 횟수가 적으면 임박으로 본다(홈 만료 임박 배너와 동일 기준).
+  const sessionsLeft = m.remainingVisits;
+  const countUrgent =
+    !expired && isSession && sessionsLeft != null && sessionsLeft >= 0 && sessionsLeft <= URGENT_SESSIONS;
+  const expiring = dateUrgent || countUrgent;
 
   // 한 줄 상태: 인세권=소멸 임박 금액 / 기간권=목표까지 남은(정체) 금액
   const line = expired
