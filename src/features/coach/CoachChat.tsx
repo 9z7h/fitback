@@ -493,7 +493,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
 
   // Photo analysis state
   const [showPhotoSource, setShowPhotoSource] = useState(false);
-  const [isAnalyzingPhoto, setIsAnalyzingPhoto] = useState(false);
+  const [, setIsAnalyzingPhoto] = useState(false);
   const { mutate: generateRoutine, isPending: routinePending } = useGenerateRoutine();
   const setSessionRoutine = useWorkoutSession((s) => s.setRoutine);
 
@@ -673,7 +673,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
     let img;
     try {
       img = await pickFoodImage(source);
-    } catch (e) {
+    } catch {
       // 권한 거부 등 — 조용히 종료 (diet screen과 동일 처리)
       return;
     }
@@ -1010,8 +1010,6 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
       {/* Messages */}
       <ScrollView ref={scrollRef} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         {messages.map((m, i) => {
-          const isLast = i === messages.length - 1;
-
           if (m.role === 'user') {
             return (
               <View key={i} style={styles.userLine}>

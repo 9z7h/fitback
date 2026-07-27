@@ -9,7 +9,6 @@ let sdkPromise: Promise<void> | null = null;
 
 function loadSdk(): Promise<void> {
   if (typeof document === 'undefined') return Promise.reject(new Error('no document'));
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const w = window as any;
   if (w.kakao?.maps) return Promise.resolve();
   if (sdkPromise) return sdkPromise;
@@ -46,9 +45,7 @@ export function KakaoMap({
   showLine?: boolean;
 }) {
   const idRef = useRef(`kakao-map-${counter++}`);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapRef = useRef<any>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const curOverlayRef = useRef<any>(null);
 
   // 지도 초기화 (도착지/출발지/경로선).
@@ -57,7 +54,6 @@ export function KakaoMap({
     loadSdk()
       .then(() => {
         if (cancelled) return;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const kakao = (window as any).kakao;
         const el = document.getElementById(idRef.current);
         if (!el || !kakao?.maps) return;
@@ -109,7 +105,6 @@ export function KakaoMap({
 
   // 현재 위치만 실시간 갱신 (지도 재생성 없이 마커 이동).
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const kakao = (window as any).kakao;
     const map = mapRef.current;
     const overlay = curOverlayRef.current;

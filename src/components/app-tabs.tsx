@@ -56,8 +56,6 @@ export function TabButton({ children, isFocused, icon: IconCmp, style: _ignored,
   );
 }
 
-const TAB_ROUTES = new Set(['/', '/diet', '/workout']);
-
 export function CustomTabList({ style: _ignored, ...props }: TabListProps) {
   const { bottom } = useSafeAreaInsets();
   return (
