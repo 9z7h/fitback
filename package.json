@@ -45,7 +45,7 @@
     "react-native-gesture-handler": "~2.31.1",
     "react-native-reanimated": "4.3.1",
     "react-native-safe-area-context": "~5.7.0",
-    "react-native-screens": "4.25.2",
+    "react-native-screens": "~4.26.0",
     "react-native-svg": "15.15.4",
     "react-native-url-polyfill": "^3.0.0",
     "react-native-view-shot": "5.1.0",
@@ -63,6 +63,7 @@
     "eas-cli": "^20.3.0",
     "eslint": "^9.0.0",
     "eslint-config-expo": "~56.0.4",
+    "patch-package": "^8.0.1",
     "storybook": "^8.6.18",
     "supabase": "^2.105.0",
     "typescript": "~6.0.3",
@@ -79,7 +80,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "db:build": "node ./scripts/build-setup-sql.js",
-    "db:push": "node ./scripts/build-setup-sql.js && node ./scripts/db-push.js"
+    "db:push": "node ./scripts/build-setup-sql.js && node ./scripts/db-push.js",
+    "postinstall": "patch-package"
   },
   "private": true
 }
