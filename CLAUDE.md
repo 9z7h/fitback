@@ -12,13 +12,6 @@
 3. **Surgical Changes** — 변경한 모든 줄이 요청과 1:1. 범위 밖 리팩토링·포맷 변경 금지.
 4. **Goal-Driven Execution** — 측정 가능한 완료 조건. 자체 검증 전 "완료" 선언 금지.
 
-## 기술 스택
-
-- Expo SDK 56 (React Native) + Expo Router (`src/app/`) + React Native Web
-- Supabase — DB + Auth + **Edge Functions** (`supabase/functions/`)
-- TanStack Query(서버 상태) · Zustand(클라 상태) · TypeScript strict
-- `lucide-react-native`(아이콘) · `expo-font`+Pretendard · `expo-location`
-
 ## 절대 규칙 (디자인 토큰)
 
 - 색·여백·radius **하드코딩 금지**. 반드시 `src/constants/theme.ts` 토큰 사용(`Palette.*`/`Spacing.*`/`Radius.*`). raw hex·raw 숫자 = 위반.
@@ -37,30 +30,11 @@
 
 ## 도메인 요약 (상세 → `docs/architecture.md`)
 
-- **회원권 타입**: `free`(자유) / `session`(PT) / `class`(클래스). 남은횟수 = `max_visits − visits.count`.
-- **ROI 핵심 지표**: `valueAtRisk = remaining × (cost/max_visits)` = 만료 시 소멸 금액. 페이스로 danger/warning/safe. free는 neutral(만료 시엔 danger, 단 valueAtRisk=0이라 금액 영향 없음). → `dashboard.ts`
+- **회원권 타입**: `session`(세션권 · PT/필라테스 등 횟수 차감형) / `period`(기간권 · 헬스 등 무제한·주당목표형).
+- **ROI 핵심 지표**: 회당가치 = 원금 ÷ 목표 방문 수 (세션권=`max_visits`, 기간권=주당목표×기간으로 환산한 값). `valueAtRisk = 잔여 목표 방문 × 회당가치`. 세션권=소멸 프레이밍, 기간권=정체 프레이밍(현금은 안 사라지고 진행만 멈춤). → `dashboard.ts`
 - **AI 코치**: `coach` Edge Function이 risk·pace 받아 `CoachTip` 1장 생성(6h 캐시). → `useCoach.ts`
 - **실제 테이블**: profiles, memberships, centers, visits, exercise_records, user_preferences, workout_logs, exercises, meals, food_favorites.
 - 식단(`diet.tsx`/`meals`)·홈트는 **독립 기능(ROI 비핵심)** — 코드는 유지, 신규 작업 시 ROI 우선.
-
-## 프로젝트 구조
-
-```
-src/app/        # 라우트 (index, diet, workout/*)
-src/features/   # 도메인 훅·UI (auth, membership, onboarding, diet, workout)
-src/components/ # 공용 컴포넌트 (themed-text, ui/)
-src/constants/  # theme.ts (토큰)
-src/lib/        # supabase, queryClient
-src/stores/     # zustand
-supabase/migrations/  # 01~17  ·  supabase/functions/  # Edge Functions
-```
-
-## 빌드 명령어
-
-```bash
-npm run web      # 웹    npm run ios / android
-npm run lint     # ESLint
-```
 
 ## 코드 컨벤션
 
@@ -135,12 +109,4 @@ npm run lint     # ESLint
 
 **목표:** 화면(FE)·데이터/ROI 로직(BE)·검증(QA)을 분리된 에이전트로 처리해 카파시 4원칙(수술적 변경·단계별 확인)을 지키며 개발한다.
 
-**트리거:** 기능 추가·버그 수정·리팩토링 등 코드 작업 요청 시 `fitback-harness` 스킬을 사용하라. 단순 질문·설명 요청은 직접 응답 가능.
-
-**변경 이력:**
-| 날짜 | 변경 내용 | 대상 | 사유 |
-|------|----------|------|------|
-| 2026-07-27 | 초기 구성 (fitback-frontend/backend/qa 에이전트 + 오케스트레이터) | 전체 | 하네스 신규 구축 요청 |
-| 2026-07-27 | fitback-design 에이전트 추가 (구현 후 디자인 품질 검수) | agents/fitback-design.md, skills/fitback-design-review, skills/fitback-harness | 디자인 에이전트 추가 요청 |
-| 2026-07-27 | fitback-ralph-backlog 스킬 추가 (ralph-loop 연동, 저위험 백로그 무인 반복 처리, Phase4에 사전승인 게이트 예외 명시) | skills/fitback-ralph-backlog, skills/fitback-harness | 무인 루프 엔지니어링 통합 요청 |
-| 2026-07-28 | fitback-design 에이전트를 5단계 절차(Clarify/Context Gather/Plan/Generate/Evaluate)로 구조화, 구조화된 보고 포맷·확신도 표기 추가 | agents/fitback-design.md | design-expo 참고 디벨롭 요청 |
+**트리거:** 기능 추가·버그 수정·리팩토링 등 코드 작업 요청 시 `fitback-harness` 스킬을 사용하라. 단순 질문·설명 요청은 직접 응답 가능. (변경 이력 → `.claude/skills/fitback-harness/SKILL.md`)

@@ -85,3 +85,12 @@ QA 결과, 디자인 검토 결과(있으면), 변경 요약을 사용자에게 
 ## 후속 작업 트리거 키워드
 
 "다시 실행", "재실행", "업데이트", "이 부분만 수정", "이전 결과 기반으로", "QA만 다시", "프론트만/백엔드만 다시", "디자인만 다시 검토" — 이런 표현이 나오면 Phase 0의 부분 재실행 분기를 탄다.
+
+## 변경 이력
+
+| 날짜 | 변경 내용 | 대상 | 사유 |
+|------|----------|------|------|
+| 2026-07-27 | 초기 구성 (fitback-frontend/backend/qa 에이전트 + 오케스트레이터) | 전체 | 하네스 신규 구축 요청 |
+| 2026-07-27 | fitback-design 에이전트 추가 (구현 후 디자인 품질 검수) | agents/fitback-design.md, skills/fitback-design-review, skills/fitback-harness | 디자인 에이전트 추가 요청 |
+| 2026-07-27 | fitback-ralph-backlog 스킬 추가 (ralph-loop 연동, 저위험 백로그 무인 반복 처리, Phase4에 사전승인 게이트 예외 명시) | skills/fitback-ralph-backlog, skills/fitback-harness | 무인 루프 엔지니어링 통합 요청 |
+| 2026-07-28 | fitback-design 에이전트를 5단계 절차(Clarify/Context Gather/Plan/Generate/Evaluate)로 구조화, 구조화된 보고 포맷·확신도 표기 추가 | agents/fitback-design.md | design-expo 참고 디벨롭 요청 |

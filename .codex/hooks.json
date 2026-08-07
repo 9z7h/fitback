@@ -1,0 +1,35 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/Users/yeneon/Documents/2026/fitback/fitback-작업/.codex/hooks/protect-files.mjs'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/Users/yeneon/Documents/2026/fitback/fitback-작업/.codex/hooks/check-design-tokens.mjs'"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node '/Users/yeneon/Documents/2026/fitback/fitback-작업/.codex/hooks/check-story-exists.mjs'"
+          }
+        ]
+      }
+    ]
+  }
+}
