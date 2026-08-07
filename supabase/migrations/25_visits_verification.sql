@@ -2,7 +2,10 @@
 -- 체크인 UX Flow 명세 §6 — 방문 검증/자기신고 구분 + 회수 금액 기록.
 --   method        : geofence(지오펜스 검증) / fallback(자기신고 보정)
 --   verify_status : verified / unverified
---   recovered_amount : 이 방문으로 발생한 회수액(원). unverified면 0.
+--   recovered_amount : 이 방문으로 발생한 회수액(원). verify_status와 무관하게
+--                       항상 계산된 회당가치가 들어간다(PRD §08, CheckInFlow.tsx
+--                       checkIn() 참조) — 이 주석은 초기 설계 의도였고 실제
+--                       구현과 다름.
 --   center_lat/lng, distance_m : 검증 근거(반경 100m 판정)
 -- 멱등(idempotent).
 alter table public.visits add column if not exists method text
