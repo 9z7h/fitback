@@ -1,0 +1,75 @@
+/**
+ * FitBack 컬러 토큰 — Figma `fitback` 파일 > 디자인시스템 > 스타일가이드_컬러 미러.
+ * 런타임 미사용(RN은 src/constants/theme.ts의 Palette.*를 씀). Figma 동기화 참조용.
+ * 출처: get_variable_defs + get_metadata(nodeId: 1401:988, "Alias → Primitive" 표), 2026-08-12.
+ */
+:root {
+  /* ── Primitive — Gray ───────────────────────────────── */
+  --color-gray-00: #ffffff;
+  --color-gray-200: #f2f4f7;
+  --color-gray-300: #e7e9f1;
+  --color-gray-400: #c0c3cf;
+  --color-gray-500: #999999;
+  --color-gray-600: #6b7280;
+  --color-gray-800: #272e3e;
+
+  /* ── Primitive — Indigo ─────────────────────────────── */
+  --color-indigo-100: #f0f1ff;
+  --color-indigo-200: #e0e3ff;
+  --color-indigo-500: #6675ff;
+  --color-indigo-600: #5566f7;
+  --color-indigo-700: #4957d8;
+
+  /* ── Primitive — Blue ───────────────────────────────── */
+  --color-blue-200: #d0deff;
+  --color-blue-500: #6490ff;
+
+  /* ── Primitive — Purple ─────────────────────────────── */
+  --color-purple-500: #bd7bf8;
+
+  /* ── Primitive — Status ─────────────────────────────── */
+  --color-status-error: #ef4444;
+  --color-status-error-light: #fee2e2;
+  --color-status-success: #22c55e;
+  --color-status-success-light: #dcfce7;
+  --color-status-warning: #ffcc00;
+
+  /* ── Semantic — Primary ─────────────────────────────── */
+  --primary-primary: var(--color-indigo-500);
+  --primary-primary-pressed: var(--color-indigo-600);
+
+  /* ── Semantic — Background ──────────────────────────── */
+  --background-primary: var(--color-gray-200);
+
+  /* ── Semantic — Text ────────────────────────────────── */
+  --text-secondary: var(--color-gray-600);
+  --text-primary: var(--color-gray-800);
+  --text-caption: var(--color-gray-500);
+  --text-inverse: var(--color-gray-00);
+  --text-inverse-secondary: var(--color-indigo-200);
+
+  /* ── Semantic — Secondary ───────────────────────────── */
+  --secondary-secondary: var(--color-blue-500);
+
+  /* ── Semantic — Card ────────────────────────────────── */
+  --card-emphasis: var(--color-gray-800);
+  --card-primary: var(--color-gray-00);
+  --card-secondary: var(--color-gray-200);
+  --card-tertiary: var(--color-gray-300);
+
+  /* ── Semantic — Icon ────────────────────────────────── */
+  --icon-primary: var(--color-gray-400);
+  --icon-select: var(--color-indigo-500);
+  --icon-inverse: var(--color-gray-00);
+  --icon-border: var(--color-gray-600);
+
+  /* ── Semantic — Overlay (Primitive 참조 없음, Figma 표 기준) ─ */
+  --overlay-200: #ffffffbf;
+  --overlay-100: #ffffff29;
+
+  /* ── Semantic — Border ──────────────────────────────── */
+  --border-input: var(--color-gray-300);
+
+  /* ── Semantic — Tertiary ────────────────────────────── */
+  --tertiary-tertiary: var(--color-purple-500);
+}

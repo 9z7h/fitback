@@ -1,6 +1,6 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CameraView, useCameraPermissions } from 'expo-camera';
-import { useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   ArrowDown,
   ArrowLeft,
@@ -128,6 +128,7 @@ import {
   useToggleFavorite,
   type FoodFavorite,
 } from '@/features/diet/useFoodFavorites';
+import { useMacroRatio } from '@/features/diet/useMacroRatio';
 import {
   MEAL_TYPES,
   useAddMeal,
@@ -1946,6 +1947,8 @@ export default function DietScreen() {
   }
 
 
+  const router = useRouter();
+
   // 오늘 운동 로그 실연동 — 없으면 STEP_KCAL 폴백
   const workoutLog = useTodayWorkoutLog();
   const wl = workoutLog.data;
@@ -1960,7 +1963,9 @@ export default function DietScreen() {
     : 'protein';
 
   // 가이드 목표 — 회원 신체정보(profiles) 기반. 단백질=체중×1.5g, 칼로리=TDEE×목표보정.
+  // 저장된 커스텀 탄단지 비율(user_preferences)이 있으면 그 비율로 3분할한다.
   const { data: profile } = useProfile();
+  const { data: macroRatio } = useMacroRatio();
   const guide = useMemo(() => {
     const kcal = profile
       ? calorieTargetFromProfile(
@@ -1975,9 +1980,9 @@ export default function DietScreen() {
         )
       : null;
     const protein = profile ? proteinTargetFromProfile(profile.weight) : null;
-    return generateGuide(workoutCtx, { kcal, protein });
+    return generateGuide(workoutCtx, { kcal, protein, ratio: macroRatio });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profile, workoutCtx.goal, workoutCtx.part]);
+  }, [profile, macroRatio, workoutCtx.goal, workoutCtx.part]);
 
   const totals = useMemo(
     () =>
@@ -2087,6 +2092,14 @@ export default function DietScreen() {
                 />
               ))}
             </View>
+            <Pressable
+              onPress={() => router.push('/diet/macro-ratio')}
+              hitSlop={4}
+              accessibilityRole="button"
+              style={styles.macroRatioLink}>
+              <Txt variant="caption" weight="600" color={Palette.primary}>탄단지 비율 직접 조정</Txt>
+              <Icon name="chevron-right" size={16} color={Palette.primary} />
+            </Pressable>
             <View style={styles.guideBtnRow}>
               <Pressable
                 style={styles.guideOutlineBtn}
@@ -2986,6 +2999,13 @@ const styles = StyleSheet.create({
     bottom: BottomTabInset + Spacing.md,
     width: 62,
     height: 62,
+  },
+  // 탄단지 비율 조정 진입 링크
+  macroRatioLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    gap: Spacing.xs,
   },
   guideBtnRow: {
     flexDirection: 'row',

@@ -10,7 +10,9 @@
 **토큰 파일**:
 - `src/constants/theme.ts` — RN 코드에서 직접 import (`Palette.*` / `Spacing.*` / `Radius.*`)
 - `src/tokens/colors.css` — Web CSS 커스텀 프로퍼티 (컬러)
-- `src/tokens/spacing.css` — Web CSS 커스텀 프로퍼티 (스페이싱·Radius·타이포)
+- `src/tokens/spacing.css` — Web CSS 커스텀 프로퍼티 (스페이싱·엘리베이션)
+- `src/tokens/radius.css` — Web CSS 커스텀 프로퍼티 (Radius)
+- `src/tokens/typography.css` — Web CSS 커스텀 프로퍼티 (타이포)
 - `docs/design-tokens.md` — Primitive→Semantic 매핑 테이블
 
 ---
@@ -60,23 +62,24 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 | Primary | `#6675FF` | `--color-brand-primary` | CTA 버튼, 주요 수치, 액티브 상태 |
 | Primary Hover | `#5566F7` | `--color-brand-primary-hover` | 버튼 hover |
 | Primary Pressed | `#4957D8` | `--color-brand-primary-pressed` | 버튼 pressed |
-| Primary Light | `#EEF1FF` | `--color-brand-primary-light` | 배지 배경, 카드 강조 배경, 인풋 포커스 링 |
-| Secondary | `#6892FF` | `--color-brand-secondary` | 보조 강조, 그라데이션 블렌딩 |
+| Primary Light | `#F0F1FF` | `--color-brand-primary-light` | 배지 배경, 카드 강조 배경, 인풋 포커스 링 |
+| Secondary | `#6490FF` | `--color-brand-secondary` | 보조 강조, 그라데이션 블렌딩 |
+| Tertiary | `#BD7BF8` | `--color-brand-tertiary` | 3차 강조 (Figma tertiary/tertiary) |
 
 ### Background
 
 | 이름 | 값 | CSS 변수 | 용도 |
 |------|-----|----------|------|
-| BG Base | `#F2F2F7` | `--color-bg-base` | 앱 전체 배경 (웜 오프화이트) |
+| BG Base | `#F2F4F7` | `--color-bg-base` | 앱 전체 배경 |
 | BG Surface | `#FFFFFF` | `--color-bg-surface` | 카드, 모달, 바텀시트 |
-| BG Muted | `#F3F4F6` | `--color-bg-muted` | 비활성 영역 |
+| BG Muted | `#F2F4F7` | `--color-bg-muted` | 비활성 영역 (Figma에서 BG Base와 동일값으로 통합) |
 
 ### Semantic — UI 상태
 
 | 이름 | 값 | CSS 변수 | 용도 |
 |------|-----|----------|------|
 | Success | `#22C55E` | `--color-state-success` | 운동 완료·목표 달성·스트릭 유지 |
-| Warning | `#F59E0B` | `--color-state-warning` | 회원권 만료 임박, 목표 미달 |
+| Warning | `#FFCC00` | `--color-state-warning` | 회원권 만료 임박, 목표 미달 |
 | Error | `#EF4444` | `--color-state-error` | 입력·네트워크 오류 |
 | Success Light | `#DCFCE7` | `--color-state-success-light` | 성공 상태 카드 배경 |
 | Error Light | `#FEE2E2` | `--color-state-error-light` | 오류 상태 카드 배경 |
@@ -91,26 +94,27 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 |------|-----|----------|------|
 | roi/profit | `#6675FF` | `--color-roi-profit` | 이익 상태 (Primary와 동일) |
 | roi/profit-light | `#EEF1FF` | `--color-roi-profit-light` | 이익 배지·배경 |
-| roi/loss | `#222C43` | `--color-roi-loss` | 손실 상태 (Gray 900과 동일 — 중립 전달) |
+| roi/loss | `#272E3E` | `--color-roi-loss` | 손실 상태 (Gray 900과 동일 — 중립 전달) |
 | roi/loss-light | `#F2F2F7` | `--color-roi-loss-light` | 손실 배지·배경 |
 
 ### Neutral
 
 | 이름 | 값 | CSS 변수 | 용도 |
 |------|-----|----------|------|
-| Gray 900 | `#222C43` | `--color-neutral-900` | 주요 텍스트, 본문 |
+| Gray 900 | `#272E3E` | `--color-neutral-900` | 주요 텍스트, 본문 |
 | Gray 700 | `#374151` | `--color-neutral-700` | (하위 호환용) |
 | Gray 500 | `#6B7280` | `--color-neutral-500` | 보조 설명, 라벨 |
 | Gray 400 | `#999999` | `--color-neutral-400` | 플레이스홀더, 약한 보조 텍스트 |
 | Gray 300 | `#D1D5DB` | `--color-neutral-300` | 비활성 텍스트, 아이콘 |
 | Gray 100 | `#F3F4F6` | `--color-neutral-100` | 배경, Secondary 버튼 |
-| Gray 50 | `#F2F2F7` | `--color-neutral-50` | 구분 배경 |
+| Gray 50 | `#F2F4F7` | `--color-neutral-50` | 구분 배경 |
 
 ### Line / Border
 
 | 이름 | 값 | CSS 변수 | 용도 |
 |------|-----|----------|------|
 | Border Strong | `#6B7280` | `--color-border-strong` | 아이콘 stroke, 강조 라인 |
+| Icon Primary | `#C0C3CF` | `--color-icon-primary` | 비활성/기본 아이콘 색 (Figma icon/primary) |
 | Line Default | `rgba(0, 0, 0, 0.07)` | `--color-line-default` | 카드 테두리, 일반 구분선 |
 | Line Strong | `rgba(0, 0, 0, 0.15)` | `--color-line-strong` | 강조 구분선 |
 | Line Primary | `#6675FF` | `--color-line-primary` | 선택된 탭 인디케이터, 포커스 테두리 |
@@ -141,10 +145,10 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 | Heading 2 | 20px | Semibold | 125% | `--font-size-h2` / `--line-height-h2` | 섹션 타이틀, 카드 타이틀 |
 | Subtitle | 18px | Semibold | 125% | `--font-size-subtitle` / `--line-height-subtitle` | 서브타이틀, 버튼 |
 | Body | 16px | Medium | 150% | `--font-size-body` / `--line-height-body` | 본문 |
-| Caption | 14px | Medium | 150% | `--font-size-caption` / `--line-height-caption` | 보조 설명 |
-| Label | 12px | Medium | 150% | `--font-size-label` / `--line-height-label` | 배지, 태그, 메타 정보 |
+| Label | 14px | Medium/Semibold | 150% | `--font-size-label` / `--line-height-label` | 보조 설명 |
+| Caption | 12px | Medium | 150% | `--font-size-caption` / `--line-height-caption` | 배지, 태그, 메타 정보 |
 
-> 자간 -2.5%는 전체 공통 적용. 별도 예외 없음.
+> 자간 -2.5% 기본 적용, 단 Display(32px)만 -3% 예외.
 
 ---
 
@@ -159,7 +163,7 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 | MD | 16px | `--spacing-md` | 카드 패딩, 리스트 아이템 간격 |
 | LG | 24px | `--spacing-lg` | 섹션 간 간격 |
 | XL | 32px | `--spacing-xl` | 페이지 상단 여백 |
-| XXL | 48px | `--spacing-xxl` | 주요 섹션 구분 |
+| XXL | 44px | `--spacing-xxl` | 주요 섹션 구분 |
 
 **좌우 여백** — 20px (`--spacing-screen-pad`, 전 화면 공통)
 

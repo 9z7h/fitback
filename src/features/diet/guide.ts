@@ -7,6 +7,8 @@
  * 용어 규칙(명세 §1-3): 사용자 노출 명칭은 "가이드". "타겟" 금지.
  */
 
+import { gramsOf, type MacroRatio } from '@/features/diet/useMacroRatio';
+
 export type Goal = 'gain' | 'cut' | 'maintain';
 export type WorkoutPart = 'lower' | 'upper' | 'full' | 'cardio';
 export type Intensity = 'low' | 'mid' | 'high';
@@ -83,14 +85,27 @@ export interface BodyProfile {
   gender: 'M' | 'F' | null;
   height: number | null; // cm
   weight: number | null; // kg
-  exerciseLevel: 'beginner' | 'intermediate' | 'advanced' | null;
+  exerciseLevel: ActivityLevel | null;
 }
 
-// 운동 수준 → 활동계수 (Mifflin 표준: 비활동 1.2 / 가벼움 1.375 / 보통 1.55)
-const ACTIVITY_FACTOR: Record<string, number> = {
-  beginner: 1.2,
-  intermediate: 1.375,
-  advanced: 1.55,
+// 활동 수준 5단계 (Mifflin 표준 활동계수)
+export type ActivityLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
+
+// 활동 수준 표시 라벨 (입력 UI 공용)
+export const ACTIVITY_LEVELS: { value: ActivityLevel; label: string }[] = [
+  { value: 'sedentary', label: '좌식' },
+  { value: 'light', label: '가벼운 활동' },
+  { value: 'moderate', label: '보통' },
+  { value: 'active', label: '활발' },
+  { value: 'very_active', label: '매우 활발' },
+];
+
+const ACTIVITY_FACTOR: Record<ActivityLevel, number> = {
+  sedentary: 1.2,
+  light: 1.375,
+  moderate: 1.55,
+  active: 1.725,
+  very_active: 1.9,
 };
 
 // 회원 정보 기반 목표 칼로리 — Mifflin-St Jeor BMR × 활동계수 × 목표보정.
@@ -99,7 +114,7 @@ export function calorieTargetFromProfile(p: BodyProfile, goal: Goal): number | n
   if (p.age == null || p.height == null || p.weight == null) return null;
   const genderOffset = p.gender === 'F' ? -161 : 5; // 미지정 시 남성 기준
   const bmr = 10 * p.weight + 6.25 * p.height - 5 * p.age + genderOffset;
-  const factor = ACTIVITY_FACTOR[p.exerciseLevel ?? ''] ?? 1.2;
+  const factor = p.exerciseLevel ? ACTIVITY_FACTOR[p.exerciseLevel] : 1.2;
   const tdee = bmr * factor;
   const goalMul: Record<Goal, number> = { maintain: 1, cut: 0.85, gain: 1.1 };
   return Math.round(tdee * goalMul[goal]);
@@ -118,28 +133,49 @@ const BASE_KCAL: Record<Goal, number> = {
   cut: 1100,
 };
 
-// ── Step 2: 가이드 생성 ─────────────────────────────────────
-// opts.kcal·opts.protein(회원 정보 기반)이 주어지면 그 값을, 없으면 기본값으로 폴백.
-// 단백질은 체중 기반(체중×1.5g)을 우선 쓰고, 남은 칼로리를 탄수:지방 = 4:3으로 분배.
-export function generateGuide(
-  ctx: WorkoutContext,
-  opts?: { kcal?: number | null; protein?: number | null },
-): GuideResult {
-  let kcal = opts?.kcal ?? BASE_KCAL[ctx.goal];
-
-  // 부위/강도로 칼로리 보정
+// 오늘 운동 컨텍스트(부위·강도)로 보정한 목표 칼로리.
+// 가이드(diet)와 탄단지 비율 조정 화면이 같은 kcal 기준을 쓰도록 분리해 export한다.
+export function workoutAdjustedKcal(ctx: WorkoutContext, baseKcal?: number | null): number {
+  let kcal = baseKcal ?? BASE_KCAL[ctx.goal];
   if (ctx.part === 'lower' || ctx.part === 'upper') kcal += 50;
   else if (ctx.part === 'full') kcal += 80;
   else if (ctx.part === 'cardio') kcal += 50;
   if (ctx.intensity === 'high') kcal += 100;
   else if (ctx.intensity === 'low') kcal -= 50;
+  return kcal;
+}
 
-  // 단백질: 회원 체중 기반 값 우선. 없으면 칼로리의 30%로 폴백.
-  const protein = Math.round(opts?.protein ?? (kcal * 0.3) / 4);
-  // 남은 칼로리를 탄수:지방 = 4:3(칼로리)으로 분배 (탄·단 4kcal/g, 지 9kcal/g)
-  const remainKcal = Math.max(0, kcal - protein * 4);
-  const carb = Math.round((remainKcal * (4 / 7)) / 4);
-  const fat = Math.round((remainKcal * (3 / 7)) / 9);
+// 커스텀 비율은 탄·단·지 3개가 모두 유효할 때만 적용(하나라도 없으면 기존 로직 폴백).
+function isUsableRatio(r?: MacroRatio | null): r is MacroRatio {
+  return !!r && [r.carb, r.protein, r.fat].every((v) => Number.isFinite(v) && v > 0);
+}
+
+// ── Step 2: 가이드 생성 ─────────────────────────────────────
+// opts.kcal·opts.protein(회원 정보 기반)이 주어지면 그 값을, 없으면 기본값으로 폴백.
+// opts.ratio(사용자가 저장한 탄단지 비율)가 있으면 칼로리를 그 비율로 3분할하고,
+// 없으면 기존 로직(체중 기반 단백질 우선 + 남은 칼로리를 탄수:지방 4:3 분배)을 쓴다.
+export function generateGuide(
+  ctx: WorkoutContext,
+  opts?: { kcal?: number | null; protein?: number | null; ratio?: MacroRatio | null },
+): GuideResult {
+  const kcal = workoutAdjustedKcal(ctx, opts?.kcal);
+
+  let protein: number;
+  let carb: number;
+  let fat: number;
+  if (isUsableRatio(opts?.ratio)) {
+    const ratio = opts.ratio as MacroRatio;
+    carb = gramsOf(kcal, 'carb', ratio.carb);
+    protein = gramsOf(kcal, 'protein', ratio.protein);
+    fat = gramsOf(kcal, 'fat', ratio.fat);
+  } else {
+    // 단백질: 회원 체중 기반 값 우선. 없으면 칼로리의 30%로 폴백.
+    protein = Math.round(opts?.protein ?? (kcal * 0.3) / 4);
+    // 남은 칼로리를 탄수:지방 = 4:3(칼로리)으로 분배 (탄·단 4kcal/g, 지 9kcal/g)
+    const remainKcal = Math.max(0, kcal - protein * 4);
+    carb = Math.round((remainKcal * (4 / 7)) / 4);
+    fat = Math.round((remainKcal * (3 / 7)) / 9);
+  }
   const target: MacroTarget = { protein, carb, fat, kcal: kcalOf(protein, carb, fat) };
 
   // 컨텍스트 한 줄 (명세 §3 Step2)
@@ -196,6 +232,50 @@ function buildCoaching(target: MacroTarget, consumed: MacroTarget): Coaching {
   return {
     state: '오늘 섭취량 충분',
     nextAction: '추가 섭취 없이 회복할 수 있어요',
+  };
+}
+
+// ── 오늘의 식단 점수 ────────────────────────────────────────
+export interface DietScore {
+  balanceScore: number; // 균형점수 0~100 — 목표 매크로 비율 대비 편차
+  completionRate: number; // 완성도(%) 0~100 — 섭취 칼로리 / 목표 칼로리
+  finalScore: number; // 최종점수 0~100 — 균형 60% + 완성도 40%
+}
+
+function clamp01to100(v: number): number {
+  return Math.min(100, Math.max(0, v));
+}
+
+// 매크로 g → 매크로 kcal 합 기준의 비중(%). 분모는 protein*4+carb*4+fat*9 이며,
+// 별도로 기록된 kcal 필드(m.kcal)와는 다른 값이므로 여기서 절대 쓰지 않는다.
+function macroKcalShares(m: MacroTarget): { protein: number; carb: number; fat: number } {
+  const total = kcalOf(m.protein, m.carb, m.fat);
+  if (total <= 0) return { protein: 0, carb: 0, fat: 0 };
+  return {
+    protein: ((m.protein * 4) / total) * 100,
+    carb: ((m.carb * 4) / total) * 100,
+    fat: ((m.fat * 9) / total) * 100,
+  };
+}
+
+export function computeDietScore(target: MacroTarget, consumed: MacroTarget): DietScore {
+  const targetShare = macroKcalShares(target);
+  const consumedShare = macroKcalShares(consumed);
+
+  // 탄·단·지 3개 편차의 절대값을 모두 더한 뒤 한 번만 100에서 뺀다.
+  const deviation =
+    Math.abs(consumedShare.protein - targetShare.protein) +
+    Math.abs(consumedShare.carb - targetShare.carb) +
+    Math.abs(consumedShare.fat - targetShare.fat);
+  const balance = clamp01to100(100 - deviation);
+
+  // 완성도는 기록된 섭취 칼로리(consumed.kcal)를 그대로 사용.
+  const completion = target.kcal > 0 ? clamp01to100((consumed.kcal / target.kcal) * 100) : 0;
+
+  return {
+    balanceScore: Math.round(balance),
+    completionRate: Math.round(completion * 10) / 10,
+    finalScore: Math.round(clamp01to100(balance * 0.6 + completion * 0.4)),
   };
 }
 

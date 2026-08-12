@@ -13,18 +13,19 @@ export const Palette = {
   primary: '#6675FF',
   primaryHover: '#5566F7',
   primaryPressed: '#4957D8',
-  primaryLight: '#EEF1FF',
-  secondary: '#6892FF',
+  primaryLight: '#F0F1FF',
+  secondary: '#6490FF',
+  tertiary: '#BD7BF8',
 
   // Background
-  bgBase: '#F5F5F9',
+  bgBase: '#F2F4F7',
   bgSurface: '#FFFFFF',
-  bgMuted: '#F5F5F8',
+  bgMuted: '#F2F4F7',
 
   // Semantic — UI 상태
   success: '#22C55E',
   successLight: '#DCFCE7',
-  warning: '#F59E0B',
+  warning: '#FFCC00',
   error: '#EF4444',
   errorLight: '#FEE2E2',
 
@@ -32,11 +33,11 @@ export const Palette = {
   // loss는 빨강 아닌 다크 네이비: "Encourage, Not Pressure" — 압박이 아닌 사실 전달
   profit: '#6675FF',
   profitLight: '#EEF1FF',
-  loss: '#222C43',
+  loss: '#272E3E',
   lossLight: '#F2F2F7',
 
   // Neutral
-  gray900: '#111827',
+  gray900: '#272E3E',
   gray800: '#222C43',
   gray700: '#313E5B',
   gray500: '#6B7280',
@@ -44,7 +45,7 @@ export const Palette = {
   gray300: '#D1D5DB',
   gray200: '#E7E9F1',
   gray100: '#F5F5F9',
-  gray50: '#F2F2F7',
+  gray50: '#F2F4F7',
   white: '#FFFFFF',
 
   // Coach banner — "운동" 강조 (코치 배너 전용, 인디고 위 노란 포인트)
@@ -61,6 +62,7 @@ export const Palette = {
   lineStrong: 'rgba(0, 0, 0, 0.15)',
   linePrimary: '#6675FF',
   borderStrong: '#6B7280', // Figma border/strong — 아이콘 stroke, 강조 라인
+  iconPrimary: '#C0C3CF', // Figma icon/primary — 비활성/기본 아이콘 색
 } as const;
 
 // 기존 ThemedText/ThemedView 호환용 시맨틱 키 (라이트 전용).
@@ -94,7 +96,7 @@ type TypeToken = Pick<
 >;
 
 export const Typography = {
-  display: { fontSize: 32, lineHeight: 40, fontFamily: FontFamily.bold, letterSpacing: -0.8, fontWeight: '700' },
+  display: { fontSize: 32, lineHeight: 40, fontFamily: FontFamily.bold, letterSpacing: -0.96, fontWeight: '700' },
   display2: { fontSize: 28, lineHeight: 36, fontFamily: FontFamily.bold, letterSpacing: -0.7, fontWeight: '700' },
   h1: { fontSize: 24, lineHeight: 30, fontFamily: FontFamily.bold, letterSpacing: -0.6, fontWeight: '700' },
   h2: { fontSize: 20, lineHeight: 25, fontFamily: FontFamily.semibold, letterSpacing: -0.5, fontWeight: '600' },
@@ -102,9 +104,10 @@ export const Typography = {
   body: { fontSize: 16, lineHeight: 24, fontFamily: FontFamily.medium, letterSpacing: -0.4, fontWeight: '500' },
   bodySemibold: { fontSize: 16, lineHeight: 24, fontFamily: FontFamily.semibold, letterSpacing: -0.4, fontWeight: '600' },
   bodyMedium: { fontSize: 16, lineHeight: 24, fontFamily: FontFamily.medium, letterSpacing: -0.4, fontWeight: '500' }, // body와 동일 — alias
-  caption: { fontSize: 14, lineHeight: 21, fontFamily: FontFamily.medium, letterSpacing: -0.35, fontWeight: '500' },
-  captionBold: { fontSize: 14, lineHeight: 21, fontFamily: FontFamily.semibold, letterSpacing: -0.35, fontWeight: '600' },
-  label: { fontSize: 12, lineHeight: 18, fontFamily: FontFamily.medium, letterSpacing: -0.3, fontWeight: '500' },
+  // Figma 명명 기준(Token Documentation — Typography): 14px=Label, 12px=Caption.
+  label: { fontSize: 14, lineHeight: 21, fontFamily: FontFamily.medium, letterSpacing: -0.35, fontWeight: '500' },
+  labelBold: { fontSize: 14, lineHeight: 21, fontFamily: FontFamily.semibold, letterSpacing: -0.35, fontWeight: '600' },
+  caption: { fontSize: 12, lineHeight: 18, fontFamily: FontFamily.medium, letterSpacing: -0.3, fontWeight: '500' },
 } as const satisfies Record<string, TypeToken>;
 
 export const Fonts = Platform.select({
@@ -124,7 +127,7 @@ export const Spacing = {
   card: 20,
   lg: 24,
   xl: 32,
-  xxl: 48,
+  xxl: 44,
   'screen-x': 20,
   // legacy aliases (점진 마이그레이션)
   half: 2,

@@ -1,0 +1,24 @@
+/**
+ * FitBack 스페이싱·엘리베이션 토큰 — Figma `fitback` 파일 >
+ * Token Documentation — Spacing & Radius / Elevation 미러.
+ * Radius는 radius.css, 타이포는 typography.css로 분리됨.
+ * 런타임 미사용(RN은 src/constants/theme.ts의 Spacing.*/Elevation.*를 씀).
+ * 출처: get_metadata(nodeId: 1398:1007), get_variable_defs(nodeId: 1398:1084), 2026-08-12.
+ */
+:root {
+  /* ── Spacing (8pt grid) ─────────────────────────────── */
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-m: 12px;
+  --spacing-md: 16px;
+  --spacing-card: 20px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 44px;
+
+  /* ── Elevation ──────────────────────────────────────── */
+  --shadow-s: 0 2px 12px rgba(17, 24, 39, 0.04);
+  --shadow-m: 0 2px 12px rgba(17, 24, 39, 0.08);
+  --shadow-l: 0 2px 12px rgba(17, 24, 39, 0.16); /* Figma 신규 — 현재 theme.ts Elevation에 대응 레벨 없음 */
+}

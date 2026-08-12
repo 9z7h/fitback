@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.primaryLight,
   },
   trayChipText: {
-    ...Typography.caption,
+    ...Typography.label,
     color: Palette.primary,
   },
 

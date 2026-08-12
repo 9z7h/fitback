@@ -9,7 +9,8 @@ import { ThemedView } from '@/components/themed-view';
 import { Card, Icon, Input } from '@/components/ui';
 import { Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { useDeleteAccountData } from '@/features/auth/useDeleteAccountData';
-import { useProfile, type Gender } from '@/features/auth/useProfile';
+import { useProfile, type ExerciseLevel, type Gender } from '@/features/auth/useProfile';
+import { ACTIVITY_LEVELS } from '@/features/diet/guide';
 import { getNotifySettings, setNotifySettings } from '@/features/home/notifySettings';
 import { useMemberships } from '@/features/membership/useMemberships';
 import { supabase } from '@/lib/supabase';
@@ -30,6 +31,7 @@ const goalLabel = (g: string | null) => GOALS.find((x) => x.value === g)?.label 
 // 피해야 할 운동 부위 — exercises.contraindicated_parts 기준. 코치 운동 추천 회피에 사용.
 const AVOID_PARTS = ['목', '어깨', '허리', '무릎', '손목'];
 const genderLabel = (g: Gender | null) => (g === 'M' ? '남자' : g === 'F' ? '여자' : '-');
+const activityLabel = (l: ExerciseLevel | null) => ACTIVITY_LEVELS.find((x) => x.value === l)?.label ?? '-';
 const APP_VERSION = '1.0.0 (beta)';
 
 function joinedDate(iso?: string | null): string {
@@ -71,12 +73,14 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
   const [eGender, setEGender] = useState<Gender | null>(null);
   const [eHeight, setEHeight] = useState('');
   const [eWeight, setEWeight] = useState('');
+  const [eLevel, setELevel] = useState<ExerciseLevel | null>(null);
   const [eAvoidParts, setEAvoidParts] = useState<string[]>([]);
   function startInfo() {
     setEAge(profile?.age != null ? String(profile.age) : '');
     setEGender(profile?.gender ?? null);
     setEHeight(profile?.height != null ? String(profile.height) : '');
     setEWeight(profile?.weight != null ? String(profile.weight) : '');
+    setELevel(profile?.exercise_level ?? null);
     setEAvoidParts(profile?.avoid_exercise_parts ?? []);
     setEditInfo(true);
   }
@@ -89,6 +93,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
           gender: eGender,
           height: eHeight ? Number(eHeight) : null,
           weight: eWeight ? Number(eWeight) : null,
+          exercise_level: eLevel,
           avoid_exercise_parts: eAvoidParts,
         })
         .eq('id', uid);
@@ -191,6 +196,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
                     <Row label="성별" value={genderLabel(profile?.gender ?? null)} />
                     <Row label="키" value={profile?.height != null ? `${profile.height} cm` : '-'} />
                     <Row label="몸무게" value={profile?.weight != null ? `${profile.weight} kg` : '-'} />
+                    <Row label="활동 수준" value={activityLabel(profile?.exercise_level ?? null)} />
                     <Row
                       label="피해야 할 부위"
                       value={profile?.avoid_exercise_parts?.length ? profile.avoid_exercise_parts.join(', ') : '없음'}
@@ -218,6 +224,23 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
                     </Field>
                     <Field label="몸무게 (kg)">
                       <Input value={eWeight} onChangeText={(t) => setEWeight(t.replace(/[^0-9.]/g, ''))} keyboardType="numeric" placeholder="예: 58" />
+                    </Field>
+                    <Field label="활동 수준">
+                      <View style={styles.goalGrid}>
+                        {ACTIVITY_LEVELS.map((l) => {
+                          const on = eLevel === l.value;
+                          return (
+                            <Pressable
+                              key={l.value}
+                              onPress={() => setELevel((v) => (v === l.value ? null : l.value))}
+                              style={[styles.goalChip, on && styles.segOn]}>
+                              <ThemedText type={on ? 'captionBold' : 'caption'} style={on ? styles.activeText : undefined}>
+                                {l.label}
+                              </ThemedText>
+                            </Pressable>
+                          );
+                        })}
+                      </View>
                     </Field>
                     <Field label="피해야 할 운동 부위 (선택)">
                       <View style={styles.goalGrid}>
