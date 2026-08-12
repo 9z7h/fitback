@@ -18,7 +18,7 @@
 - [Supabase](https://app.supabase.com) 프로젝트 1개
 - (선택) iOS/Android 폰에 **Expo Go** 설치 — 폰에서 바로 띄워보고 싶을 때
 
-## 설치 & 셋업
+## 설치 &amp; 셋업
 
 ```bash
 git clone <repo-url>
@@ -34,7 +34,7 @@ cp .env.example .env
 3. **Authentication → Users → Add user** 로 개발용 테스트 계정 생성 (**Auto Confirm User 체크**)(선택)
 4. 생성한 이메일/비밀번호를 `.env`의 `EXPO_PUBLIC_DEV_TEST_EMAIL` / `EXPO_PUBLIC_DEV_TEST_PASSWORD`에 입력
 5. **SQL Editor** 열고 [supabase/migrations/01_init_profiles.sql](supabase/migrations/01_init_profiles.sql) 내용 전체 실행
-   - `profiles` 테이블, RLS, 자동 프로필 생성 트리거, `is_admin()` 헬퍼가 한 번에 셋업됨
+  - `profiles` 테이블, RLS, 자동 프로필 생성 트리거, `is_admin()` 헬퍼가 한 번에 셋업됨
 
 `.env` 예시:
 
@@ -84,13 +84,14 @@ supabase/
 - [x] 개발용 LoginScreen (테스트 계정 자동 채우기)
 - [x] `profiles` 테이블 + RLS + `is_admin()` 헬퍼 (member/admin 역할, 자가-승격 방지)
 - [x] 회원권 / 식단 / 홈트 3탭 화면 (가데이터)
-- [ ] 회원권 Supabase 연동 (`memberships` 테이블)
-- [ ] 식단/홈트 Supabase 연동
-- [ ] 실제 로그인/회원가입 화면 (개발용 LoginScreen 대체)
-- [ ] 배포 (웹 → EAS Build → 스토어)
+- [x] 회원권 Supabase 연동 (`memberships` 테이블)
+- [x] 식단/홈트 Supabase 연동
+- [x] 실제 로그인/회원가입 화면 (개발용 LoginScreen 대체)
+- [x] 배포 (웹 → EAS Build → 스토어)
 
 ## 메모
 
 - **로그인 화면은 개발용**입니다. `.env`의 테스트 계정으로만 로그인되며, 입력란 아래에 자동 채우기 버튼이 있습니다.
 - **역할(role)** 은 `member` / `admin` 두 가지. 현재는 admin 정책 미적용 (컬럼만 존재). 자세한 전략은 [CLAUDE.md](CLAUDE.md#역할role-전략).
 - 탭 아이콘은 임시로 템플릿 이미지를 재사용 중 — 디자인 에셋 확정 시 교체 예정.
+

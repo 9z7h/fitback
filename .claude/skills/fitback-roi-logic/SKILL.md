@@ -7,7 +7,7 @@ description: FitBack의 ROI(본전 회수율) 계산, 회원권 타입 분기, �
 
 ## Why
 
-FitBack의 유일한 차별점은 "회원권 본전을 실제로 회수하는가"를 숫자(ROI)로 보여주는 것이다. 이 숫자가 신뢰를 잃으면(자기신고로 부풀려지거나 계산이 틀리면) 앱의 존재 이유가 사라진다. 그래서 ROI에 영향을 주는 모든 코드는 "검증된 기록"만 반영해야 한다.
+FitBack의 유일한 차별점은 "회원권 본전을 실제로 회수하는가"를 숫자(ROI)로 보여주는 것이다. 이 숫자가 신뢰를 잃으면(계산 자체가 틀리면) 앱의 존재 이유가 사라진다. ROI에 영향을 주는 모든 코드는 정확한 회당가치 계산을 지켜야 하고, verify_status는 표시용/신뢰도 지표용 구분일 뿐 ROI 반영 여부를 가르지 않는다.
 
 ## 회원권 타입 3종
 
@@ -32,7 +32,7 @@ valueUsed = used × (cost / max_visits)
 ## 출석 검증 규칙 (확정)
 
 - 체크인은 센터 **100m 이내**에서만 활성화된다. 지오펜스 판정은 `CheckInFlow`에 있고, 위치는 웹·앱 모두 `getPosition()`으로 취득한다.
-- **자기신고로 ROI를 움직이지 않는다.** 폴백(수동) 출석 기능을 추가할 경우, 반드시 `verified: boolean` 같은 필드로 검증된 기록과 구분해서 저장하고, ROI 계산(`valueAtRisk`, `usedVisits` 등)에는 검증된 기록만 반영한다.
+- **자기신고(수동) 출석도 ROI에 반영한다(PRD §08, 현행 유지).** `visits.verify_status`(verified/unverified)로 검증 여부는 구분해 저장하되, `valueAtRisk`/`usedVisits`/`recoveredAmount` 계산은 verify_status와 무관하게 전체 visits를 반영한다. verified 필터링은 NSM 등 신뢰도 전용 집계(`analytics.*` 뷰)에서만 적용한다.
 - 지오펜스 체크 없이 방문 카운트를 늘리는 코드 경로가 있으면 이 규칙 위반이다.
 
 ## AI 코치(coach Edge Function) 계약

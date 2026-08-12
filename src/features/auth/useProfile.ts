@@ -5,7 +5,8 @@ import { useCurrentUser } from '@/stores/auth';
 
 export type Role = 'member' | 'admin';
 export type Gender = 'M' | 'F';
-export type ExerciseLevel = 'beginner' | 'intermediate' | 'advanced';
+// 활동 수준 5단계 (활동계수 매핑은 features/diet/guide.ts ACTIVITY_FACTOR)
+export type ExerciseLevel = 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active';
 
 export interface Profile {
   id: string;

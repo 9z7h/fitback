@@ -21,6 +21,7 @@ import { Icon, Input } from '@/components/ui';
 import { Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { EVENTS, logEvent } from '@/features/analytics/events';
 import { useProfile } from '@/features/auth/useProfile';
+import { getRecentBodyPartCounts } from '@/features/coach/bodyPartBalance';
 import { deleteSession, loadSessions, saveSession, type ChatSession } from '@/features/coach/chatHistory';
 import type { AppResponse, DietResponse, FollowupAction, RoiInfo } from '@/features/coach/chatbot.types';
 import { useAddMeal, type MealType } from '@/features/diet/useMeals';
@@ -546,6 +547,14 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
     queryFn: () => fetchCoachCandidates(profile?.avoid_exercise_parts ?? []),
   });
 
+  // 최근 7일 부위별 완료 횟수 — plan 인텐트에서 편중 트레이닝 방지용.
+  const { data: recentBodyParts } = useQuery({
+    queryKey: ['coach-recent-body-parts', profile?.id],
+    staleTime: 1000 * 60 * 30,
+    enabled: !!profile?.id,
+    queryFn: () => getRecentBodyPartCounts(profile!.id),
+  });
+
   function buildContext(): Record<string, unknown> {
     const ctx: Record<string, unknown> = {};
     if (profile) {
@@ -563,6 +572,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
     if (risk) { ctx.membership_risk = risk.level; ctx.value_at_risk = risk.valueAtRisk; ctx.remaining_days = risk.remainingDays; }
     if (scheduleCtx) ctx.schedule = scheduleCtx;
     if (exerciseCandidates?.length) ctx.exercise_candidates = exerciseCandidates;
+    if (recentBodyParts) ctx.recent_body_parts = recentBodyParts;
     return ctx;
   }
 

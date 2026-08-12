@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
   },
   routineMeta: {
     // #오운완 태그(gray500)보다 더 연한 회색. duration 왼쪽에 오른쪽 정렬로 붙음.
-    ...Typography.label,
+    ...Typography.caption,
     color: Palette.gray400,
     textAlign: 'right',
     marginRight: Spacing.sm,

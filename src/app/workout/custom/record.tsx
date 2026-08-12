@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
     textAlign: 'center',
-    ...Typography.captionBold,
+    ...Typography.labelBold,
     color: Palette.gray900,
     backgroundColor: 'transparent',
     borderWidth: 0,
@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
   memoInput: {
     minHeight: 60,
     color: Palette.gray900,
-    ...Typography.caption,
+    ...Typography.label,
     textAlignVertical: 'top',
   },
 

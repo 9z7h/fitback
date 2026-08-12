@@ -1,0 +1,36 @@
+/**
+ * FitBack 타이포그래피 토큰 — Figma `fitback` 파일 > Token Documentation — Typography 미러.
+ * 런타임 미사용(RN은 src/constants/theme.ts의 Typography.*를 씀).
+ * 출처: get_variable_defs(nodeId: 1398:952), 2026-08-12.
+ */
+:root {
+  --font-family-base: 'Pretendard Variable';
+
+  --font-size-display: 32px;
+  --line-height-display: 40px; /* 1.25 */
+  --letter-spacing-display: -3%; /* 예외 — 나머지는 전부 -2.5% */
+
+  --font-size-h1: 24px;
+  --line-height-h1: 30px;
+  --letter-spacing-h1: -2.5%;
+
+  --font-size-h2: 20px;
+  --line-height-h2: 25px;
+  --letter-spacing-h2: -2.5%;
+
+  --font-size-title: 18px;
+  --line-height-title: 22.5px;
+  --letter-spacing-title: -2.5%;
+
+  --font-size-body: 16px;
+  --line-height-body: 24px; /* 1.5 */
+  --letter-spacing-body: -2.5%;
+
+  --font-size-label: 14px;
+  --line-height-label: 21px;
+  --letter-spacing-label: -2.5%;
+
+  --font-size-caption: 12px;
+  --line-height-caption: 18px;
+  --letter-spacing-caption: -2.5%;
+}

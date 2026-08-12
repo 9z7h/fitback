@@ -1,120 +1,124 @@
-# FitBack Design Tokens
+# Design Tokens — Primitive → Semantic 매핑
 
-소스: `src/constants/theme.ts` ↔ `src/tokens/colors.css` / `src/tokens/spacing.css`
-
-> **Figma Variables 미정의**: Figma 파일(aJIudmwrEER8OoccfLmHiY)에 Variables가 설정되어 있지 않아 `theme.ts`를 단일 정규 소스로 사용합니다.
-> Figma Variables가 추가되면 이 파일과 CSS 토큰을 업데이트하세요.
-
----
-
-## 구조
-
-```
-Primitive (raw 값)
-  └─ Semantic (Primitive 참조)
-        └─ 컴포넌트 코드 (Semantic 사용)
-```
-
-CSS에서 Figma 변수명의 `/` 구분자는 `-`로 변환합니다.  
-예) `brand/primary` → `--color-brand-primary`
+> **출처** — Figma `fitback` 파일 > `Token Documentation` 프레임군 (`get_variable_defs`, 2026-08-12 추출).
+> **런타임** — RN 코드는 이 문서를 참조하지 않는다. 실제 소스는 `src/constants/theme.ts`(`Palette`/`Spacing`/`Radius`/`Typography`/`Elevation`).
+> **CSS 미러** — `src/tokens/colors.css`, `src/tokens/spacing.css`, `src/tokens/radius.css`, `src/tokens/typography.css` (웹 CSS 커스텀 프로퍼티, 런타임 미사용·Figma 동기화 참조용).
 
 ---
 
-## 1. 컬러 토큰 (`src/tokens/colors.css`)
+## 1. 컬러
 
-### Primitive → Semantic 매핑
+> 출처: Figma `디자인시스템 > 스타일가이드_컬러`(nodeId 1401:988) "Alias → Primitive" 공식 표. 값은 기존 추출과 100% 일치 — 이번 갱신은 primitive 이름 보정만(이전엔 "대응 없음"으로 적었던 게 실은 다 있었음).
 
-| theme.ts (Palette.*) | CSS Primitive | CSS Semantic | 값 |
+### Primitive (raw ramp)
+
+| Figma 이름 | CSS 변수 | 값 |
+|---|---|---|
+| gray/00 | `--color-gray-00` | `#ffffff` |
+| gray/200 | `--color-gray-200` | `#f2f4f7` |
+| gray/300 | `--color-gray-300` | `#e7e9f1` |
+| gray/400 | `--color-gray-400` | `#c0c3cf` |
+| gray/500 | `--color-gray-500` | `#999999` |
+| gray/600 | `--color-gray-600` | `#6b7280` |
+| gray/800 | `--color-gray-800` | `#272e3e` |
+| Indigo/100 | `--color-indigo-100` | `#f0f1ff` |
+| Indigo/200 | `--color-indigo-200` | `#e0e3ff` |
+| Indigo/500 | `--color-indigo-500` | `#6675ff` |
+| Indigo/600 | `--color-indigo-600` | `#5566f7` |
+| Indigo/700 | `--color-indigo-700` | `#4957d8` |
+| blue/200 | `--color-blue-200` | `#d0deff` |
+| blue/500 | `--color-blue-500` | `#6490ff` |
+| purple/500 | `--color-purple-500` | `#bd7bf8` |
+
+### Semantic → Primitive 참조 (Figma "Alias → Primitive" 표 그대로)
+
+| Figma 이름 | CSS 변수 | 참조 Primitive | 값 |
 |---|---|---|---|
-| `primary` | `--color-p-indigo-400` | `--color-brand-primary` | `#6675FF` |
-| `primaryHover` | `--color-p-indigo-500` | `--color-brand-primary-hover` | `#5566F7` |
-| `primaryPressed` | `--color-p-indigo-600` | `--color-brand-primary-pressed` | `#4957D8` |
-| `primaryLight` | `--color-p-indigo-50` | `--color-brand-primary-light` | `#EEF1FF` |
-| `secondary` | `--color-p-blue-400` | `--color-brand-secondary` | `#6892FF` |
-| `bgBase` | `--color-p-surface-page` | `--color-bg-base` | `#F5F5F9` |
-| `bgSurface` | `--color-p-white` | `--color-bg-surface` | `#FFFFFF` |
-| `bgMuted` | `--color-p-surface-muted` | `--color-bg-muted` | `#F5F5F8` |
-| `success` | `--color-p-green-500` | `--color-state-success` | `#22C55E` |
-| `successLight` | `--color-p-green-50` | `--color-state-success-light` | `#DCFCE7` |
-| `warning` | `--color-p-amber-400` | `--color-state-warning` | `#F59E0B` |
-| `error` | `--color-p-red-500` | `--color-state-error` | `#EF4444` |
-| `errorLight` | `--color-p-red-50` | `--color-state-error-light` | `#FEE2E2` |
-| `profit` | `--color-p-indigo-400` | `--color-roi-profit` | `#6675FF` |
-| `profitLight` | `--color-p-indigo-50` | `--color-roi-profit-light` | `#EEF1FF` |
-| `loss` | `--color-p-gray-800` | `--color-roi-loss` | `#222C43` |
-| `lossLight` | `--color-p-gray-50` | `--color-roi-loss-light` | `#F2F2F7` |
-| `gray900` | `--color-p-gray-900` | `--color-neutral-900` | `#111827` |
-| `gray800` | `--color-p-gray-800` | `--color-neutral-800` | `#222C43` |
-| `gray700` | `--color-p-gray-700` | `--color-neutral-700` | `#313E5B` |
-| `gray500` | `--color-p-gray-500` | `--color-neutral-500` | `#6B7280` |
-| `gray400` | `--color-p-gray-400` | `--color-neutral-400` | `#999999` |
-| `gray300` | `--color-p-gray-300` | `--color-neutral-300` | `#D1D5DB` |
-| `gray200` | `--color-p-gray-200` | `--color-neutral-200` | `#E7E9F1` |
-| `gray100` | `--color-p-gray-100` | `--color-neutral-100` | `#F5F5F9` |
-| `gray50` | `--color-p-gray-50` | `--color-neutral-50` | `#F2F2F7` |
-| `white` | `--color-p-white` | `--color-neutral-0` | `#FFFFFF` |
-| `tintOrange` | `--color-p-orange-400` | `--color-diet-tint-orange` | `#F5A623` |
-| `tintYellow` | `--color-p-yellow-400` | `--color-diet-tint-yellow` | `#F2B807` |
-| `tintPurple` | `--color-p-purple-500` | `--color-diet-tint-purple` | `#7C6CF0` |
-| `tintIndigo` | `--color-p-indigo-300` | `--color-diet-tint-indigo` | `#8E9BFF` |
-| `lineDefault` | `--color-p-black-07` | `--color-line-default` | `rgba(0,0,0,0.07)` |
-| `lineStrong` | `--color-p-black-15` | `--color-line-strong` | `rgba(0,0,0,0.15)` |
-| `linePrimary` | `--color-p-indigo-400` | `--color-line-primary` | `#6675FF` |
-| `borderStrong` | `--color-p-gray-500` | `--color-border-strong` | `#6B7280` |
+| primary/primary | `--primary-primary` | `--color-indigo-500` | `#6675ff` |
+| primary/primary-pressed | `--primary-primary-pressed` | `--color-indigo-600` | `#5566f7` |
+| background/Primary | `--background-primary` | `--color-gray-200` | `#f2f4f7` |
+| text/secondary | `--text-secondary` | `--color-gray-600` | `#6b7280` |
+| text/primary | `--text-primary` | `--color-gray-800` | `#272e3e` |
+| text/caption | `--text-caption` | `--color-gray-500` | `#999999` |
+| text/inverse | `--text-inverse` | `--color-gray-00` | `#ffffff` |
+| text/inverse-secondary | `--text-inverse-secondary` | `--color-indigo-200` | `#e0e3ff` |
+| secondary/secondary | `--secondary-secondary` | `--color-blue-500` | `#6490ff` |
+| card/emphasis | `--card-emphasis` | `--color-gray-800` | `#272e3e` |
+| card/primary | `--card-primary` | `--color-gray-00` | `#ffffff` |
+| card/secondary | `--card-secondary` | `--color-gray-200` | `#f2f4f7` |
+| card/tertiary | `--card-tertiary` | `--color-gray-300` | `#e7e9f1` |
+| icon/primary | `--icon-primary` | `--color-gray-400` | `#c0c3cf` |
+| icon/select | `--icon-select` | `--color-indigo-500` | `#6675ff` |
+| icon/inverse | `--icon-inverse` | `--color-gray-00` | `#ffffff` |
+| icon/border | `--icon-border` | `--color-gray-600` | `#6b7280` |
+| border/input | `--border-input` | `--color-gray-300` | `#e7e9f1` |
+| tertiary/tertiary | `--tertiary-tertiary` | `--color-purple-500` | `#bd7bf8` |
+| status/error | `--color-status-error` | 없음(Figma 표에도 "—") | `#ef4444` |
+| status/error-light | `--color-status-error-light` | 없음 | `#fee2e2` |
+| status/success | `--color-status-success` | 없음 | `#22c55e` |
+| status/success-light | `--color-status-success-light` | 없음 | `#dcfce7` |
+| status/warning | `--color-status-warning` | 없음 | `#ffcc00` |
+| Overlay/200 | `--overlay-200` | 없음 | `#ffffffbf` |
+| Overlay/100 | `--overlay-100` | 없음 | `#ffffff29` |
+
+### `theme.ts` Palette와 대조
+
+| Figma 값 | `theme.ts` 키 | 일치 |
+|---|---|---|
+| `#6675ff`(Indigo/500) | `Palette.primary` | ✓ |
+| `#5566f7`(Indigo/600) | `Palette.primaryHover` | 값 일치, Figma는 `primary/primary-pressed`로 명명 — 네이밍 차이 |
+| `#4957d8`(Indigo/700) | `Palette.primaryPressed` | 값은 존재하나 Figma 시맨틱 별칭 없음(램프에만 존재) |
+| `#f0f1ff` | `Palette.primaryLight` | ✓ (8/12 갱신) |
+| `#6490ff` | `Palette.secondary` | ✓ (8/12 갱신) |
+| `#bd7bf8` | `Palette.tertiary` | ✓ (8/12 신규 추가) |
+| `#ffcc00` | `Palette.warning` | ✓ (8/12 갱신) |
+| `#f2f4f7` | `Palette.bgBase` / `Palette.bgMuted` / `Palette.gray50` | ✓ (8/12 갱신) |
+| `#272e3e` | `Palette.gray900` / `Palette.loss` | ✓ (8/12 갱신) |
+| `#c0c3cf` | `Palette.iconPrimary` | ✓ (8/12 신규 추가) |
 
 ---
 
-## 2. Spacing / Radius / Typography (`src/tokens/spacing.css`)
+## 2. 스페이싱 (8pt grid)
 
-### Spacing
-
-| theme.ts (Spacing.*) | CSS Primitive | CSS Semantic | 값 |
+| Figma | CSS 변수 | 값 | `theme.ts` |
 |---|---|---|---|
-| `xs` | `--space-p-4` | `--spacing-xs` | `4px` |
-| `sm` | `--space-p-8` | `--spacing-sm` | `8px` |
-| `ms` | `--space-p-10` | `--spacing-ms` | `10px` |
-| `md` | `--space-p-16` | `--spacing-md` | `16px` |
-| `lg` | `--space-p-24` | `--spacing-lg` | `24px` |
-| `xl` | `--space-p-32` | `--spacing-xl` | `32px` |
-| `xxl` | `--space-p-48` | `--spacing-xxl` | `48px` |
-| `ScreenPadding` | `--space-p-20` | `--spacing-screen-pad` | `20px` |
+| xxs | `--spacing-xxs` | 2px | `Spacing.half`(레거시 별칭, 값 동일) |
+| xs | `--spacing-xs` | 4px | `Spacing.xs` |
+| sm | `--spacing-sm` | 8px | `Spacing.sm` |
+| m | `--spacing-m` | 12px | `Spacing.m` |
+| md | `--spacing-md` | 16px | `Spacing.md` |
+| card | `--spacing-card` | 20px | `Spacing.card` |
+| lg | `--spacing-lg` | 24px | `Spacing.lg` |
+| xl | `--spacing-xl` | 32px | `Spacing.xl` |
+| xxl | `--spacing-xxl` | 44px | `Spacing.xxl`(8/12 48→44 갱신) |
 
-### Border Radius
+## 3. Radius
 
-| theme.ts (Radius.*) | CSS Primitive | CSS Semantic | 값 |
+| Figma | CSS 변수 | 값 | `theme.ts` |
 |---|---|---|---|
-| `small` | `--radius-p-8` | `--radius-small` | `8px` |
-| `button` | `--radius-p-12` | `--radius-button` | `12px` |
-| `card` | `--radius-p-20` | `--radius-card` | `20px` |
-| `modal` | `--radius-p-20` | `--radius-modal` | `20px` |
-| `full` | `--radius-p-100` | `--radius-full` | `100px` |
+| xs | `--radius-xs` | 8px | `Radius.small` |
+| sm | `--radius-sm` | 12px | `Radius.button` |
+| md | `--radius-md` | 20px | `Radius.card` / `Radius.modal` |
+| lg | `--radius-lg` | 100px | `Radius.full` |
 
-### Typography Font Size
+## 4. 타이포그래피
 
-| theme.ts (Typography.*) | CSS Semantic (font-size) | CSS Semantic (line-height) | px |
+| Figma | 크기/굵기 | CSS 변수 | `theme.ts` |
 |---|---|---|---|
-| `display` | `--font-size-display` | `--line-height-display` | 32 / 40 |
-| `display2` | `--font-size-display2` | `--line-height-display2` | 28 / 36 |
-| `h1` | `--font-size-h1` | `--line-height-h1` | 24 / 30 |
-| `h2` | `--font-size-h2` | `--line-height-h2` | 20 / 25 |
-| `subtitle` | `--font-size-subtitle` | `--line-height-subtitle` | 18 / 23 |
-| `body` | `--font-size-body` | `--line-height-body` | 16 / 24 · Medium (16_M) |
-| `bodySemibold` | `--font-size-body` | `--line-height-body` | 16 / 24 · SemiBold (16_SB) |
-| `caption` | `--font-size-caption` | `--line-height-caption` | 14 / 21 |
-| `label` | `--font-size-label` | `--line-height-label` | 12 / 18 |
+| Display/32 | 32 Bold, ls -3% | `--font-size-display` | `Typography.display` |
+| Heading/24 | 24 Bold, ls -2.5% | `--font-size-h1` | `Typography.h1` |
+| Heading/20 | 20 Bold, ls -2.5% | `--font-size-h2` | `Typography.h2` |
+| Title/18 | 18 Bold, ls -2.5% | `--font-size-title` | `Typography.subtitle` |
+| Body/16_M, Body/16_SB | 16 Medium/SemiBold | `--font-size-body` | `Typography.body` / `bodySemibold` |
+| Label/14_M, Label/14_SB | 14 Medium/SemiBold | `--font-size-label` | `Typography.label` / `labelBold`(8/12 갱신 — 구 `caption`) |
+| Caption/12 | 12 Medium | `--font-size-caption` | `Typography.caption`(8/12 갱신 — 구 `label`) |
 
----
+`display2`(28px)는 Figma Token Documentation에 없음 — 코드 전용 확장 토큰(대형 강조 수치용), Figma 정본과 무관하게 유지.
 
-## 3. 사용 규칙
+## 5. Elevation
 
-- **RN 코드** → `theme.ts` (`Palette.*` / `Spacing.*` / `Radius.*`)
-- **Web CSS / NativeWind** → `src/tokens/*.css` CSS custom properties
-- raw hex / raw 숫자 하드코딩 금지 (CLAUDE.md 절대 규칙)
-- `--color-roi-profit` / `--color-roi-loss` 는 ROI 손익 화면에만 사용
-
-## 4. Figma Variables 추가 시 업데이트 방법
-
-1. Figma에서 Variables 패널에 컬러/스페이싱 추가
-2. `get_variable_defs` 재실행 → 변수 목록 확인
-3. Primitive → Semantic 참조 구조 그대로 이 파일 및 CSS 파일 업데이트
-4. `theme.ts`와 동기화
+| Figma | CSS 변수 | 값 | `theme.ts` |
+|---|---|---|---|
+| shadow/s | `--shadow-s` | `rgba(17,24,39,0.04)` | `Elevation.level1` |
+| shadow/m | `--shadow-m` | `rgba(17,24,39,0.08)` | `Elevation.level2` |
+| shadow/l | `--shadow-l` | `rgba(17,24,39,0.16)` | 대응 없음 — Figma 신규, 미반영 |

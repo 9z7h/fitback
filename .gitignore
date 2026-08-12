@@ -30,6 +30,9 @@ yarn-error.*
 .DS_Store
 *.pem
 
+# JetBrains IDE
+.idea/
+
 # local env files
 .env
 .env.*
@@ -50,5 +53,8 @@ supabase/.temp/
 # 테스트 결과물
 test-results/
 .vercel
+
+# Storybook
+storybook-static/
 
 .env.local
