@@ -109,6 +109,7 @@ export function useCompleteSession() {
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: KEY_ACTIVE });
+      qc.invalidateQueries({ queryKey: ['coach-recent-body-parts'] });
     },
   });
 }

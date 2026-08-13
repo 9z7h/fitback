@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { CheckCircle2, Clock, Flame, Frown, PartyPopper } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
@@ -133,6 +134,7 @@ const PAIN_NONE = PAIN_OPTIONS[0];
 export default function CompleteScreen() {
   const theme = useTheme();
   const router = useRouter();
+  const qc = useQueryClient();
   const routine = useWorkoutSession((s) => s.routine);
   const completedCount = useWorkoutSession((s) => s.completedCount);
   const sessionStartedAt = useWorkoutSession((s) => s.sessionStartedAt);
@@ -221,6 +223,9 @@ export default function CompleteScreen() {
         return;
       }
       setLogId(log.id);
+      if (completionStatus === 'completed') {
+        qc.invalidateQueries({ queryKey: ['coach-recent-body-parts'] });
+      }
       logEvent(EVENTS.workoutCompleted, { completionStatus, exerciseCount: total, calories: cal });
 
       try {

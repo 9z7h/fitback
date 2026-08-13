@@ -22,7 +22,7 @@ const LOG_PART_TO_KO: Record<string, BodyPartKo> = {
   full: '전신',
 };
 
-const LOG_PARTS = ['lower', 'upper', 'full', 'cardio'];
+const LOG_PARTS = ['lower', 'upper', 'full'];
 const SESSION_PARTS: BodyPartKo[] = ['하체', '상체', '코어', '전신'];
 
 /**

@@ -143,12 +143,13 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 | Display 2 | 28px | Bold | 128% | `--font-size-display2` / `--line-height-display2` | 대형 강조 수치 |
 | Heading 1 | 24px | Bold | 125% | `--font-size-h1` / `--line-height-h1` | 페이지 타이틀 |
 | Heading 2 | 20px | Semibold | 125% | `--font-size-h2` / `--line-height-h2` | 섹션 타이틀, 카드 타이틀 |
-| Subtitle | 18px | Semibold | 125% | `--font-size-subtitle` / `--line-height-subtitle` | 서브타이틀, 버튼 |
+| Subtitle | 18px | Semibold | 125% | `--font-size-subtitle` / `--line-height-subtitle` | 서브타이틀 |
 | Body | 16px | Medium | 150% | `--font-size-body` / `--line-height-body` | 본문 |
 | Label | 14px | Medium/Semibold | 150% | `--font-size-label` / `--line-height-label` | 보조 설명 |
 | Caption | 12px | Medium | 150% | `--font-size-caption` / `--line-height-caption` | 배지, 태그, 메타 정보 |
 
 > 자간 -2.5% 기본 적용, 단 Display(32px)만 -3% 예외.
+> 버튼 텍스트는 Subtitle 크기(18px)에 Bold 굵기로 override — Semibold 아님(Figma "Title/18" = Bold 700).
 
 ---
 
@@ -197,17 +198,24 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 
 ### 버튼
 
-| 타입 | 배경 | 테두리 | 텍스트 | 용도 |
-|------|------|--------|--------|------|
-| Primary | `--color-brand-primary` | — | `--color-neutral-0` | 핵심 CTA (운동 시작, 저장) |
-| Outline | `transparent` | `1px solid var(--color-brand-primary)` | `--color-brand-primary` | 주요 보조 액션 (체크인, 출석) |
-| Secondary | `--color-neutral-100` | — | `--color-neutral-900` | 보조 액션 |
-| Ghost | `transparent` | — | `--color-brand-primary` | 텍스트 버튼, 취소 |
-| Danger | `transparent` | — | `--color-state-error` | 손실 경고 관련 액션 (Ghost 스타일) |
+`src/components/ui/Button.tsx` 단일 컴포넌트 + `variant` prop. 아래 값은 실제 구현 기준.
 
-- 높이: 44px (Outline/Secondary/Ghost), 52px (Primary)
-- 폰트: Pretendard 18px Semibold (Subtitle)
+| variant | 높이 | 배경 | 테두리 | 텍스트 | 용도 |
+|---------|------|------|--------|--------|------|
+| primary | 56px | `--color-brand-primary` | — | `--color-neutral-0` | 핵심 CTA (운동 시작, 저장) |
+| secondary | 56px | `--color-bg-surface` | `1px solid var(--color-brand-primary)` | `--color-brand-primary` | 주요 보조 액션 |
+| quick | 52px | Gray 200 | — | Gray 500 | 우측 `+` 아이콘 동반 퀵 액션 |
+| more | 44px | Gray 200 | — | Gray 500 | 우측 `⌄` 아이콘, 더보기 |
+| disable | 56px | `icon/primary` (`#C0C3CF`) | — | Gray 700 | 비활성 상태 |
+| chat | 가변(패딩 기반) | `--color-bg-base` | — | Gray 900 | AI 코치 제안 pill |
+| card | 정사각 카드(162:163) | `--color-bg-surface` | — | Gray 900 | 지표 카드형 버튼 |
+
+- 폰트: Pretendard 18px Bold (primary/secondary/quick/disable), 16px Medium (more/chat/card)
+- `disabled`/`loading`이 true면 variant와 무관하게 disable variant의 배경·텍스트 색이 강제 적용되고 테두리는 제거된다(별도 opacity 처리 없음).
 - Primary 버튼은 화면당 1개 원칙
+
+> **레거시 호환용 variant** — Figma에 없고 마이그레이션 잔여 호출부를 위해 유지. 신규 화면에서 사용 금지.
+> `outline`(56px, 흰 배경 + `1px solid var(--color-brand-primary)` 테두리), `ghost`(44px, transparent), `danger`(44px, `--color-state-error` 배경).
 
 ### 카드
 
@@ -221,10 +229,10 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 
 ### 인풋
 
-- 배경: `--color-bg-muted`
-- 포커스 테두리: `1.5px solid var(--color-line-primary)`
-- 포커스 배경: `--color-brand-primary-light`
-- 높이: 52px
+- 배경: `--color-white`(흰색), 단 검색형(filled) 인풋만 `--color-bg-muted`
+- 테두리: `1px solid` Gray 300, 포커스 시 `--color-line-primary`로 색만 변경(배경은 유지). 검색형(filled)은 테두리 없음
+- 높이: 56px (검색형 filled만 52px)
+- 좌우 패딩: `--spacing-m` (12px)
 
 ### Progress
 

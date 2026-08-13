@@ -4,21 +4,14 @@
  */
 import type { LucideIcon } from 'lucide-react-native';
 import type { ReactNode } from 'react';
-import { useState } from 'react';
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  View,
-  type StyleProp,
-  type TextInputProps,
-  type TextStyle,
-  type ViewStyle,
-} from 'react-native';
+import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { ThemedText } from '@/components/themed-text';
 import { Elevation, Palette, Radius, Spacing } from '@/constants/theme';
+
+// Button / Chip / Input은 Figma 디자인 시스템 구현체를 배럴로 재수출한다.
+export { Button } from './ui/Button';
+export { Chip } from './ui/Chip';
+export { Input } from './ui/Input';
 
 // ── 아이콘 (Lucide, outline 통일 · 24px · stroke 1.5) ──────
 export function Icon({
@@ -33,78 +26,6 @@ export function Icon({
   strokeWidth?: number;
 }) {
   return <IconCmp size={size} color={color} strokeWidth={strokeWidth} />;
-}
-
-// ── 버튼 ──────────────────────────────────────────────────
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'outline';
-
-const BTN_BG: Record<ButtonVariant, string> = {
-  primary: Palette.primary,
-  secondary: Palette.gray100,
-  ghost: 'transparent',
-  danger: Palette.loss,
-  outline: Palette.white,
-};
-const BTN_FG: Record<ButtonVariant, string> = {
-  primary: Palette.white,
-  secondary: Palette.gray900,
-  ghost: Palette.primary,
-  danger: Palette.white,
-  outline: Palette.primary,
-};
-const BTN_PRESSED: Record<ButtonVariant, string> = {
-  primary: Palette.primaryPressed,
-  secondary: Palette.gray300,
-  ghost: Palette.primaryLight,
-  danger: '#C01840',
-  outline: Palette.primaryLight,
-};
-
-export function Button({
-  label,
-  onPress,
-  variant = 'primary',
-  disabled,
-  loading,
-  icon,
-  style,
-}: {
-  label: string;
-  onPress?: () => void;
-  variant?: ButtonVariant;
-  disabled?: boolean;
-  loading?: boolean;
-  icon?: LucideIcon;
-  style?: StyleProp<ViewStyle>;
-}) {
-  const off = disabled || loading;
-  return (
-    <Pressable
-      onPress={onPress}
-      disabled={off}
-      style={({ pressed }) => [
-        styles.btn,
-        variant === 'primary' || variant === 'outline' ? styles.btnPrimary : styles.btnSecondary,
-        { backgroundColor: pressed && !off ? BTN_PRESSED[variant] : BTN_BG[variant] },
-        variant === 'ghost' && styles.btnGhost,
-        variant === 'outline' && styles.btnOutline,
-        off && styles.btnDisabled,
-        style,
-      ]}
-      accessibilityRole="button"
-      accessibilityState={{ disabled: !!off }}>
-      {loading ? (
-        <ActivityIndicator color={BTN_FG[variant]} />
-      ) : (
-        <View style={styles.btnInner}>
-          {icon ? <Icon icon={icon} size={20} color={BTN_FG[variant]} /> : null}
-          <ThemedText type="captionBold" style={{ color: BTN_FG[variant], fontSize: 16 }}>
-            {label}
-          </ThemedText>
-        </View>
-      )}
-    </Pressable>
-  );
 }
 
 // ── 카드 ──────────────────────────────────────────────────
@@ -138,53 +59,6 @@ export function Card({
   return <View style={cardStyle}>{children}</View>;
 }
 
-// ── 칩 / 배지 (필 형태) ───────────────────────────────────
-export function Chip({
-  label,
-  color = Palette.gray700,
-  bg = Palette.gray100,
-  icon,
-}: {
-  label: string;
-  color?: string;
-  bg?: string;
-  icon?: LucideIcon;
-}) {
-  return (
-    <View style={[styles.chip, { backgroundColor: bg }]}>
-      {icon ? <Icon icon={icon} size={14} color={color} /> : null}
-      <ThemedText type="label" style={{ color }}>
-        {label}
-      </ThemedText>
-    </View>
-  );
-}
-
-// ── Input ────────────────────────────────────────────────
-export function Input({
-  style,
-  textStyle,
-  ...props
-}: TextInputProps & { style?: StyleProp<ViewStyle>; textStyle?: StyleProp<TextStyle> }) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <View
-      style={[
-        styles.inputWrapper,
-        focused && styles.inputWrapperFocused,
-        style,
-      ]}>
-      <TextInput
-        style={[styles.inputText, textStyle]}
-        placeholderTextColor={Palette.gray500}
-        onFocus={(e) => { setFocused(true); props.onFocus?.(e); }}
-        onBlur={(e) => { setFocused(false); props.onBlur?.(e); }}
-        {...props}
-      />
-    </View>
-  );
-}
-
 // ── Progress (트랙 위 채움) ───────────────────────────────
 export function ProgressBar({
   ratio,
@@ -214,19 +88,6 @@ export function ProgressBar({
 }
 
 const styles = StyleSheet.create({
-  btn: {
-    borderRadius: Radius.button,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: Spacing.md,
-  },
-  btnPrimary: { height: 52 },
-  btnSecondary: { height: 44 },
-  btnGhost: { paddingHorizontal: Spacing.sm },
-  btnOutline: { borderWidth: 1, borderColor: Palette.primary },
-  btnDisabled: { opacity: 0.4 },
-  btnInner: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
-
   card: {
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.modal, // §9 카드 반경 20
@@ -236,36 +97,5 @@ const styles = StyleSheet.create({
   },
   cardPressed: { opacity: 0.85 },
 
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.xs,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 4,
-    borderRadius: Radius.full,
-  },
-
   track: { width: '100%', overflow: 'hidden' },
-
-  inputWrapper: {
-    width: '100%',
-    height: 48,
-    backgroundColor: Palette.bgSurface,
-    borderRadius: Radius.button,
-    borderWidth: 1,
-    borderColor: Palette.gray300,
-    justifyContent: 'center',
-    paddingHorizontal: Spacing.md,
-  },
-  inputWrapperFocused: {
-    borderColor: Palette.primary,
-  },
-  inputText: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontFamily: 'PretendardMedium',
-    letterSpacing: -0.4,
-    color: Palette.gray900,
-    padding: 0,
-  },
 });

@@ -905,7 +905,8 @@ const styles = StyleSheet.create({
   searchRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.sm },
   searchInput: { flex: 1 },
   searchBtn: {
-    width: 44,
+    width: 56,
+    height: 56,
     borderRadius: Radius.small,
     backgroundColor: Palette.primary,
     alignItems: 'center',
