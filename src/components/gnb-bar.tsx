@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 
 import { IconBell, IconCalendar, IconMenu } from '@/components/icons';
-import { MaxContentWidth, Palette, Radius, ScreenPadding } from '@/constants/theme';
+import { MaxContentWidth, Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 
 interface GnbBarProps {
   onMenu?: () => void;
@@ -45,7 +45,7 @@ export function GnbBar({
               style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
               accessibilityRole="button"
               accessibilityLabel="달력 보기">
-              <IconCalendar size={22} color={Palette.gray300} />
+              <IconCalendar size={22} color={Palette.iconPrimary} />
             </Pressable>
           )}
           <Pressable
@@ -54,7 +54,7 @@ export function GnbBar({
             accessibilityRole="button"
             accessibilityLabel="알림">
             <View>
-              <IconBell size={22} color={Palette.gray300} />
+              <IconBell size={22} color={Palette.iconPrimary} />
               {hasAlarm && <View style={styles.alarmDot} />}
             </View>
           </Pressable>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
+    backgroundColor: Palette.bgSurface,
   },
   header: {
     flexDirection: 'row',
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  headerActions: { flexDirection: 'row', gap: 20 },
+  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  headerActions: { flexDirection: 'row', gap: Spacing.card },
   headerBtn: {
     width: 40,
     height: 40,
@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
   logo: { width: 110, height: 19 },
   alarmDot: {
     position: 'absolute',
-    top: 2,
-    right: 2,
+    top: Spacing.half,
+    right: Spacing.half,
     width: 6,
     height: 6,
     borderRadius: 3,

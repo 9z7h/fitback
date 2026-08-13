@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { Chip } from './chip';
+import { Chip } from './ui/Chip';
 import { IconArrowChevron } from './icons';
 import { ThemedText } from './themed-text';
 import { Elevation, FontFamily, Palette, Radius, Spacing } from '@/constants/theme';
@@ -29,7 +29,7 @@ export function RecordCard({ label, value, onPress, children }: RecordCardProps)
 }
 
 RecordCard.Pill = function Pill({ text }: { text: string }) {
-  return <Chip label={text} style={{ marginTop: 'auto' as never }} />;
+  return <Chip size="large" label={text} style={{ marginTop: 'auto' as never }} />;
 };
 
 RecordCard.Badge = function Badge({ text }: { text: string }) {

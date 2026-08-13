@@ -20,6 +20,7 @@ export const Palette = {
   // Background
   bgBase: '#F2F4F7',
   bgSurface: '#FFFFFF',
+  bgSurfaceTranslucent: 'rgba(255, 255, 255, 0.75)', // Figma TabBar — 반투명 표면(블러 위)
   bgMuted: '#F2F4F7',
 
   // Semantic — UI 상태
