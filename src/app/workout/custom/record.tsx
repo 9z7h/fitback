@@ -99,7 +99,7 @@ export default function RecordScreen() {
           {/* 진행 상태 배너 */}
           <View style={styles.banner}>
             <View style={styles.bannerCheck}>
-              <Icon icon={Check} size={14} color={Palette.white} strokeWidth={3} />
+              <Icon icon={Check} size={14} color={Palette.white} strokeWidth={2} />
             </View>
             <View style={{ flex: 1 }}>
               <ThemedText type="captionBold" style={{ color: Palette.gray900 }}>

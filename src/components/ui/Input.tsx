@@ -59,7 +59,7 @@ export function Input({
 
   const field = (
     <View style={[styles.field, FIELD_STYLE[resolved], style]}>
-      {resolved === 'filled' ? <Search size={20} color={Palette.gray400} strokeWidth={1.5} /> : null}
+      {resolved === 'filled' ? <Search size={20} color={Palette.gray400} strokeWidth={2} /> : null}
       <TextInput
         style={[styles.input, textStyle]}
         value={value}
@@ -78,7 +78,7 @@ export function Input({
       />
       {resolved === 'filled' && onClear ? (
         <Pressable onPress={onClear} accessibilityRole="button">
-          <X size={24} color={Palette.gray400} strokeWidth={1.5} />
+          <X size={24} color={Palette.gray400} strokeWidth={2} />
         </Pressable>
       ) : null}
     </View>

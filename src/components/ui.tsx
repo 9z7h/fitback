@@ -13,12 +13,12 @@ export { Button } from './ui/Button';
 export { Chip } from './ui/Chip';
 export { Input } from './ui/Input';
 
-// ── 아이콘 (Lucide, outline 통일 · 24px · stroke 1.5) ──────
+// ── 아이콘 (Lucide, outline 통일 · 24px · stroke 2) ──────
 export function Icon({
   icon: IconCmp,
   size = 24,
   color = Palette.gray700,
-  strokeWidth = 1.5,
+  strokeWidth = 2,
 }: {
   icon: LucideIcon;
   size?: number;

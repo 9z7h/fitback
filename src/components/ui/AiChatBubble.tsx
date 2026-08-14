@@ -2,7 +2,7 @@
  * FitBack AiChatBubble — Figma Ai 섹션(Ai_Card / Ai_Chat / Ai_Ploating_Button / User_Chat) 통합.
  * variant 하나로 처리하며 variant별 컴포넌트 분리 금지.
  */
-import { Sparkles, X, Zap } from 'lucide-react-native';
+import { X, Zap } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import {
   Image,
@@ -16,6 +16,7 @@ import {
 
 import { ThemedText } from '@/components/themed-text';
 import { Elevation, FontFamily, Palette, Radius, Spacing, Typography } from '@/constants/theme';
+import AiPloatingButtonImage from '../../../assets/images/Ai_Ploating_Button.png';
 
 type AiChatBubbleVariant = 'floatingButton' | 'chat' | 'userChat' | 'card';
 
@@ -69,11 +70,11 @@ export function AiChatBubble({
           pressed && styles.pressed,
           style,
         ]}>
-        {imageSource ? (
-          <Image source={imageSource} style={styles.floatingImage} resizeMode="cover" />
-        ) : (
-          <Sparkles size={24} color={Palette.primary} strokeWidth={1.5} />
-        )}
+        <Image
+          source={imageSource ?? AiPloatingButtonImage}
+          style={styles.floatingImage}
+          resizeMode="cover"
+        />
       </Pressable>
     );
   }
@@ -83,7 +84,7 @@ export function AiChatBubble({
       <View style={[styles.card, Elevation.level2, alignSelf ? { alignSelf } : null, style]}>
         <View style={styles.cardHead}>
           <View style={styles.cardTitleWrap}>
-            <Zap size={20} color={Palette.primary} strokeWidth={1.5} />
+            <Zap size={20} color={Palette.primary} strokeWidth={2} />
             <ThemedText style={styles.cardTitle}>{title}</ThemedText>
           </View>
           {onClose ? (
@@ -92,7 +93,7 @@ export function AiChatBubble({
               accessibilityRole="button"
               accessibilityLabel="닫기"
               style={({ pressed }) => [pressed && styles.pressed]}>
-              <X size={20} color={Palette.gray500} strokeWidth={1.5} />
+              <X size={20} color={Palette.gray500} strokeWidth={2} />
             </Pressable>
           ) : null}
         </View>
@@ -123,12 +124,14 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: Radius.full,
-    backgroundColor: Palette.bgSurface,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  floatingImage: { width: '100%', height: '100%' },
+  // 원본 PNG(336x336)는 캐릭터 원형 배지(240x240) 바깥에 투명 여백이 있어
+  // 60x60 그대로 그리면 원이 꽉 차지 않는다. 336/240=1.4배 확대(84x84)해
+  // 배지 지름이 60이 되도록 맞추고, 배지 중심이 위로 치우친 만큼 아래로 보정한다.
+  floatingImage: { width: 84, height: 84, transform: [{ translateY: 2 }] },
 
   // ── chat / userChat ──
   bubbleBase: {

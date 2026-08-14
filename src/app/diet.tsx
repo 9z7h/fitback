@@ -101,11 +101,12 @@ function Icon({
   style?: StyleProp<ViewStyle>;
 }) {
   const C = ICONS[name] as any;
-  return <C size={size} color={color} strokeWidth={1.5} style={style} />;
+  return <C size={size} color={color} strokeWidth={2} style={style} />;
 }
 
 import { CoachTipCard } from '@/components/coach-tip-card';
-import { GnbBar } from '@/components/gnb-bar';
+import { AiChatBubble } from '@/components/ui/AiChatBubble';
+import { Gnb } from '@/components/ui/Gnb';
 import { sheetPresentation } from '@/components/modal-presentation';
 import { BottomTabInset, Elevation, Palette, Radius, ScreenPadding, Spacing, Typography } from '@/constants/theme';
 import { MyPanel } from '@/features/auth/MyPanel';
@@ -138,7 +139,6 @@ import {
   type Meal,
   type MealType,
 } from '@/features/diet/useMeals';
-import { MonthCalendar } from '@/features/home/MonthCalendar';
 import { useTodayWorkoutLog } from '@/features/workout/useTodayWorkoutLog';
 
 const GNB_HEIGHT = 68; // 52 헤더 + 16 하단 패딩
@@ -587,7 +587,7 @@ function CameraViewContent({
     return (
       <View style={{ flex: 1, backgroundColor: '#000' }}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Camera size={72} color="rgba(255,255,255,0.08)" strokeWidth={1} />
+          <Camera size={72} color="rgba(255,255,255,0.08)" strokeWidth={2} />
         </View>
         {bottomBar}
       </View>
@@ -603,7 +603,7 @@ function CameraViewContent({
   if (!permission.granted) {
     return (
       <View style={styles.cameraDenied}>
-        <Camera size={48} color="rgba(255,255,255,0.5)" strokeWidth={1.5} />
+        <Camera size={48} color="rgba(255,255,255,0.5)" strokeWidth={2} />
         <Txt variant="body" weight="600" color="#fff">카메라 권한이 필요해요</Txt>
         <Txt variant="caption" color="rgba(255,255,255,0.6)" style={styles.center}>
           음식을 촬영하려면 카메라 접근 권한을 허용해주세요
@@ -2059,14 +2059,13 @@ export default function DietScreen() {
   }
 
   const [showMyPanel, setShowMyPanel] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
   const [showCoach, setShowCoach] = useState(false);
   const [coachInitialMsg, setCoachInitialMsg] = useState<string | undefined>(undefined);
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-        <GnbBar onMenu={() => setShowMyPanel(true)} onCalendar={() => setShowCalendar(true)} />
+        <Gnb onMenu={() => setShowMyPanel(true)} />
         <View style={styles.scrollWrap}>
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
@@ -2201,13 +2200,11 @@ export default function DietScreen() {
       </SafeAreaView>
 
       {/* FAB — AI 코치 */}
-      <Pressable
+      <AiChatBubble
+        variant="floatingButton"
         onPress={() => setShowCoach(true)}
-        style={({ pressed }) => [styles.fab, pressed && { opacity: 0.8 }]}
-        accessibilityRole="button"
-        accessibilityLabel="AI 코치 열기">
-        <Image source={require('../../assets/images/Chat_floting.png')} style={{ width: 62, height: 62 }} resizeMode="contain" />
-      </Pressable>
+        style={styles.fab}
+      />
 
       <RecordModal
         visible={modalOpen}
@@ -2230,16 +2227,6 @@ export default function DietScreen() {
           openRecord(t);
         }}
       />
-      <Modal
-        visible={showCalendar}
-        animationType="slide"
-        presentationStyle={sheetPresentation}
-        onRequestClose={() => setShowCalendar(false)}>
-        <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
-          <MonthCalendar onClose={() => setShowCalendar(false)} />
-        </SafeAreaView>
-      </Modal>
-
       <Modal
         visible={showMyPanel}
         animationType="slide"
@@ -2996,9 +2983,9 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: ScreenPadding,
-    bottom: BottomTabInset + Spacing.md,
-    width: 62,
-    height: 62,
+    bottom: BottomTabInset + Spacing.card,
+    width: 60,
+    height: 60,
   },
   // 탄단지 비율 조정 진입 링크
   macroRatioLink: {

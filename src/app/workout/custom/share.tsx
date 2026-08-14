@@ -171,7 +171,7 @@ export default function ShareScreen() {
           <View style={styles.ctaWrap}>
             <Button
               label="이미지 저장"
-              variant="outline"
+              variant="secondary"
               icon={Download}
               loading={saving}
               onPress={handleSave}

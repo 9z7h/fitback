@@ -58,7 +58,7 @@ export function Chip({
 
   return (
     <View style={[styles.base, BOX_STYLE[size], { backgroundColor: bg ?? CHIP_BG[size] }, style]}>
-      {IconCmp ? <IconCmp size={iconSize} color={fg} strokeWidth={1.5} /> : null}
+      {IconCmp ? <IconCmp size={iconSize} color={fg} strokeWidth={2} /> : null}
       <ThemedText style={[TEXT_STYLE[size], { color: fg }]}>{body}</ThemedText>
       {size === 'medium_b' && secondaryLabel ? (
         <>

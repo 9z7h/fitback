@@ -32,7 +32,7 @@ function DayCell({ d }: { d: WeekDay }) {
             borderWidth: showTodayRing ? 2 : 0,
           },
         ]}>
-        {filled && <Check color={Palette.white} size={16} strokeWidth={3} />}
+        {filled && <Check color={Palette.white} size={16} strokeWidth={2} />}
       </View>
       <ThemedText
         type="label"

@@ -16,6 +16,12 @@ const meta = {
       </View>
     ),
   ],
+  parameters: {
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/design/nfQ1gL93cSoZBrca8hcJgF/fitback-%EA%B0%9C%EC%9D%B8?node-id=1222-1763',
+    },
+  },
 } satisfies Meta<typeof Button>;
 
 export default meta;
@@ -55,19 +61,6 @@ export const Card: Story = {
   },
 };
 
-// ── 레거시(ui.tsx 흡수) variant ─────────────────────────
-export const Ghost: Story = {
-  args: { variant: 'ghost', children: '건너뛰기' },
-};
-
-export const Danger: Story = {
-  args: { variant: 'danger', children: '회원권 삭제' },
-};
-
-export const Outline: Story = {
-  args: { variant: 'outline', children: '센터 다시 검색' },
-};
-
 // ── state ───────────────────────────────────────────────
 export const Loading: Story = {
   args: { variant: 'primary', children: '체크인 중', loading: true },
@@ -86,7 +79,7 @@ export const WithRightChevron: Story = {
 };
 
 export const WithCustomIcon: Story = {
-  args: { variant: 'outline', children: '주변 센터 찾기', icon: MapPin },
+  args: { variant: 'secondary', children: '주변 센터 찾기', icon: MapPin },
 };
 
 export const CardWithoutSublabel: Story = {

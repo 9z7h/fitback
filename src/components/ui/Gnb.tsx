@@ -1,27 +1,28 @@
+/**
+ * FitBack Gnb — Figma Gnb(949:205) 이식. 좌측 메뉴+로고, 우측 벨.
+ * 아이콘은 icons.tsx(Figma SVG 세트), 배경은 expo-blur BlurView(Figma backdrop-blur 4px) 재사용.
+ * 캘린더 버튼은 하단 탭바 "기록"으로 기능 이동됨에 따라 제거.
+ */
+import { BlurView } from 'expo-blur';
 import { Image, Pressable, StyleSheet, View, type ViewStyle } from 'react-native';
 
-import { IconBell, IconCalendar, IconMenu } from '@/components/icons';
+import { IconBell, IconMenu } from '@/components/icons';
 import { MaxContentWidth, Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 
-interface GnbBarProps {
-  onMenu?: () => void;
-  onCalendar?: () => void;
-  onAlarm?: () => void;
-  hasAlarm?: boolean;
-  showCalendar?: boolean;
-  style?: ViewStyle;
-}
-
-export function GnbBar({
+export function Gnb({
   onMenu,
-  onCalendar,
   onAlarm,
   hasAlarm = false,
-  showCalendar = true,
   style,
-}: GnbBarProps) {
+}: {
+  onMenu?: () => void;
+  onAlarm?: () => void;
+  hasAlarm?: boolean;
+  style?: ViewStyle;
+}) {
   return (
     <View style={[styles.wrap, style]}>
+      <BlurView intensity={30} tint="light" style={StyleSheet.absoluteFill} />
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Pressable
@@ -29,32 +30,19 @@ export function GnbBar({
             style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
             accessibilityRole="button"
             accessibilityLabel="메뉴 열기">
-            <IconMenu size={22} color={Palette.gray900} />
+            <IconMenu size={24} color={Palette.gray900} />
           </Pressable>
-          <Image
-            source={require('../../assets/images/Logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+          <Image source={require('../../../assets/images/Logo.png')} style={styles.logo} resizeMode="contain" />
         </View>
 
         <View style={styles.headerActions}>
-          {showCalendar && (
-            <Pressable
-              onPress={onCalendar}
-              style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
-              accessibilityRole="button"
-              accessibilityLabel="달력 보기">
-              <IconCalendar size={22} color={Palette.iconPrimary} />
-            </Pressable>
-          )}
           <Pressable
             onPress={onAlarm}
             style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
             accessibilityRole="button"
             accessibilityLabel="알림">
             <View>
-              <IconBell size={22} color={Palette.iconPrimary} />
+              <IconBell size={28} color={Palette.iconPrimary} />
               {hasAlarm && <View style={styles.alarmDot} />}
             </View>
           </Pressable>
@@ -71,19 +59,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 10,
-    backgroundColor: Palette.bgSurface,
+    overflow: 'hidden',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 52,
+    height: 48,
     paddingHorizontal: ScreenPadding,
     maxWidth: MaxContentWidth,
     width: '100%',
     alignSelf: 'center',
   },
-  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
   headerActions: { flexDirection: 'row', gap: Spacing.card },
   headerBtn: {
     width: 40,

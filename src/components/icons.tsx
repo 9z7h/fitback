@@ -9,7 +9,7 @@ type IconProps = {
   size?: number;
 };
 
-const STROKE = 1.5;
+const STROKE = 2;
 
 export function IconMenu({ color, size = 24 }: IconProps) {
   return <Menu size={size} color={color} strokeWidth={STROKE} />;
@@ -63,8 +63,8 @@ export function IconFit({ color, size = 24 }: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <Path transform="translate(0.5 5.5)" d="M1.5 1.5V11.5" stroke={color} strokeWidth={3} strokeLinecap="round" />
-      <Path transform="translate(20.5 5.5)" d="M1.5 1.5V11.5" stroke={color} strokeWidth={3} strokeLinecap="round" />
+      <Path transform="translate(0.5 5.5)" d="M1.5 1.5V11.5" stroke={color} strokeWidth={2} strokeLinecap="round" />
+      <Path transform="translate(20.5 5.5)" d="M1.5 1.5V11.5" stroke={color} strokeWidth={2} strokeLinecap="round" />
     </Svg>
   );
 }
@@ -148,9 +148,9 @@ export function IconMore({ color, size = 24 }: IconProps) {
   const dot = 'M1.75 2.75C2.30228 2.75 2.75 2.30228 2.75 1.75C2.75 1.19772 2.30228 0.75 1.75 0.75C1.19772 0.75 0.75 1.19772 0.75 1.75C0.75 2.30228 1.19772 2.75 1.75 2.75Z';
   return (
     <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <Path transform="translate(10.25 3.25)" d={dot} fill={color} stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-      <Path transform="translate(10.25 10.25)" d={dot} fill={color} stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
-      <Path transform="translate(10.25 17.25)" d={dot} fill={color} stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+      <Path transform="translate(10.25 3.25)" d={dot} fill={color} stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <Path transform="translate(10.25 10.25)" d={dot} fill={color} stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <Path transform="translate(10.25 17.25)" d={dot} fill={color} stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }
@@ -188,6 +188,62 @@ export function IconBell({ color, size = 24 }: IconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </Svg>
+  );
+}
+
+export function IconClose({
+  color,
+  size = 24,
+  variant = 'line',
+}: IconProps & { variant?: 'fill' | 'line' }) {
+  if (variant === 'fill') {
+    return (
+      <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+        <Path
+          transform="translate(2 2)"
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M10 20C4.47715 20 0 15.5228 0 10C0 4.47715 4.47715 0 10 0C15.5228 0 20 4.47715 20 10C20 15.5228 15.5228 20 10 20ZM10 8.5858L7.87867 6.46447C7.48815 6.07394 6.85499 6.07394 6.46446 6.46446C6.07394 6.85499 6.07394 7.48815 6.46447 7.87867L8.5858 10L6.46447 12.1213C6.07395 12.5118 6.07395 13.145 6.46447 13.5355C6.85499 13.926 7.48815 13.926 7.87867 13.5355L10 11.4142L12.1213 13.5355C12.5118 13.926 13.145 13.926 13.5355 13.5355C13.926 13.145 13.926 12.5118 13.5355 12.1213L11.4142 10L13.5355 7.87867C13.926 7.48815 13.926 6.85499 13.5355 6.46447C13.145 6.07395 12.5118 6.07395 12.1213 6.46447L10 8.5858Z"
+          fill={color}
+        />
+      </Svg>
+    );
+  }
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path transform="translate(5 5)" d="M13 1L1 13" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <Path transform="translate(5 5)" d="M1 1L13 13" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function IconPlusCircle({ color, size = 24 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM11 11H8C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H11V16C11 16.5523 11.4477 17 12 17C12.5523 17 13 16.5523 13 16V13H16C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11H13V8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8V11Z"
+        fill={color}
+      />
+    </Svg>
+  );
+}
+
+export function IconArrowRight({ color, size = 24 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path transform="translate(8 5)" d="M1 13L7 7L1 1" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function IconArrowUp({ color, size = 24 }: IconProps) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <Path transform="translate(4 4)" d="M1 8L8 1L15 8" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+      <Path transform="translate(11 4)" d="M1 15V1" stroke={color} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
     </Svg>
   );
 }

@@ -10,7 +10,14 @@ import { Palette, Radius, Spacing } from '@/constants/theme';
 type InfoBoxVariant = 'primary' | 'secondary' | 'tertiary';
 
 const BOX_STYLE: Record<InfoBoxVariant, ViewStyle> = {
-  primary: { flex: 1, minHeight: 72, borderColor: Palette.gray200, justifyContent: 'center', gap: Spacing.xs },
+  primary: {
+    flex: 1,
+    minHeight: 72,
+    borderColor: Palette.gray200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: Spacing.xs,
+  },
   secondary: { flex: 1, borderColor: Palette.gray200, paddingVertical: Spacing.sm, gap: Spacing.sm },
   tertiary: {
     flex: 1,

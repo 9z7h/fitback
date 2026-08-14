@@ -6,8 +6,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CoachTipCard } from '@/components/coach-tip-card';
 import { sheetPresentation } from '@/components/modal-presentation';
-import { GnbBar } from '@/components/gnb-bar';
-import { MonthCalendar } from '@/features/home/MonthCalendar';
+import { AiChatBubble } from '@/components/ui/AiChatBubble';
+import { Gnb } from '@/components/ui/Gnb';
 
 const GNB_HEIGHT = 68; // 52 헤더 + 16 하단 패딩
 import { ThemedText } from '@/components/themed-text';
@@ -38,12 +38,11 @@ export default function WorkoutScreen() {
   const [selectedDate] = useState<string>(() => todayIso());
   const [showMyPanel, setShowMyPanel] = useState(false);
   const [showCoach, setShowCoach] = useState(false);
-  const [showCalendar, setShowCalendar] = useState(false);
 
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-        <GnbBar onMenu={() => setShowMyPanel(true)} onCalendar={() => setShowCalendar(true)} />
+        <Gnb onMenu={() => setShowMyPanel(true)} />
         <ScrollView
           style={styles.scroll}
           contentContainerStyle={styles.scrollContent}
@@ -144,29 +143,12 @@ export default function WorkoutScreen() {
       </SafeAreaView>
 
       {/* FAB — AI 코치 */}
-      <Pressable
+      <AiChatBubble
+        variant="floatingButton"
         onPress={() => setShowCoach(true)}
-        style={({ pressed }) => [styles.fab, pressed && { opacity: 0.8 }]}
-        accessibilityRole="button"
-        accessibilityLabel="AI 코치 열기">
-        <Image
-          source={require('../../../assets/images/Chat_floting.png')}
-          style={{ width: 62, height: 62 }}
-          resizeMode="contain"
-        />
-      </Pressable>
+        style={styles.fab}
+      />
 
-      <Modal
-        visible={showCalendar}
-        animationType="slide"
-        presentationStyle={sheetPresentation}
-        onRequestClose={() => setShowCalendar(false)}>
-        <ThemedView style={{ flex: 1 }}>
-          <SafeAreaView style={{ flex: 1 }} edges={['top', 'bottom']}>
-            <MonthCalendar onClose={() => setShowCalendar(false)} />
-          </SafeAreaView>
-        </ThemedView>
-      </Modal>
 
       <Modal
         visible={showMyPanel}
@@ -270,8 +252,8 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: ScreenPadding,
-    bottom: BottomTabInset + Spacing.md,
-    width: 62,
-    height: 62,
+    bottom: BottomTabInset + Spacing.card,
+    width: 60,
+    height: 60,
   },
 });
