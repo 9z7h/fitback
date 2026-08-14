@@ -3,7 +3,7 @@
  * 데이터는 아직 훅에 연결하지 않았다(TODO 표기). 이번 범위는 레이아웃·컴포넌트 조합.
  */
 import { router } from 'expo-router';
-import { Coins, MoreHorizontal, TrendingUp } from 'lucide-react-native';
+import { Coins, MoreHorizontal } from 'lucide-react-native';
 import { Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,9 +13,11 @@ import { ThemedView } from '@/components/themed-view';
 import { AiChatBubble } from '@/components/ui/AiChatBubble';
 import { Button } from '@/components/ui/Button';
 import { Chip } from '@/components/ui/Chip';
+import { Gauge } from '@/components/ui/Gauge';
 import { Gnb } from '@/components/ui/Gnb';
 import { Indicator } from '@/components/ui/Indicator';
 import { InfoBox } from '@/components/ui/InfoBox';
+import { MembershipCard } from '@/components/ui/MembershipCard';
 import { SpeechBubble } from '@/components/ui/SpeechBubble';
 import {
   BottomTabInset,
@@ -73,23 +75,26 @@ export default function HomeScreen() {
           style={styles.scrollView}
           contentContainerStyle={styles.body}
           showsVerticalScrollIndicator={false}>
-          {/* ── 멤버십 카드 ── */}
-          <View style={[styles.membershipCard, Elevation.level1]}>
-            <View style={styles.membershipHeader}>
-              <Chip size="day">{MEMBERSHIP.dday}</Chip>
-              <ThemedText style={styles.centerName} numberOfLines={1}>
-                {MEMBERSHIP.centerName}
-              </ThemedText>
-              {/* TODO: 회원권 목록/액션 연결 */}
-              <Pressable
-                onPress={() => {}}
-                hitSlop={Spacing.sm}
-                accessibilityRole="button"
-                accessibilityLabel="회원권 더보기">
-                <MoreHorizontal size={20} color={Palette.white} strokeWidth={2} />
-              </Pressable>
-            </View>
-
+          {/* ── 멤버십 카드 (Figma main_card) ── */}
+          <MembershipCard
+            header={
+              <View style={styles.membershipHeader}>
+                <Chip size="day" style={styles.ddayChip}>
+                  {MEMBERSHIP.dday}
+                </Chip>
+                <ThemedText style={styles.centerName} numberOfLines={1}>
+                  {MEMBERSHIP.centerName}
+                </ThemedText>
+                {/* TODO: 회원권 목록/액션 연결 */}
+                <Pressable
+                  onPress={() => {}}
+                  hitSlop={Spacing.sm}
+                  accessibilityRole="button"
+                  accessibilityLabel="회원권 더보기">
+                  <MoreHorizontal size={20} color={Palette.white} strokeWidth={2} />
+                </Pressable>
+              </View>
+            }>
             <View style={styles.membershipBody}>
               <View style={styles.summaryRow}>
                 <View style={styles.summaryLeft}>
@@ -103,7 +108,6 @@ export default function HomeScreen() {
                     {MEMBERSHIP.recovered}
                   </ThemedText>
                   <View style={styles.todayRow}>
-                    <TrendingUp size={16} color={Palette.secondary} strokeWidth={2} />
                     <ThemedText type="bodySemibold" style={styles.todayText}>
                       오늘 출석시{' '}
                       <ThemedText type="bodySemibold" style={styles.todayGain}>
@@ -120,8 +124,8 @@ export default function HomeScreen() {
                 <View style={[styles.bubbleAnchor, { width: `${MEMBERSHIP.progressPct}%` }]}>
                   <SpeechBubble variant="tail-right">{`${MEMBERSHIP.progressPct}%`}</SpeechBubble>
                 </View>
-                <View style={styles.progressTrack}>
-                  <View style={[styles.progressFill, { width: `${MEMBERSHIP.progressPct}%` }]} />
+                <View style={styles.progressWrap}>
+                  <Gauge percent={MEMBERSHIP.progressPct} />
                   <View style={styles.coinBadge}>
                     <Coins size={14} color={Palette.primary} strokeWidth={2} />
                   </View>
@@ -145,7 +149,7 @@ export default function HomeScreen() {
               {/* TODO: 회원권 캐러셀 연결 시 count/activeIndex 동적화 */}
               <Indicator count={2} activeIndex={0} />
             </View>
-          </View>
+          </MembershipCard>
 
           {/* ── AI 코칭 배너 (Figma Ai_Card) ── */}
           {/* TODO: useCoach 연결 */}
@@ -282,20 +286,14 @@ const styles = StyleSheet.create({
   pressed: { opacity: 0.75 },
 
   // ── 멤버십 카드 ──
-  membershipCard: {
-    width: '100%',
-    borderRadius: Radius.card,
-    backgroundColor: Palette.bgSurface,
-    overflow: 'hidden',
-  },
   membershipHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
-    backgroundColor: Palette.gray800,
+    height: 40,
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.m,
   },
+  ddayChip: { alignSelf: 'center' },
   centerName: { ...Typography.bodySemibold, flex: 1, color: Palette.white },
   membershipBody: {
     padding: Spacing.card,
@@ -323,21 +321,7 @@ const styles = StyleSheet.create({
 
   // ── 진행률 바 ──
   bubbleAnchor: { alignItems: 'flex-end', paddingBottom: Spacing.sm },
-  progressTrack: {
-    height: 32,
-    borderRadius: Radius.full,
-    backgroundColor: Palette.gray200,
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  progressFill: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
-    borderRadius: Radius.full,
-    backgroundColor: Palette.primary,
-  },
+  progressWrap: { justifyContent: 'center' },
   coinBadge: {
     position: 'absolute',
     right: Spacing.xs,

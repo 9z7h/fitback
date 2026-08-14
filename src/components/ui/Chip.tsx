@@ -16,7 +16,7 @@ const CHIP_BG: Record<ChipSize, string> = {
   medium_a: Palette.gray200,
   medium_b: Palette.bgMuted,
   state: Palette.primaryLight,
-  day: Palette.gray900,
+  day: Palette.overlayWhite16,
 };
 
 const CHIP_FG: Record<ChipSize, string> = {

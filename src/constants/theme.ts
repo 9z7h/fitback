@@ -15,6 +15,7 @@ export const Palette = {
   primaryPressed: '#4957D8',
   primaryLight: '#F0F1FF',
   secondary: '#6490FF',
+  blue200: '#D0DEFF', // Figma variable blue/200 — Gauge(prograss) 채움색
   tertiary: '#BD7BF8',
 
   // Background
@@ -22,6 +23,7 @@ export const Palette = {
   bgSurface: '#FFFFFF',
   bgSurfaceTranslucent: 'rgba(255, 255, 255, 0.75)', // Figma TabBar — 반투명 표면(블러 위)
   bgMuted: '#F2F4F7',
+  overlayWhite16: 'rgba(255, 255, 255, 0.16)', // Figma overlay/100 — Chip size=day 등 dark 배경 위 오버레이
 
   // Semantic — UI 상태
   success: '#22C55E',
