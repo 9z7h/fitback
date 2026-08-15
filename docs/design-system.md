@@ -86,7 +86,7 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 
 ### Semantic — 손익 상태
 
-이익(흑자)은 Primary로, 손실(적자)은 **Gray 900(다크 네이비)** 으로 표현한다.  
+이익(흑자)은 Primary로, 손실(적자)은 **Gray 800(다크 네이비)** 으로 표현한다.  
 손실에 빨강을 쓰지 않는 이유: "Encourage, Not Pressure" 원칙 — 압박이 아닌 사실 전달.  
 빨강(`Error`)은 시스템 오류·입력 실패에만 사용한다.
 
@@ -94,20 +94,19 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 |------|-----|----------|------|
 | roi/profit | `#6675FF` | `--color-roi-profit` | 이익 상태 (Primary와 동일) |
 | roi/profit-light | `#EEF1FF` | `--color-roi-profit-light` | 이익 배지·배경 |
-| roi/loss | `#272E3E` | `--color-roi-loss` | 손실 상태 (Gray 900과 동일 — 중립 전달) |
+| roi/loss | `#272E3E` | `--color-roi-loss` | 손실 상태 (Gray 800과 동일 — 중립 전달) |
 | roi/loss-light | `#F2F2F7` | `--color-roi-loss-light` | 손실 배지·배경 |
 
 ### Neutral
 
 | 이름 | 값 | CSS 변수 | 용도 |
 |------|-----|----------|------|
-| Gray 900 | `#272E3E` | `--color-neutral-900` | 주요 텍스트, 본문 |
-| Gray 700 | `#374151` | `--color-neutral-700` | (하위 호환용) |
-| Gray 500 | `#6B7280` | `--color-neutral-500` | 보조 설명, 라벨 |
-| Gray 400 | `#999999` | `--color-neutral-400` | 플레이스홀더, 약한 보조 텍스트 |
-| Gray 300 | `#D1D5DB` | `--color-neutral-300` | 비활성 텍스트, 아이콘 |
-| Gray 100 | `#F3F4F6` | `--color-neutral-100` | 배경, Secondary 버튼 |
-| Gray 50 | `#F2F4F7` | `--color-neutral-50` | 구분 배경 |
+| Gray 800 | `#272E3E` | `--color-neutral-800` | 주요 텍스트, 본문 |
+| Gray 600 | `#6B7280` | `--color-neutral-600` | 보조 설명, 라벨 |
+| Gray 500 | `#999999` | `--color-neutral-500` | 플레이스홀더, 약한 보조 텍스트 |
+| Gray 400 | `#C0C3CF` | `--color-neutral-400` | 비활성 텍스트, 아이콘 |
+| Gray 300 | `#E7E9F1` | `--color-neutral-300` | 구분선, 약한 배경 |
+| Gray 200 | `#F2F4F7` | `--color-neutral-200` | 배경, 구분 배경, Secondary 버튼 |
 
 ### Line / Border
 
@@ -162,8 +161,8 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 | XS | 4px | `--spacing-xs` | 아이콘-텍스트 간격, 인라인 요소 |
 | SM | 8px | `--spacing-sm` | 컴포넌트 내부 간격 |
 | MD | 16px | `--spacing-md` | 카드 패딩, 리스트 아이템 간격 |
-| LG | 24px | `--spacing-lg` | 섹션 간 간격 |
-| XL | 32px | `--spacing-xl` | 페이지 상단 여백 |
+| LG | 24px | `--spacing-lg` | 인접 컴포넌트 간 간격(예: 멤버십 카드-핏쌤 코칭) |
+| XL | 32px | `--spacing-xl` | 페이지 상단 여백, 콘텐츠 섹션 간 간격(예: 오늘의 추천-내 기록 모아보기) |
 | XXL | 44px | `--spacing-xxl` | 주요 섹션 구분 |
 
 **좌우 여백** — 20px (`--spacing-screen-pad`, 전 화면 공통)
@@ -204,11 +203,11 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 |---------|------|------|--------|--------|------|
 | primary | 56px | `--color-brand-primary` | — | `--color-neutral-0` | 핵심 CTA (운동 시작, 저장) |
 | secondary | 56px | `--color-bg-surface` | `1px solid var(--color-brand-primary)` | `--color-brand-primary` | 주요 보조 액션 |
-| quick | 52px | Gray 200 | — | Gray 500 | 우측 `+` 아이콘 동반 퀵 액션 |
-| more | 44px | Gray 200 | — | Gray 500 | 우측 `⌄` 아이콘, 더보기 |
-| disable | 56px | `icon/primary` (`#C0C3CF`) | — | Gray 700 | 비활성 상태 |
-| chat | 가변(패딩 기반) | `--color-bg-base` | — | Gray 900 | AI 코치 제안 pill |
-| card | 정사각 카드(162:163) | `--color-bg-surface` | — | Gray 900 | 지표 카드형 버튼 |
+| quick | 52px | Gray 300 | — | Gray 600 | 우측 `+` 아이콘 동반 퀵 액션 |
+| more | 44px | Gray 300 | — | Gray 600 | 우측 `⌄` 아이콘, 더보기 |
+| disable | 56px | `icon/primary` (`#C0C3CF`) | — | Gray 800 | 비활성 상태 |
+| chat | 가변(패딩 기반) | `--color-bg-base` | — | Gray 800 | AI 코치 제안 pill |
+| card | 정사각 카드(162:163) | `--color-bg-surface` | — | Gray 800 | 지표 카드형 버튼 |
 
 - 폰트: Pretendard 18px Bold (primary/secondary/quick/disable), 16px Medium (more/chat/card)
 - `disabled`/`loading`이 true면 variant와 무관하게 disable variant의 배경·텍스트 색이 강제 적용되고 테두리는 제거된다(별도 opacity 처리 없음).
@@ -230,7 +229,7 @@ Reliable(데이터 기반·신뢰) · Encouraging(압박 대신 응원) · Insig
 ### 인풋
 
 - 배경: `--color-white`(흰색), 단 검색형(filled) 인풋만 `--color-bg-muted`
-- 테두리: `1px solid` Gray 300, 포커스 시 `--color-line-primary`로 색만 변경(배경은 유지). 검색형(filled)은 테두리 없음
+- 테두리: `1px solid` Gray 400, 포커스 시 `--color-line-primary`로 색만 변경(배경은 유지). 검색형(filled)은 테두리 없음
 - 높이: 56px (검색형 filled만 52px)
 - 좌우 패딩: `--spacing-m` (12px)
 

@@ -120,9 +120,9 @@ export default function HomeScreen() {
                 <View style={styles.avatarPlaceholder} />
               </View>
 
-              <View>
+              <View style={styles.progressSection}>
                 <View style={[styles.bubbleAnchor, { width: `${MEMBERSHIP.progressPct}%` }]}>
-                  <SpeechBubble variant="tail-right">{`${MEMBERSHIP.progressPct}%`}</SpeechBubble>
+                  <SpeechBubble>{`${MEMBERSHIP.progressPct}%`}</SpeechBubble>
                 </View>
                 <View style={styles.progressWrap}>
                   <Gauge percent={MEMBERSHIP.progressPct} />
@@ -141,13 +141,13 @@ export default function HomeScreen() {
                 <InfoBox label="남은 금액" valueMain={MEMBERSHIP.remainingAmount} />
               </View>
 
+              {/* TODO: 회원권 캐러셀 연결 시 count/activeIndex 동적화 */}
+              <Indicator count={2} activeIndex={0} />
+
               {/* TODO: CheckInFlow 연결 */}
               <Button variant="primary" onPress={() => {}}>
                 지금 출석하기
               </Button>
-
-              {/* TODO: 회원권 캐러셀 연결 시 count/activeIndex 동적화 */}
-              <Indicator count={2} activeIndex={0} />
             </View>
           </MembershipCard>
 
@@ -186,7 +186,7 @@ export default function HomeScreen() {
                       ) : null}
                     </ThemedText>
                   </View>
-                  <IconArrowChevron size={20} color={Palette.gray400} />
+                  <IconArrowChevron size={20} color={Palette.gray500} />
                 </Pressable>
               ))}
             </View>
@@ -258,7 +258,7 @@ function RecordTile({
         <ThemedText type="body" style={styles.recordTitle}>
           {title}
         </ThemedText>
-        <IconArrowChevron size={20} color={Palette.gray400} />
+        <IconArrowChevron size={20} color={Palette.gray500} />
       </View>
       <ThemedText type="h2" style={styles.recordValue}>
         {value}
@@ -307,19 +307,21 @@ const styles = StyleSheet.create({
   },
   summaryLeft: { flex: 1, gap: Spacing.xs },
   summaryLabelRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  summaryLabel: { color: Palette.gray500 },
-  summaryAmount: { color: Palette.gray900 },
+  summaryLabel: { color: Palette.gray600 },
+  summaryAmount: { color: Palette.gray800 },
   todayRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  todayText: { color: Palette.gray500 },
+  todayText: { color: Palette.gray600 },
   todayGain: { color: Palette.secondary },
   avatarPlaceholder: {
     width: 77,
     height: 77,
     borderRadius: Radius.full,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
   },
 
   // ── 진행률 바 ──
+  // 부모(membershipBody) gap이 20(Spacing.card)이라 -4(Spacing.xs)만큼 당겨서 16px로 맞춘다.
+  progressSection: { marginTop: -Spacing.xs },
   bubbleAnchor: { alignItems: 'flex-end', paddingBottom: Spacing.sm },
   progressWrap: { justifyContent: 'center' },
   coinBadge: {
@@ -338,8 +340,9 @@ const styles = StyleSheet.create({
   // ── AI 코칭 ──
 
   // ── 섹션 공통 ──
-  section: { gap: Spacing.m },
-  sectionTitle: { ...Typography.subtitle, color: Palette.gray900 },
+  // 부모(body) gap이 24(Spacing.lg)라 +8(Spacing.sm)만큼 더해 32px(Spacing.xl)로 맞춘다.
+  section: { gap: Spacing.m, marginTop: Spacing.sm },
+  sectionTitle: { ...Typography.subtitle, color: Palette.gray800, },
 
   // ── 오늘의 추천 리스트 ──
   listCard: {
@@ -356,17 +359,17 @@ const styles = StyleSheet.create({
   },
   listRowDivider: {
     borderBottomWidth: 1,
-    borderBottomColor: Palette.gray200,
+    borderBottomColor: Palette.gray300,
   },
   listThumb: {
     width: Spacing.xxl,
     height: Spacing.xxl,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray200,
+    backgroundColor: Palette.gray300,
   },
   listTextWrap: { flex: 1, gap: Spacing.xs },
-  listTitle: { color: Palette.gray900 },
-  listSub: { ...Typography.caption, color: Palette.gray500 },
+  listTitle: { color: Palette.gray800 },
+  listSub: { ...Typography.caption, color: Palette.gray600 },
   listSubHighlight: { color: Palette.secondary },
 
   // ── 기록 카드 그리드 ──
@@ -389,18 +392,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  recordTitle: { color: Palette.gray500 },
-  recordValue: { color: Palette.gray900 },
-  recordCaption: { ...Typography.caption, color: Palette.gray400, marginTop: 'auto' },
+  recordTitle: { color: Palette.gray600 },
+  recordValue: { color: Palette.gray800 },
+  recordCaption: { ...Typography.caption, color: Palette.gray500, marginTop: 'auto' },
   recordChip: { marginTop: 'auto' },
   chartPlaceholder: {
     height: 43,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
   },
 
   // ── 빠른 기록 ──
-  quickButton: { alignSelf: 'center' },
+  quickButton: { alignSelf: 'center', marginVertical: Spacing.xxl },
 
   // ── 플로팅 AI ──
   floatingAi: {

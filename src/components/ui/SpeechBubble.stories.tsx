@@ -21,24 +21,19 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const TailLeft: Story = {
-  args: { variant: 'tail-left', children: '오늘 가면 회당 비용이 ₩11,200까지 내려가요' },
-};
-
-export const TailRight: Story = {
-  args: { variant: 'tail-right', children: '이번 주는 이미 3번 갔어요!' },
+export const Default: Story = {
+  args: { children: '80%' },
 };
 
 export const LongText: Story = {
   args: {
-    variant: 'tail-left',
     children: '이번 주 페이스가 목표보다 조금 느려요. 주말 전에 한 번 더 다녀오면 목표 회수 페이스를 따라잡을 수 있어요.',
   },
 };
 
 export const CustomChildren: Story = {
   render: () => (
-    <SpeechBubble variant="tail-left">
+    <SpeechBubble>
       <View style={styles.custom}>
         <ThemedText type="bodySemibold">남은 세션 12회</ThemedText>
         <ThemedText type="caption" style={styles.sub}>
@@ -52,5 +47,5 @@ export const CustomChildren: Story = {
 const styles = StyleSheet.create({
   frame: { width: 360, padding: Spacing.md },
   custom: { gap: Spacing.xs },
-  sub: { color: Palette.gray500 },
+  sub: { color: Palette.gray600 },
 });

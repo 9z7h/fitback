@@ -644,7 +644,7 @@ export default function SessionScreen() {
           <Pressable
             onPress={handleClose}
             style={({ pressed }) => [styles.closeBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={X} size={24} color={Palette.gray500} />
+            <Icon icon={X} size={24} color={Palette.gray600} />
           </Pressable>
           <ThemedText type="smallBold">
             홈트 진행 중
@@ -1179,7 +1179,7 @@ const styles = StyleSheet.create({
   aiVideoNote: {
     fontSize: 12,
     lineHeight: 16,
-    color: Palette.gray400,
+    color: Palette.gray500,
     textAlign: 'center',
     marginTop: Spacing.sm,
   },
@@ -1254,6 +1254,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textButtonText: {
-    color: Palette.gray400,
+    color: Palette.gray500,
   },
 });

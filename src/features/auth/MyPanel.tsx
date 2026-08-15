@@ -163,12 +163,12 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
             <ThemedText type="h2">{title}</ThemedText>
           ) : (
             <Pressable onPress={() => setView('main')} style={styles.backRow} hitSlop={8} accessibilityRole="button">
-              <Icon icon={ChevronLeft} size={20} color={Palette.gray700} />
+              <Icon icon={ChevronLeft} size={20} color={Palette.gray800} />
               <ThemedText type="h2">{title}</ThemedText>
             </Pressable>
           )}
           <Pressable onPress={onClose} hitSlop={8} accessibilityRole="button" accessibilityLabel="닫기">
-            <Icon icon={X} size={22} color={Palette.gray500} />
+            <Icon icon={X} size={22} color={Palette.gray600} />
           </Pressable>
         </View>
 
@@ -188,7 +188,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
               <Card>
                 <Pressable onPress={() => (editInfo ? setEditInfo(false) : startInfo())} style={styles.cardHead} accessibilityRole="button">
                   <ThemedText type="captionBold">내 정보 수정</ThemedText>
-                  <Icon icon={ChevronRight} size={18} color={Palette.gray300} />
+                  <Icon icon={ChevronRight} size={18} color={Palette.gray400} />
                 </Pressable>
                 {!editInfo ? (
                   <View style={styles.infoRows}>
@@ -270,7 +270,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
               <Card>
                 <Pressable onPress={() => (editGoal ? setEditGoal(false) : startGoal())} style={styles.cardHead} accessibilityRole="button">
                   <ThemedText type="captionBold">목표 설정</ThemedText>
-                  <Icon icon={ChevronRight} size={18} color={Palette.gray300} />
+                  <Icon icon={ChevronRight} size={18} color={Palette.gray400} />
                 </Pressable>
                 {!editGoal ? (
                   <View style={styles.infoRows}>
@@ -302,9 +302,9 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
               {/* 알림 설정 진입 */}
               <Card>
                 <Pressable onPress={() => setView('notify')} style={styles.navRow} accessibilityRole="button">
-                  <Icon icon={Bell} size={16} color={Palette.gray500} />
+                  <Icon icon={Bell} size={16} color={Palette.gray600} />
                   <ThemedText type="caption" style={styles.navLabel}>알림 설정</ThemedText>
-                  <Icon icon={ChevronRight} size={16} color={Palette.gray300} />
+                  <Icon icon={ChevronRight} size={16} color={Palette.gray400} />
                 </Pressable>
               </Card>
 
@@ -341,7 +341,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
                   <ThemedText type="caption">알람 수신</ThemedText>
                   <ThemedText type="label" themeColor="textSecondary">운동 리마인드·회원권 만료 알림</ThemedText>
                 </View>
-                <Switch value={notify.enabled} onValueChange={(v) => toggleNotify({ enabled: v })} trackColor={{ true: Palette.primary, false: Palette.gray300 }} />
+                <Switch value={notify.enabled} onValueChange={(v) => toggleNotify({ enabled: v })} trackColor={{ true: Palette.primary, false: Palette.gray400 }} />
               </View>
               <View style={styles.divider} />
               <View style={styles.toggleRow}>
@@ -349,7 +349,7 @@ export function MyPanel({ onClose }: { onClose: () => void }) {
                   <ThemedText type="caption">야간 알람 수신</ThemedText>
                   <ThemedText type="label" themeColor="textSecondary">밤 시간대에도 알림을 받아요</ThemedText>
                 </View>
-                <Switch value={notify.night} onValueChange={(v) => toggleNotify({ night: v })} disabled={!notify.enabled} trackColor={{ true: Palette.primary, false: Palette.gray300 }} />
+                <Switch value={notify.night} onValueChange={(v) => toggleNotify({ night: v })} disabled={!notify.enabled} trackColor={{ true: Palette.primary, false: Palette.gray400 }} />
               </View>
             </Card>
           ) : null}
@@ -491,19 +491,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     fontSize: 16,
-    color: Palette.gray900,
-    backgroundColor: Palette.gray50,
+    color: Palette.gray800,
+    backgroundColor: Palette.gray200,
     minHeight: 44,
   },
   segmentRow: { flexDirection: 'row', gap: Spacing.sm },
-  segment: { flex: 1, alignItems: 'center', paddingVertical: Spacing.sm, borderRadius: Radius.small, backgroundColor: Palette.gray100 },
+  segment: { flex: 1, alignItems: 'center', paddingVertical: Spacing.sm, borderRadius: Radius.small, backgroundColor: Palette.gray200 },
   segOn: { backgroundColor: Palette.primaryLight },
   activeText: { color: Palette.primary },
   goalGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
-  goalChip: { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, backgroundColor: Palette.gray100 },
+  goalChip: { paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full, backgroundColor: Palette.gray200 },
   editActions: { flexDirection: 'row', gap: Spacing.sm },
   editBtn: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingVertical: Spacing.md, borderRadius: Radius.button, minHeight: 44 },
-  editCancel: { backgroundColor: Palette.gray100 },
+  editCancel: { backgroundColor: Palette.gray200 },
   editSave: { backgroundColor: Palette.primary },
   toggleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.md },
   toggleText: { flex: 1, gap: 2 },

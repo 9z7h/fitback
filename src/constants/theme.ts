@@ -39,16 +39,13 @@ export const Palette = {
   loss: '#272E3E',
   lossLight: '#F2F2F7',
 
-  // Neutral
-  gray900: '#272E3E',
-  gray800: '#222C43',
-  gray700: '#313E5B',
-  gray500: '#6B7280',
-  gray400: '#999999',
-  gray300: '#D1D5DB',
-  gray200: '#E7E9F1',
-  gray100: '#F5F5F9',
-  gray50: '#F2F4F7',
+  // Neutral (Figma gray 스케일: 800/600/500/400/300/200/00)
+  gray800: '#272E3E',
+  gray600: '#6B7280',
+  gray500: '#999999',
+  gray400: '#C0C3CF',
+  gray300: '#E7E9F1',
+  gray200: '#F2F4F7',
   white: '#FFFFFF',
 
   // Coach banner — "운동" 강조 (코치 배너 전용, 인디고 위 노란 포인트)
@@ -70,11 +67,11 @@ export const Palette = {
 
 // 기존 ThemedText/ThemedView 호환용 시맨틱 키 (라이트 전용).
 const lightTheme = {
-  text: Palette.gray900,
-  textSecondary: Palette.gray500,
+  text: Palette.gray800,
+  textSecondary: Palette.gray600,
   background: Palette.bgBase,
   backgroundElement: Palette.bgSurface, // 카드/모달 표면
-  backgroundSelected: Palette.gray100,
+  backgroundSelected: Palette.gray200,
 } as const;
 
 export const Colors = {

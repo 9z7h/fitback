@@ -134,7 +134,7 @@ function ModeRow({
       </View>
       <View style={styles.timeRight}>
         {loading ? (
-          <ActivityIndicator color={Palette.gray300} />
+          <ActivityIndicator color={Palette.gray400} />
         ) : (
           <>
             <ThemedText type="captionBold">{time}</ThemedText>
@@ -462,7 +462,7 @@ export function CheckInFlow({
       <View style={styles.header}>
         <ThemedText type="h2">센터 가기</ThemedText>
         <Pressable onPress={onClose} hitSlop={8} accessibilityLabel="닫기">
-          <Icon icon={X} size={24} color={Palette.gray500} />
+          <Icon icon={X} size={24} color={Palette.gray600} />
         </Pressable>
       </View>
 
@@ -479,7 +479,7 @@ export function CheckInFlow({
                 }}>
                 <View style={styles.optionRow}>
                   <ThemedText type="captionBold">{m.name}</ThemedText>
-                  <Icon icon={ChevronRight} size={20} color={Palette.gray300} />
+                  <Icon icon={ChevronRight} size={20} color={Palette.gray400} />
                 </View>
               </Card>
             ))}
@@ -560,7 +560,7 @@ export function CheckInFlow({
                   key={`${r.lat}-${r.lng}-${i}`}
                   onPress={() => pickOrigin(r)}
                   style={({ pressed }) => [styles.resultRow, pressed && styles.pressed]}>
-                  <Icon icon={MapPin} size={14} color={Palette.gray500} />
+                  <Icon icon={MapPin} size={14} color={Palette.gray600} />
                   <View style={styles.resultText}>
                     <ThemedText type="captionBold">{r.name}</ThemedText>
                     {r.address ? (
@@ -663,7 +663,7 @@ export function CheckInFlow({
               <View style={styles.divider} />
               <View style={styles.timeRow}>
                 <View style={styles.timeLeft}>
-                  <Icon icon={mode ? MODE_META[mode].icon : Navigation} size={15} color={Palette.gray500} />
+                  <Icon icon={mode ? MODE_META[mode].icon : Navigation} size={15} color={Palette.gray600} />
                   <ThemedText type="caption" themeColor="textSecondary">{mode ? MODE_META[mode].label : '이동'}</ThemedText>
                 </View>
                 <ThemedText type="captionBold">도착 예정 {etaText}</ThemedText>
@@ -719,7 +719,7 @@ export function CheckInFlow({
             <ThemedText type="h2">센터에 도착했어요</ThemedText>
             {gps.phase === 'checking' ? (
               <View style={styles.infoRow}>
-                <Icon icon={MapPin} size={16} color={Palette.gray500} />
+                <Icon icon={MapPin} size={16} color={Palette.gray600} />
                 <ThemedText type="caption" themeColor="textSecondary">
                   위치 확인 중…
                 </ThemedText>
@@ -735,7 +735,7 @@ export function CheckInFlow({
             ) : null}
             {gps.phase === 'far' ? (
               <View style={styles.infoRow}>
-                <Icon icon={Navigation} size={16} color={Palette.gray500} />
+                <Icon icon={Navigation} size={16} color={Palette.gray600} />
                 <ThemedText type="caption" themeColor="textSecondary">
                   {`아직 ${(gps.km ?? 0).toFixed(1)}km 떨어져 있어요. 도착하면 체크인하세요.`}
                 </ThemedText>
@@ -743,7 +743,7 @@ export function CheckInFlow({
             ) : null}
             {gps.phase === 'unavailable' ? (
               <View style={styles.infoRow}>
-                <Icon icon={MapPin} size={16} color={Palette.gray500} />
+                <Icon icon={MapPin} size={16} color={Palette.gray600} />
                 <ThemedText type="caption" themeColor="textSecondary">
                   위치 확인이 어려워요. 도착했다면 수동으로 체크인하세요.
                 </ThemedText>
@@ -859,7 +859,7 @@ export function CheckInFlow({
             ) : null}
 
             <View style={styles.noteChip}>
-              <Icon icon={Check} size={14} color={Palette.gray500} />
+              <Icon icon={Check} size={14} color={Palette.gray600} />
               <ThemedText type="caption" themeColor="textSecondary">
                 수동 출석으로 기록됐어요
               </ThemedText>
@@ -957,7 +957,7 @@ const styles = StyleSheet.create({
     height: 26,
     borderRadius: Radius.small,
     borderWidth: 2,
-    borderColor: Palette.gray300,
+    borderColor: Palette.gray400,
     alignItems: 'center',
     justifyContent: 'center',
   },

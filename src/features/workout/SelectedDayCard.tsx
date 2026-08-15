@@ -47,7 +47,7 @@ export function SelectedDayCard({
           <ThemedText type="small" themeColor="textSecondary">
             더보기
           </ThemedText>
-          <ChevronRight color={Palette.gray500} size={16} />
+          <ChevronRight color={Palette.gray600} size={16} />
         </Pressable>
       ) : null}
     </View>

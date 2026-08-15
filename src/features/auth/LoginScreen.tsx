@@ -179,7 +179,7 @@ export function LoginScreen() {
               {/* 상단: 브랜드 · 헤딩 */}
               <View style={styles.topSection}>
                 <Pressable onPress={() => setMode('landing')} style={styles.backRow} hitSlop={6}>
-                  <Icon icon={ChevronLeft} size={16} color={Palette.gray500} />
+                  <Icon icon={ChevronLeft} size={16} color={Palette.gray600} />
                   <ThemedText type="caption" themeColor="textSecondary">처음으로</ThemedText>
                 </Pressable>
                 <Image
@@ -399,7 +399,7 @@ const styles = StyleSheet.create({
   logoImg: { width: 130, height: 26 },
   landingTagline: {
     textAlign: 'center',
-    color: Palette.gray900,
+    color: Palette.gray800,
     marginTop: Spacing.sm,
   },
   landingFooter: {
@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: Radius.small,
     borderWidth: 1.5,
-    borderColor: Palette.gray300,
+    borderColor: Palette.gray400,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     fontSize: 16,
-    color: Palette.gray900,
+    color: Palette.gray800,
     backgroundColor: Palette.white,
     minHeight: 44,
   },
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     minHeight: 44,
     justifyContent: 'center',
   },
-  buttonDisabled: { backgroundColor: Palette.gray300 },
+  buttonDisabled: { backgroundColor: Palette.gray400 },
   buttonPressed: { backgroundColor: Palette.primaryPressed },
   buttonLabel: { color: Palette.white },
   error: { color: Palette.error, marginTop: Spacing.xs },
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     borderColor: Palette.lineDefault,
     gap: Spacing.xs,
   },
-  devTitle: { color: Palette.gray700 },
+  devTitle: { color: Palette.gray800 },
   devButton: {
     marginTop: Spacing.sm,
     paddingVertical: Spacing.sm,

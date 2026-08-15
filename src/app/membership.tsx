@@ -33,7 +33,7 @@ function AuthFooter() {
         onPress={handleSignOut}
         style={({ pressed }) => [styles.authButton, pressed && styles.authButtonPressed]}
         accessibilityRole="button">
-        <Icon icon={LogOut} size={16} color={Palette.gray500} />
+        <Icon icon={LogOut} size={16} color={Palette.gray600} />
         <ThemedText type="caption" themeColor="textSecondary">
           로그아웃
         </ThemedText>

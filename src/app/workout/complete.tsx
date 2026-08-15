@@ -428,7 +428,7 @@ export default function CompleteScreen() {
                           ]}>
                           <ThemedText
                             type="smallBold"
-                            style={{ color: active ? Palette.white : Palette.gray700 }}>
+                            style={{ color: active ? Palette.white : Palette.gray800 }}>
                             {opt.label}
                           </ThemedText>
                         </Pressable>
@@ -455,7 +455,7 @@ export default function CompleteScreen() {
                           ]}>
                           <ThemedText
                             type="smallBold"
-                            style={{ color: active ? Palette.white : Palette.gray700 }}>
+                            style={{ color: active ? Palette.white : Palette.gray800 }}>
                             {opt}
                           </ThemedText>
                         </Pressable>
@@ -531,7 +531,7 @@ export default function CompleteScreen() {
                   styles.primaryCta,
                   styles.flex1,
                   {
-                    backgroundColor: pressed ? Palette.gray100 : Palette.bgMuted,
+                    backgroundColor: pressed ? Palette.gray200 : Palette.bgMuted,
                     borderColor: Palette.lineDefault,
                     borderWidth: StyleSheet.hairlineWidth,
                   },
@@ -552,7 +552,7 @@ export default function CompleteScreen() {
                 // 8자리 hex 의 끝 E6 = 약 90% alpha — 살짝 비치는 느낌.
                 // no token for error+alpha
                 backgroundColor:
-                  toast.kind === 'error' ? `${Palette.error}E6` : `${Palette.gray900}E6`,
+                  toast.kind === 'error' ? `${Palette.error}E6` : `${Palette.gray800}E6`,
               },
             ]}>
             <ThemedText type="smallBold" style={{ color: Palette.white }}>

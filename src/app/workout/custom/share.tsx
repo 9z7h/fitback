@@ -82,10 +82,10 @@ export default function ShareScreen() {
           <Pressable
             onPress={handleClose}
             style={({ pressed }) => [styles.iconBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={ChevronLeft} size={24} color={Palette.gray900} />
+            <Icon icon={ChevronLeft} size={24} color={Palette.gray800} />
           </Pressable>
           <ThemedText type="subtitle">운동 공유</ThemedText>
-          <ThemedText type="captionBold" style={{ color: Palette.gray500 }}>
+          <ThemedText type="captionBold" style={{ color: Palette.gray600 }}>
             4 / 4
           </ThemedText>
         </View>
@@ -277,9 +277,9 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgMuted,
   },
   routineMeta: {
-    // #오운완 태그(gray500)보다 더 연한 회색. duration 왼쪽에 오른쪽 정렬로 붙음.
+    // #오운완 태그(gray600)보다 더 연한 회색. duration 왼쪽에 오른쪽 정렬로 붙음.
     ...Typography.caption,
-    color: Palette.gray400,
+    color: Palette.gray500,
     textAlign: 'right',
     marginRight: Spacing.sm,
   },

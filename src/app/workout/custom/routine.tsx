@@ -77,10 +77,10 @@ export default function RoutineScreen() {
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.iconBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={ChevronLeft} size={24} color={Palette.gray900} />
+            <Icon icon={ChevronLeft} size={24} color={Palette.gray800} />
           </Pressable>
           <ThemedText type="subtitle">루틴 생성</ThemedText>
-          <ThemedText type="captionBold" style={{ color: Palette.gray500 }}>
+          <ThemedText type="captionBold" style={{ color: Palette.gray600 }}>
             2 / 4
           </ThemedText>
         </View>
@@ -141,7 +141,7 @@ export default function RoutineScreen() {
           {/* TIP 박스 */}
           <View style={styles.tipBox}>
             <Icon icon={Lightbulb} size={18} color={Palette.primary} />
-            <ThemedText type="small" style={{ color: Palette.gray700, flex: 1 }}>
+            <ThemedText type="small" style={{ color: Palette.gray800, flex: 1 }}>
               TIP{'\n'}
               <ThemedText type="small" themeColor="textSecondary">
                 다른 종목을 원하면 뒤로 돌아가 다시 선택할 수 있어요.

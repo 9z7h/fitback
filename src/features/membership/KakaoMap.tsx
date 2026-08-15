@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: Radius.card,
     overflow: 'hidden',
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
   },
   webview: { flex: 1, backgroundColor: 'transparent' },
 });

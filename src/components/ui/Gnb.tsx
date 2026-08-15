@@ -30,7 +30,7 @@ export function Gnb({
             style={({ pressed }) => [styles.headerBtn, pressed && styles.pressed]}
             accessibilityRole="button"
             accessibilityLabel="메뉴 열기">
-            <IconMenu size={24} color={Palette.gray900} />
+            <IconMenu size={24} color={Palette.gray800} />
           </Pressable>
           <Image source={require('../../../assets/images/Logo.png')} style={styles.logo} resizeMode="contain" />
         </View>

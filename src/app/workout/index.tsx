@@ -60,7 +60,7 @@ export default function WorkoutScreen() {
 
           {/* 핏쌤의 한 마디 */}
           <CoachTipCard>
-            <ThemedText type="body" style={{ color: Palette.gray700 }}>
+            <ThemedText type="body" style={{ color: Palette.gray800 }}>
               이번 주는 2번만 더 가면 페이스 회복 돼요. 오늘 가볍게 시작해볼까요?
             </ThemedText>
           </CoachTipCard>
@@ -131,7 +131,7 @@ export default function WorkoutScreen() {
           <Pressable
             onPress={() => router.push('/workout/coach?mode=dev')}
             style={({ pressed }) => [styles.devButton, { opacity: pressed ? 0.85 : 1 }]}>
-            <Wrench color={Palette.gray500} size={16} />
+            <Wrench color={Palette.gray600} size={16} />
             <ThemedText type="body" themeColor="textSecondary">
               개발용 (3운동 고정)
             </ThemedText>

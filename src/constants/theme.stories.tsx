@@ -17,7 +17,7 @@ const COLOR_GROUPS: { title: string; keys: (keyof typeof Palette)[] }[] = [
   { title: 'Background', keys: ['bgBase', 'bgSurface', 'bgMuted'] },
   { title: 'Semantic — UI 상태', keys: ['success', 'successLight', 'warning', 'error', 'errorLight'] },
   { title: 'Semantic — 손익 상태', keys: ['profit', 'profitLight', 'loss', 'lossLight'] },
-  { title: 'Neutral', keys: ['gray900', 'gray800', 'gray700', 'gray500', 'gray400', 'gray300', 'gray200', 'gray100', 'gray50', 'white'] },
+  { title: 'Neutral', keys: ['gray800', 'gray600', 'gray500', 'gray400', 'gray300', 'gray200', 'white'] },
   { title: 'Coach', keys: ['coachAccent'] },
   { title: 'Diet', keys: ['tintOrange', 'tintYellow', 'tintPurple', 'tintIndigo'] },
   { title: 'Line / Border', keys: ['lineDefault', 'lineStrong', 'linePrimary', 'borderStrong', 'iconPrimary'] },

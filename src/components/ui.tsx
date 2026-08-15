@@ -17,7 +17,7 @@ export { Input } from './ui/Input';
 export function Icon({
   icon: IconCmp,
   size = 24,
-  color = Palette.gray700,
+  color = Palette.gray800,
   strokeWidth = 2,
 }: {
   icon: LucideIcon;
@@ -63,7 +63,7 @@ export function Card({
 export function ProgressBar({
   ratio,
   color = Palette.primary,
-  trackColor = Palette.gray100,
+  trackColor = Palette.gray200,
   height = 8,
   label,
 }: {

@@ -377,7 +377,7 @@ export default function CoachScreen() {
                   { borderColor: Palette.lineDefault, opacity: pressed ? 0.85 : 1 },
                 ]}>
                 <View style={[styles.modeIcon, { backgroundColor: Palette.bgMuted }]}>
-                  <Sliders color={Palette.gray500} size={24} />
+                  <Sliders color={Palette.gray600} size={24} />
                 </View>
                 <View style={styles.modeText}>
                   <ThemedText type="subtitle">오늘 운동 커스텀</ThemedText>
@@ -395,7 +395,7 @@ export default function CoachScreen() {
                   { borderColor: Palette.lineDefault, opacity: pressed ? 0.85 : 1 },
                 ]}>
                 <View style={[styles.modeIcon, { backgroundColor: Palette.bgMuted }]}>
-                  <Wrench color={Palette.gray500} size={24} />
+                  <Wrench color={Palette.gray600} size={24} />
                 </View>
                 <View style={styles.modeText}>
                   <ThemedText type="subtitle">개발용 (3운동 고정)</ThemedText>
@@ -422,7 +422,7 @@ export default function CoachScreen() {
                   ]}>
                   <ThemedText
                     type="label"
-                    style={{ color: Palette.gray500, fontSize: 13, lineHeight: 19 }}>
+                    style={{ color: Palette.gray600, fontSize: 13, lineHeight: 19 }}>
                     {opt}
                   </ThemedText>
                 </Pressable>

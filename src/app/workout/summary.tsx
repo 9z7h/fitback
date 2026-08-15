@@ -36,7 +36,7 @@ export default function WorkoutSummaryScreen() {
             onPress={() => router.back()}
             hitSlop={8}
             style={({ pressed }) => [styles.backBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <ChevronLeft color={Palette.gray900} size={24} />
+            <ChevronLeft color={Palette.gray800} size={24} />
           </Pressable>
           <ThemedText type="subtitle">홈트 상세</ThemedText>
           <View style={styles.backBtn} />

@@ -54,10 +54,10 @@ export default function SelectScreen() {
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.iconBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={ChevronLeft} size={24} color={Palette.gray900} />
+            <Icon icon={ChevronLeft} size={24} color={Palette.gray800} />
           </Pressable>
           <ThemedText type="subtitle">운동 선택</ThemedText>
-          <ThemedText type="captionBold" style={{ color: Palette.gray500 }}>
+          <ThemedText type="captionBold" style={{ color: Palette.gray600 }}>
             1 / 4
           </ThemedText>
         </View>
@@ -218,7 +218,7 @@ function ChipRow({
             ]}>
             <ThemedText
               type="captionBold"
-              style={{ color: on ? Palette.white : Palette.gray700 }}>
+              style={{ color: on ? Palette.white : Palette.gray800 }}>
               {opt}
             </ThemedText>
           </Pressable>

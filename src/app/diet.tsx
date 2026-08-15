@@ -159,7 +159,7 @@ type Variant = keyof typeof Typography;
 
 function Txt({
   variant = 'body',
-  color = Palette.gray900,
+  color = Palette.gray800,
   weight,
   style,
   children,
@@ -254,8 +254,8 @@ function MacroProgress({
   focused?: boolean;
   caption?: string;
 }) {
-  const labelColor = focused ? Palette.primary : Palette.gray500;
-  const fillColor = focused ? Palette.primary : Palette.gray400;
+  const labelColor = focused ? Palette.primary : Palette.gray600;
+  const fillColor = focused ? Palette.primary : Palette.gray500;
   const valuePct = goal > 0 ? Math.min((value / goal) * 100, 100) : 0;
   return (
     <View style={styles.macroCol}>
@@ -263,10 +263,10 @@ function MacroProgress({
         {label}
       </Txt>
       <View style={styles.macroValueRow}>
-        <Txt variant="body" weight="700" color={focused ? Palette.primary : Palette.gray900}>
+        <Txt variant="body" weight="700" color={focused ? Palette.primary : Palette.gray800}>
           {value}
         </Txt>
-        <Txt variant="caption" color={Palette.gray500}>
+        <Txt variant="caption" color={Palette.gray600}>
           g
         </Txt>
       </View>
@@ -280,7 +280,7 @@ function MacroProgress({
         </View>
         {/* 목표 수치 */}
         <View style={styles.rangeLabels}>
-          <Txt variant="label" color={Palette.gray400} style={{ position: 'absolute', right: 0 }}>
+          <Txt variant="label" color={Palette.gray500} style={{ position: 'absolute', right: 0 }}>
             {goal}g
           </Txt>
         </View>
@@ -319,21 +319,21 @@ function SemiGauge({
   const ey = cy - r * Math.sin(theta);
   const track = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`;
   const prog = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${ex.toFixed(2)} ${ey.toFixed(2)}`;
-  const color = active ? status.color : Palette.gray300;
+  const color = active ? status.color : Palette.gray400;
   const score = Math.max(0, Math.round(ratio * 100)); // 마이너스 없이 현재 점수
   return (
     <View style={[styles.gaugeWrap, { width: W, height: H }]}>
       <Svg width={W} height={H}>
-        <Path d={track} stroke={Palette.gray100} strokeWidth={SW} fill="none" strokeLinecap="round" />
+        <Path d={track} stroke={Palette.gray200} strokeWidth={SW} fill="none" strokeLinecap="round" />
         {p > 0 && (
           <Path d={prog} stroke={color} strokeWidth={SW} fill="none" strokeLinecap="round" />
         )}
       </Svg>
       <View style={styles.gaugeLabel}>
-        <Txt variant="display2" weight="700" color={active ? Palette.gray900 : Palette.gray500}>
+        <Txt variant="display2" weight="700" color={active ? Palette.gray800 : Palette.gray600}>
           {centerLabel ?? `${score}%`}
         </Txt>
-        <Txt variant="caption" weight="700" color={active ? status.color : Palette.gray500}>
+        <Txt variant="caption" weight="700" color={active ? status.color : Palette.gray600}>
           {active ? status.label : '등록 전'}
         </Txt>
       </View>
@@ -383,12 +383,12 @@ function CalorieBar({ consumed, goal, burned }: { consumed: number; goal: number
       <View style={styles.calLabels}>
         {burned > 0 && beforePos < 0.8 && (
           <View style={[styles.calLabelAnchor, { left: `${(beforePos * 100).toFixed(1)}%` as DimensionValue }]}>
-            <Txt variant="label" color={Palette.gray400} style={styles.calLabelCentered}>
+            <Txt variant="label" color={Palette.gray500} style={styles.calLabelCentered}>
               활동 전
             </Txt>
           </View>
         )}
-        <Txt variant="label" color={Palette.gray400} style={styles.calLabelRight}>
+        <Txt variant="label" color={Palette.gray500} style={styles.calLabelRight}>
           활동 후
         </Txt>
       </View>
@@ -411,7 +411,7 @@ function PrimaryButton({
       disabled={disabled}
       style={({ pressed }) => [
         styles.primaryBtn,
-        { backgroundColor: disabled ? Palette.gray300 : pressed ? Palette.primaryPressed : Palette.primary },
+        { backgroundColor: disabled ? Palette.gray400 : pressed ? Palette.primaryPressed : Palette.primary },
       ]}>
       <Txt variant="body" weight="600" color="#FFFFFF">
         {label}
@@ -445,7 +445,7 @@ function MealSlot({ type, meals, onPress }: { type: MealType; meals: Meal[]; onP
     <Pressable onPress={() => onPress(type)} style={styles.slotCard}>
       {/* + 버튼 — 우상단 */}
       <View style={styles.slotAddCorner}>
-        <Icon name="add" size={18} color={has ? Palette.gray400 : Palette.primary} />
+        <Icon name="add" size={18} color={has ? Palette.gray500 : Palette.primary} />
       </View>
 
       {/* 아이콘 영역 */}
@@ -461,14 +461,14 @@ function MealSlot({ type, meals, onPress }: { type: MealType; meals: Meal[]; onP
 
       {/* 하단 텍스트 */}
       <View style={styles.slotInfo}>
-        <Txt variant="body" weight="700" color={Palette.gray900}>{type}</Txt>
+        <Txt variant="body" weight="700" color={Palette.gray800}>{type}</Txt>
         {has ? (
           <>
-            <Txt variant="label" color={Palette.gray500} numberOfLines={1}>{name}</Txt>
-            <Txt variant="label" color={Palette.gray400}>{time} · {kcal} kcal</Txt>
+            <Txt variant="label" color={Palette.gray600} numberOfLines={1}>{name}</Txt>
+            <Txt variant="label" color={Palette.gray500}>{time} · {kcal} kcal</Txt>
           </>
         ) : (
-          <Txt variant="label" color={Palette.gray400}>아직 기록 없음</Txt>
+          <Txt variant="label" color={Palette.gray500}>아직 기록 없음</Txt>
         )}
       </View>
 
@@ -489,7 +489,7 @@ type RecStep = 'input' | 'analyzing' | 'review' | 'result';
 type MacroTotals = { kcal: number; carb: number; protein: number; fat: number };
 // 매크로 강조 컬러 — focusMacro(런타임 값) 기준. MACRO_DOT 대체.
 function macroDot(key: 'protein' | 'carb' | 'fat', fm: 'protein' | 'carb' | null): string {
-  return fm === key ? Palette.primary : Palette.gray300;
+  return fm === key ? Palette.primary : Palette.gray400;
 }
 
 // 코치 피드백 = 한 줄 요약(title) + 상세(body).
@@ -919,7 +919,7 @@ function RecordModal({
         {/* 헤더 */}
         <View style={styles.recHeader}>
           <Pressable onPress={() => (step === 'review' ? leaveReview() : close())} hitSlop={8} style={styles.recHeaderBtn}>
-            <Icon name={step === 'review' ? 'arrow-back' : 'close'} size={24} color={Palette.gray900} />
+            <Icon name={step === 'review' ? 'arrow-back' : 'close'} size={24} color={Palette.gray800} />
           </Pressable>
           <Txt variant="h2">
             {step === 'review' ? 'AI 분석 결과' : '식단 기록'}
@@ -943,7 +943,7 @@ function RecordModal({
                         ? { backgroundColor: Palette.primary, borderColor: Palette.primary }
                         : { backgroundColor: Palette.bgSurface, borderColor: Palette.lineDefault },
                     ]}>
-                    <Txt variant="body" weight="600" color={selected ? Palette.white : Palette.gray700}>{t}</Txt>
+                    <Txt variant="body" weight="600" color={selected ? Palette.white : Palette.gray800}>{t}</Txt>
                   </Pressable>
                 );
               })}
@@ -951,10 +951,10 @@ function RecordModal({
 
             {/* ② 식사 시간 */}
             <Pressable style={styles.mealTimeRow} onPress={() => setShowTimePicker((v) => !v)}>
-              <Icon name="clock" size={16} color={Palette.gray500} />
-              <Txt variant="body" color={Palette.gray700} style={styles.flex1}>식사 시간</Txt>
-              <Txt variant="body" weight="600" color={Palette.gray700}>{formatMealTime(mealTime)}</Txt>
-              <Icon name={showTimePicker ? 'arrow-upward' : 'keyboard-arrow-down'} size={18} color={Palette.gray500} />
+              <Icon name="clock" size={16} color={Palette.gray600} />
+              <Txt variant="body" color={Palette.gray800} style={styles.flex1}>식사 시간</Txt>
+              <Txt variant="body" weight="600" color={Palette.gray800}>{formatMealTime(mealTime)}</Txt>
+              <Icon name={showTimePicker ? 'arrow-upward' : 'keyboard-arrow-down'} size={18} color={Palette.gray600} />
             </Pressable>
 
             {showTimePicker && Platform.OS !== 'web' && (
@@ -978,31 +978,31 @@ function RecordModal({
                     hitSlop={8}
                     onPress={() => setMealTime((prev) => { const n = new Date(prev); n.setHours((prev.getHours() + 23) % 24, prev.getMinutes()); return n; })}
                     style={styles.timePickerArrow}>
-                    <Icon name="arrow-upward" size={18} color={Palette.gray700} />
+                    <Icon name="arrow-upward" size={18} color={Palette.gray800} />
                   </Pressable>
-                  <Txt variant="h2" weight="700" color={Palette.gray900}>{String(mealTime.getHours()).padStart(2, '0')}</Txt>
+                  <Txt variant="h2" weight="700" color={Palette.gray800}>{String(mealTime.getHours()).padStart(2, '0')}</Txt>
                   <Pressable
                     hitSlop={8}
                     onPress={() => setMealTime((prev) => { const n = new Date(prev); n.setHours((prev.getHours() + 1) % 24, prev.getMinutes()); return n; })}
                     style={styles.timePickerArrow}>
-                    <Icon name="arrow-downward" size={18} color={Palette.gray700} />
+                    <Icon name="arrow-downward" size={18} color={Palette.gray800} />
                   </Pressable>
                 </View>
-                <Txt variant="h2" color={Palette.gray400}>:</Txt>
+                <Txt variant="h2" color={Palette.gray500}>:</Txt>
                 {/* 분 */}
                 <View style={styles.timePickerGroup}>
                   <Pressable
                     hitSlop={8}
                     onPress={() => setMealTime((prev) => { const n = new Date(prev); n.setHours(prev.getHours(), ((prev.getMinutes() - 5 + 60) % 60)); return n; })}
                     style={styles.timePickerArrow}>
-                    <Icon name="arrow-upward" size={18} color={Palette.gray700} />
+                    <Icon name="arrow-upward" size={18} color={Palette.gray800} />
                   </Pressable>
-                  <Txt variant="h2" weight="700" color={Palette.gray900}>{String(mealTime.getMinutes()).padStart(2, '0')}</Txt>
+                  <Txt variant="h2" weight="700" color={Palette.gray800}>{String(mealTime.getMinutes()).padStart(2, '0')}</Txt>
                   <Pressable
                     hitSlop={8}
                     onPress={() => setMealTime((prev) => { const n = new Date(prev); n.setHours(prev.getHours(), (prev.getMinutes() + 5) % 60); return n; })}
                     style={styles.timePickerArrow}>
-                    <Icon name="arrow-downward" size={18} color={Palette.gray700} />
+                    <Icon name="arrow-downward" size={18} color={Palette.gray800} />
                   </Pressable>
                 </View>
                 <Pressable onPress={() => setShowTimePicker(false)} style={styles.timePickerDone} hitSlop={8}>
@@ -1033,7 +1033,7 @@ function RecordModal({
                   ) : (
                     <>
                       <Txt variant="body" weight="700">{draft.name}</Txt>
-                      <Txt variant="caption" color={Palette.gray500}>인식 결과가 다르면 수정해 주세요</Txt>
+                      <Txt variant="caption" color={Palette.gray600}>인식 결과가 다르면 수정해 주세요</Txt>
                     </>
                   )}
                 </View>
@@ -1048,7 +1048,7 @@ function RecordModal({
                       });
                     }}
                     style={styles.starBtn}>
-                    <Icon name="star" size={20} color={(optimisticFav ?? isFavorited(draft.name)) ? Palette.primary : Palette.gray300} />
+                    <Icon name="star" size={20} color={(optimisticFav ?? isFavorited(draft.name)) ? Palette.primary : Palette.gray400} />
                   </Pressable>
                   <Pressable onPress={toggleEdit} hitSlop={8} style={styles.reviewEditBtnTop}>
                     <Icon name={editingReview ? 'check' : 'edit'} size={14} color={Palette.primary} />
@@ -1064,26 +1064,26 @@ function RecordModal({
                         onPress={() => setQuantity((q) => Math.max(unit === 'g' ? 10 : 1, q - (unit === 'g' ? 10 : 1)))}
                         style={styles.stepperBtn}
                         hitSlop={8}>
-                        <Txt variant="h2" color={Palette.gray700}>-</Txt>
+                        <Txt variant="h2" color={Palette.gray800}>-</Txt>
                       </Pressable>
                       <Txt variant="body" weight="700" style={styles.stepperNum}>{quantity}</Txt>
                       <Pressable
                         onPress={() => setQuantity((q) => q + (unit === 'g' ? 10 : 1))}
                         style={styles.stepperBtn}
                         hitSlop={8}>
-                        <Txt variant="h2" color={Palette.gray700}>+</Txt>
+                        <Txt variant="h2" color={Palette.gray800}>+</Txt>
                       </Pressable>
                     </View>
                     <View style={{ position: 'relative' }}>
                       {isSearchPicked ? (
                         <View style={styles.stepperUnit}>
-                          <Txt variant="body" color={Palette.gray700}>g</Txt>
+                          <Txt variant="body" color={Palette.gray800}>g</Txt>
                         </View>
                       ) : (
                         <>
                           <Pressable onPress={() => setShowUnitPicker((v) => !v)} style={styles.stepperUnit}>
-                            <Txt variant="body" color={Palette.gray700}>{unit}</Txt>
-                            <Icon name={showUnitPicker ? 'arrow-upward' : 'keyboard-arrow-down'} size={18} color={Palette.gray500} />
+                            <Txt variant="body" color={Palette.gray800}>{unit}</Txt>
+                            <Icon name={showUnitPicker ? 'arrow-upward' : 'keyboard-arrow-down'} size={18} color={Palette.gray600} />
                           </Pressable>
                           {showUnitPicker && (
                             <View style={[styles.unitDropdown, { position: 'absolute', top: 36, right: 0, zIndex: 999 }]}>
@@ -1100,7 +1100,7 @@ function RecordModal({
                                     setShowUnitPicker(false);
                                   }}
                                   style={[styles.unitOption, u === unit && { backgroundColor: Palette.primaryLight }]}>
-                                  <Txt variant="body" color={u === unit ? Palette.primary : Palette.gray700}>{u}</Txt>
+                                  <Txt variant="body" color={u === unit ? Palette.primary : Palette.gray800}>{u}</Txt>
                                 </Pressable>
                               ))}
                             </View>
@@ -1122,9 +1122,9 @@ function RecordModal({
                     textStyle={styles.reviewKcalInputText}
                   />
                 ) : (
-                  <Txt variant="display" weight="700" color={Palette.gray900}>{scaledKcal}</Txt>
+                  <Txt variant="display" weight="700" color={Palette.gray800}>{scaledKcal}</Txt>
                 )}
-                <Txt variant="body" color={Palette.gray500}> kcal</Txt>
+                <Txt variant="body" color={Palette.gray600}> kcal</Txt>
                 {!editingReview && (
                   <View style={styles.dailyPctBadge}>
                     <Txt variant="label" weight="600" color={Palette.primary}>일일 목표 {goalPct}%</Txt>
@@ -1132,7 +1132,7 @@ function RecordModal({
                 )}
               </View>
               {!editingReview && (
-                <Txt variant="caption" color={Palette.gray500}>
+                <Txt variant="caption" color={Palette.gray600}>
                   오늘 목표까지 {remainingKcal.toLocaleString()}kcal 남았어요
                 </Txt>
               )}
@@ -1151,7 +1151,7 @@ function RecordModal({
                           textStyle={styles.reviewMacroInputText}
                         />
                       ) : (
-                        <Txt variant="h2" weight="700" color={Palette.gray900}>{val}g</Txt>
+                        <Txt variant="h2" weight="700" color={Palette.gray800}>{val}g</Txt>
                       )}
                     </MacroBox>
                   );
@@ -1176,7 +1176,7 @@ function RecordModal({
           <View style={styles.analyzing}>
             <ActivityIndicator size="large" color={Palette.primary} />
             <Txt variant="body">AI가 음식을 분석하고 있어요</Txt>
-            <Txt variant="caption" color={Palette.gray500}>
+            <Txt variant="caption" color={Palette.gray600}>
               음식 인식 · 칼로리 추정 · 탄단지 분석
             </Txt>
           </View>
@@ -1186,7 +1186,7 @@ function RecordModal({
             <View style={styles.recTabBar}>
               {REC_TABS.map((t) => {
                 const active = tab === t.key;
-                const color = active ? Palette.primary : Palette.gray500;
+                const color = active ? Palette.primary : Palette.gray600;
                 return (
                   <Pressable key={t.key} onPress={() => setTab(t.key)} style={styles.recTab}>
                     <Txt variant="body" weight={active ? '700' : '400'} color={color}>
@@ -1213,13 +1213,13 @@ function RecordModal({
                   value={textInput}
                   onChangeText={setTextInput}
                   placeholder={'먹은 음식을 입력하세요.\n(예: 치킨 2조각, 현미밥 한공기, 사과 1개)'}
-                  placeholderTextColor={Palette.gray400}
+                  placeholderTextColor={Palette.gray500}
                   style={styles.textArea}
                   multiline
                   autoFocus
                 />
                 <View style={styles.gramsRow}>
-                  <Txt variant="label" color={Palette.gray500} style={styles.flex1}>
+                  <Txt variant="label" color={Palette.gray600} style={styles.flex1}>
                     총 섭취량 (선택)
                   </Txt>
                   <Input
@@ -1252,7 +1252,7 @@ function RecordModal({
                         onPress={() => pickFood({ ...f, servingSize: f.servingSize ?? null })}
                         style={styles.flex1}>
                         <Txt variant="body" weight="600">{f.name}</Txt>
-                        <Txt variant="caption" color={Palette.gray500}>
+                        <Txt variant="caption" color={Palette.gray600}>
                           탄 {f.carb}g · 단 {f.protein}g · 지 {f.fat}g
                           {f.servingSize ? ` · 1회 ${f.servingSize}` : ''}
                         </Txt>
@@ -1272,12 +1272,12 @@ function RecordModal({
               ) : (
                 <View style={styles.photoArea}>
                   <View style={[styles.photoBtn, { backgroundColor: Palette.bgMuted }]}>
-                    <Icon name="star" size={36} color={Palette.gray300} />
+                    <Icon name="star" size={36} color={Palette.gray400} />
                   </View>
-                  <Txt variant="body" weight="600" color={Palette.gray700}>
+                  <Txt variant="body" weight="600" color={Palette.gray800}>
                     즐겨찾기한 음식이 없어요
                   </Txt>
-                  <Txt variant="caption" color={Palette.gray500} style={{ textAlign: 'center' }}>
+                  <Txt variant="caption" color={Palette.gray600} style={{ textAlign: 'center' }}>
                     검색에서 음식을 찾은 후{'\n'}별표를 눌러 저장해보세요.
                   </Txt>
                 </View>
@@ -1287,12 +1287,12 @@ function RecordModal({
             {tab === 'search' && (
               <View style={styles.tabForm}>
                 <View style={styles.searchBar}>
-                  <Icon name="search" size={20} color={Palette.gray500} />
+                  <Icon name="search" size={20} color={Palette.gray600} />
                   <TextInput
                     value={searchInput}
                     onChangeText={setSearchInput}
                     placeholder="음식 이름 검색"
-                    placeholderTextColor={Palette.gray400}
+                    placeholderTextColor={Palette.gray500}
                     style={styles.searchInput}
                     autoFocus
                   />
@@ -1304,7 +1304,7 @@ function RecordModal({
                         <Txt variant="body" weight="600">
                           {f.name}
                         </Txt>
-                        <Txt variant="caption" color={Palette.gray500}>
+                        <Txt variant="caption" color={Palette.gray600}>
                           100g 기준 · 탄 {f.carb}g · 단 {f.protein}g · 지 {f.fat}g
                           {f.servingSize ? ` · 1회 ${f.servingSize}` : ''}
                         </Txt>
@@ -1316,7 +1316,7 @@ function RecordModal({
                         <Icon
                           name="star"
                           size={18}
-                          color={isFavorited(f.name) ? Palette.primary : Palette.gray300}
+                          color={isFavorited(f.name) ? Palette.primary : Palette.gray400}
                         />
                       </Pressable>
                       <Pressable onPress={() => pickFood(f)}>
@@ -1340,12 +1340,12 @@ function RecordModal({
                     !search.isError &&
                     debouncedQuery.length >= 2 &&
                     searchResults.length === 0 && (
-                      <Txt variant="caption" color={Palette.gray500} style={styles.searchEmpty}>
+                      <Txt variant="caption" color={Palette.gray600} style={styles.searchEmpty}>
                         검색 결과가 없어요.
                       </Txt>
                     )}
                   {debouncedQuery.length < 2 && (
-                    <Txt variant="caption" color={Palette.gray500} style={styles.searchEmpty}>
+                    <Txt variant="caption" color={Palette.gray600} style={styles.searchEmpty}>
                       음식 이름을 2자 이상 입력하면 검색해요.
                     </Txt>
                   )}
@@ -1376,7 +1376,7 @@ function MacroBox({
     <View style={styles.macroCol}>
       <View style={styles.resultMacroHead}>
         <View style={[styles.resultDot, { backgroundColor: macroDot(mkey, focusMacro) }]} />
-        <Txt variant="label" weight={focused ? '600' : '400'} color={focused ? Palette.primary : Palette.gray500}>
+        <Txt variant="label" weight={focused ? '600' : '400'} color={focused ? Palette.primary : Palette.gray600}>
           {label}
         </Txt>
       </View>
@@ -1427,7 +1427,7 @@ function ScoreGraph({ points }: { points: { label: string; score: number }[] }) 
       </View>
       <View style={styles.graphLabels}>
         {points.map((p, i) => (
-          <Txt key={p.label} variant="label" color={i === n - 1 ? Palette.gray900 : Palette.gray500}>
+          <Txt key={p.label} variant="label" color={i === n - 1 ? Palette.gray800 : Palette.gray600}>
             {p.label}
           </Txt>
         ))}
@@ -1507,32 +1507,32 @@ function ResultView({
       <ScrollView contentContainerStyle={styles.reviewBody} showsVerticalScrollIndicator={false}>
         {/* 점수 카드 */}
         <View style={styles.scoreCard}>
-          <Txt variant="caption" weight="600" color={Palette.gray500}>운동 효과 점수</Txt>
+          <Txt variant="caption" weight="600" color={Palette.gray600}>운동 효과 점수</Txt>
           <View style={styles.scoreRow}>
-            <Txt variant="display" weight="700" color={Palette.gray900}>{after}점</Txt>
+            <Txt variant="display" weight="700" color={Palette.gray800}>{after}점</Txt>
             {delta !== 0 && (
-              <View style={[styles.scoreDeltaBadge, { backgroundColor: delta > 0 ? '#E8F9EF' : Palette.gray200 }]}>
+              <View style={[styles.scoreDeltaBadge, { backgroundColor: delta > 0 ? '#E8F9EF' : Palette.gray300 }]}>
                 <Icon
                   name={delta > 0 ? 'arrow-upward' : 'arrow-downward'}
                   size={12}
-                  color={delta > 0 ? Palette.success : Palette.gray500}
+                  color={delta > 0 ? Palette.success : Palette.gray600}
                 />
-                <Txt variant="label" weight="700" color={delta > 0 ? Palette.success : Palette.gray500}>
+                <Txt variant="label" weight="700" color={delta > 0 ? Palette.success : Palette.gray600}>
                   {delta > 0 ? '+' : ''}{delta}점
                 </Txt>
               </View>
             )}
           </View>
           <Txt variant="label" weight="600" style={{ color: status.color }}>{status.label}</Txt>
-          <Txt variant="caption" color={Palette.gray500}>{draft.name}</Txt>
+          <Txt variant="caption" color={Palette.gray600}>{draft.name}</Txt>
 
           <View style={styles.sectionDivider} />
 
           <View style={styles.resultKcalRow}>
-            <Txt variant="caption" color={Palette.gray500}>끼니 총 열량</Txt>
-            <Txt variant="body" weight="700" color={Palette.gray900}>{draft.kcal} kcal</Txt>
+            <Txt variant="caption" color={Palette.gray600}>끼니 총 열량</Txt>
+            <Txt variant="body" weight="700" color={Palette.gray800}>{draft.kcal} kcal</Txt>
           </View>
-          <Txt variant="label" color={Palette.gray400}>{totalKcal} / {target.kcal} kcal</Txt>
+          <Txt variant="label" color={Palette.gray500}>{totalKcal} / {target.kcal} kcal</Txt>
 
           <View style={styles.resultMacroInline}>
             {([
@@ -1542,7 +1542,7 @@ function ResultView({
             ] as const).map((m) => (
               <View key={m.key} style={styles.resultMacroChip}>
                 <View style={[styles.resultDot, { backgroundColor: m.color }]} />
-                <Txt variant="caption" color={Palette.gray700}>{m.label} {m.val}g</Txt>
+                <Txt variant="caption" color={Palette.gray800}>{m.label} {m.val}g</Txt>
               </View>
             ))}
           </View>
@@ -1555,7 +1555,7 @@ function ResultView({
             <View style={styles.resultCoachAvatar}>
               <Image source={COACH_CHARACTER} style={styles.resultCoachAvatarImg} resizeMode="contain" />
             </View>
-            <Txt variant="label" color={Palette.gray500}>핏쌤</Txt>
+            <Txt variant="label" color={Palette.gray600}>핏쌤</Txt>
           </View>
           {feedback.isPending ? (
             <View style={styles.resultCoachBubble}>
@@ -1575,7 +1575,7 @@ function ResultView({
       {/* 하단 고정 버튼 */}
       <View style={styles.resultBtns}>
         <Pressable onPress={onContinue} style={styles.resultSecondaryBtn}>
-          <Txt variant="body" weight="600" color={Palette.gray700}>기록 계속하기</Txt>
+          <Txt variant="body" weight="600" color={Palette.gray800}>기록 계속하기</Txt>
         </Pressable>
         <Pressable
           onPress={onDone}
@@ -1666,7 +1666,7 @@ function SlotDetailModal({
             onPress={() => (editing ? setEditingId(null) : close())}
             hitSlop={8}
             style={styles.recHeaderBtn}>
-            <Icon name={editing ? 'arrow-back' : 'close'} size={24} color={Palette.gray900} />
+            <Icon name={editing ? 'arrow-back' : 'close'} size={24} color={Palette.gray800} />
           </Pressable>
           <Txt variant="h2">{editing ? '기록 수정' : `${mealType ?? ''} 기록`}</Txt>
           <View style={styles.recHeaderBtn} />
@@ -1675,7 +1675,7 @@ function SlotDetailModal({
         {editing ? (
           <ScrollView contentContainerStyle={styles.reviewBody} showsVerticalScrollIndicator={false}>
             <View style={styles.editCol}>
-              <Txt variant="label" color={Palette.gray500}>
+              <Txt variant="label" color={Palette.gray600}>
                 음식
               </Txt>
               <Input
@@ -1685,7 +1685,7 @@ function SlotDetailModal({
               />
             </View>
             <View style={styles.editCol}>
-              <Txt variant="label" color={Palette.gray500}>
+              <Txt variant="label" color={Palette.gray600}>
                 칼로리 (kcal)
               </Txt>
               <Input
@@ -1698,7 +1698,7 @@ function SlotDetailModal({
             <View style={styles.editRow}>
               {(['carb', 'protein', 'fat'] as const).map((k) => (
                 <View key={k} style={[styles.editCol, styles.flex1]}>
-                  <Txt variant="label" color={Palette.gray500}>
+                  <Txt variant="label" color={Palette.gray600}>
                     {k === 'carb' ? '탄수화물(g)' : k === 'protein' ? '단백질(g)' : '지방(g)'}
                   </Txt>
                   <Input
@@ -1727,14 +1727,14 @@ function SlotDetailModal({
                   <Txt variant="body" weight="600">
                     {m.name}
                   </Txt>
-                  <Txt variant="caption" color={Palette.gray500}>
+                  <Txt variant="caption" color={Palette.gray600}>
                     {m.time} · 탄 {m.carb} · 단 {m.protein} · 지 {m.fat}
                   </Txt>
                 </View>
                 <Txt variant="body" weight="600" color={Palette.primary}>
                   {m.kcal} kcal
                 </Txt>
-                <Icon name="chevron-right" size={20} color={Palette.gray300} />
+                <Icon name="chevron-right" size={20} color={Palette.gray400} />
               </Pressable>
             ))}
             {mealType && (
@@ -1804,7 +1804,7 @@ function DateStrip({
       contentContainerStyle={styles.dateStripContent}>
       {days.map((d) => {
         const isSel = d.iso === selected;
-        const color = isSel ? Palette.gray900 : Palette.gray500;
+        const color = isSel ? Palette.gray800 : Palette.gray600;
         return (
           <Pressable
             key={d.iso}
@@ -1853,18 +1853,18 @@ function CalendarModal({
         <Pressable style={styles.calCard} onPress={() => {}}>
           <View style={styles.calHeader}>
             <Pressable onPress={prev} hitSlop={8} style={styles.calNav}>
-              <IconArrowChevron direction="left" size={24} color={Palette.gray700} />
+              <IconArrowChevron direction="left" size={24} color={Palette.gray800} />
             </Pressable>
             <Txt variant="h2">
               {view.y}년 {view.m + 1}월
             </Txt>
             <Pressable onPress={next} hitSlop={8} style={styles.calNav}>
-              <IconArrowChevron size={24} color={Palette.gray700} />
+              <IconArrowChevron size={24} color={Palette.gray800} />
             </Pressable>
           </View>
           <View style={styles.calWeekRow}>
             {DOW_KO.map((w) => (
-              <Txt key={w} variant="label" color={Palette.gray500} style={styles.calWeekCell}>
+              <Txt key={w} variant="label" color={Palette.gray600} style={styles.calWeekCell}>
                 {w}
               </Txt>
             ))}
@@ -1887,7 +1887,7 @@ function CalendarModal({
                     <Txt
                       variant="caption"
                       weight={isSel || isToday ? '700' : '400'}
-                      color={isSel ? '#FFFFFF' : isToday ? Palette.primary : Palette.gray900}>
+                      color={isSel ? '#FFFFFF' : isToday ? Palette.primary : Palette.gray800}>
                       {d}
                     </Txt>
                   </View>
@@ -2074,7 +2074,7 @@ export default function DietScreen() {
             <View style={styles.guideHead}>
               <SemiGauge ratio={intakeRatio} status={energyStatus} active={hasLog} />
               <View style={styles.guideTitleWrap}>
-                <Txt variant="body" color={Palette.gray500}>
+                <Txt variant="body" color={Palette.gray600}>
                   {stateHint}
                 </Txt>
               </View>
@@ -2120,19 +2120,19 @@ export default function DietScreen() {
           {/* ② 핏쌤의 한 마디 — 오늘 식단 AI 피드백 */}
           <CoachTipCard>
             {!hasLog ? (
-              <Txt variant="body" color={Palette.gray700}>{noLogTimeMsg()}</Txt>
+              <Txt variant="body" color={Palette.gray800}>{noLogTimeMsg()}</Txt>
             ) : dailyFeedback.isPending ? (
               <View style={styles.recLoading}>
                 <ActivityIndicator size="small" color={Palette.primary} />
-                <Txt variant="caption" color={Palette.gray500}>오늘 식단을 분석하고 있어요…</Txt>
+                <Txt variant="caption" color={Palette.gray600}>오늘 식단을 분석하고 있어요…</Txt>
               </View>
             ) : dailyFeedback.data ? (
               (() => {
                 const { title, body } = splitCoach(dailyFeedback.data);
                 return (
                   <>
-                    {title ? <Txt variant="body" weight="700" color={Palette.gray900} numberOfLines={2}>{title}</Txt> : null}
-                    {body ? <Txt variant="body" color={Palette.gray700}>{body}</Txt> : null}
+                    {title ? <Txt variant="body" weight="700" color={Palette.gray800} numberOfLines={2}>{title}</Txt> : null}
+                    {body ? <Txt variant="body" color={Palette.gray800}>{body}</Txt> : null}
                   </>
                 );
               })()
@@ -2140,7 +2140,7 @@ export default function DietScreen() {
           </CoachTipCard>
 
           {/* ③ 오늘 어떤 거 드셨나요? */}
-          <Txt variant="h2" weight="700" color={Palette.gray900} style={styles.sectionQHeader}>
+          <Txt variant="h2" weight="700" color={Palette.gray800} style={styles.sectionQHeader}>
             오늘 어떤 거 드셨나요?
           </Txt>
 
@@ -2148,7 +2148,7 @@ export default function DietScreen() {
           <Card style={{ gap: 0 }}>
             <View style={styles.kcalHead}>
               <View style={styles.flex1}>
-                <Txt variant="body" color={Palette.gray500}>
+                <Txt variant="body" color={Palette.gray600}>
                   {over
                     ? `${(-remaining).toLocaleString()}kcal 초과예요`
                     : `${remaining.toLocaleString()}kcal 더 먹어도 돼요`}
@@ -2157,11 +2157,11 @@ export default function DietScreen() {
                   <Txt variant="h1" weight="700">
                     {totals.kcal.toLocaleString()}
                   </Txt>
-                  <Txt variant="body" color={Palette.gray500}>
+                  <Txt variant="body" color={Palette.gray600}>
                     {' '}
                     / {calorieGoal.toLocaleString()}kcal
                   </Txt>
-                  <Icon name="info" size={16} color={Palette.gray300} style={styles.infoIcon} />
+                  <Icon name="info" size={16} color={Palette.gray400} style={styles.infoIcon} />
                 </View>
               </View>
             </View>
@@ -2169,13 +2169,13 @@ export default function DietScreen() {
             {isLoading ? (
               <View style={styles.listState}>
                 <ActivityIndicator color={Palette.primary} />
-                <Txt variant="caption" color={Palette.gray500}>
+                <Txt variant="caption" color={Palette.gray600}>
                   기록을 불러오는 중…
                 </Txt>
               </View>
             ) : isError ? (
               <View style={styles.listState}>
-                <Txt variant="caption" color={Palette.gray500}>
+                <Txt variant="caption" color={Palette.gray600}>
                   기록을 불러오지 못했어요.
                 </Txt>
                 <Pressable onPress={() => refetch()} hitSlop={8}>
@@ -2341,13 +2341,13 @@ const styles = StyleSheet.create({
   macroValueRow: { flexDirection: 'row', alignItems: 'baseline' },
   macroBar: { marginTop: Spacing.xs },
   rangeBarWrap: { position: 'relative', height: 6 },
-  rangeBarTrack: { position: 'absolute', left: 0, right: 0, height: 6, borderRadius: Radius.full, backgroundColor: Palette.gray100 },
+  rangeBarTrack: { position: 'absolute', left: 0, right: 0, height: 6, borderRadius: Radius.full, backgroundColor: Palette.gray200 },
   rangeBarFill: { position: 'absolute', left: 0, height: 6, borderRadius: Radius.full },
-  rangeBarGoalLine: { position: 'absolute', right: 0, top: -2, bottom: -2, width: 2, borderRadius: 1, backgroundColor: Palette.gray400 },
+  rangeBarGoalLine: { position: 'absolute', right: 0, top: -2, bottom: -2, width: 2, borderRadius: 1, backgroundColor: Palette.gray500 },
   rangeLabels: { position: 'relative', height: 14, marginTop: 2 },
 
   // progress
-  track: { height: 6, borderRadius: Radius.full, backgroundColor: Palette.gray100, overflow: 'hidden' },
+  track: { height: 6, borderRadius: Radius.full, backgroundColor: Palette.gray200, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: Radius.full },
 
   sectionDivider: { height: StyleSheet.hairlineWidth, backgroundColor: Palette.lineDefault, marginTop: Spacing.lg },
@@ -2379,7 +2379,7 @@ const styles = StyleSheet.create({
   // 메모 남기기 (결과 화면)
   memoSection: { gap: Spacing.xs },
   memoBox: { backgroundColor: Palette.bgMuted, borderRadius: Radius.card, padding: Spacing.md, minHeight: 110 },
-  memoInput: { flex: 1, minHeight: 64, ...Typography.body, color: Palette.gray900, textAlignVertical: 'top' },
+  memoInput: { flex: 1, minHeight: 64, ...Typography.body, color: Palette.gray800, textAlignVertical: 'top' },
   memoCounter: { alignSelf: 'flex-end', marginTop: Spacing.xs },
 
   // 저장 후 결과 화면 — 운동 효과 점수 상승 (카드 + 그래프)
@@ -2507,7 +2507,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgMuted,
     paddingHorizontal: Spacing.md,
     fontSize: 16,
-    color: Palette.gray900,
+    color: Palette.gray800,
   },
   deleteBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs, paddingVertical: Spacing.md, marginTop: Spacing.xs },
 
@@ -2547,7 +2547,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: Palette.gray900,
+    shadowColor: Palette.gray800,
     shadowOpacity: 0.08,
     shadowRadius: 24,
     shadowOffset: { width: 0, height: 8 },
@@ -2556,7 +2556,7 @@ const styles = StyleSheet.create({
 
   // 칼로리 그라데이션 바
   calBarWrap: { position: 'relative', marginTop: Spacing.sm },
-  calTrack: { height: 12, borderRadius: Radius.full, backgroundColor: Palette.gray100, overflow: 'hidden' },
+  calTrack: { height: 12, borderRadius: Radius.full, backgroundColor: Palette.gray200, overflow: 'hidden' },
   calMarker: {
     position: 'absolute',
     top: -2,
@@ -2564,7 +2564,7 @@ const styles = StyleSheet.create({
     height: 16,
     borderLeftWidth: 1,
     borderStyle: 'dashed',
-    borderColor: Palette.gray300,
+    borderColor: Palette.gray400,
   },
   calLabels: { position: 'relative', height: 16, marginTop: Spacing.xs },
   calLabelAnchor: { position: 'absolute' },
@@ -2637,7 +2637,7 @@ const styles = StyleSheet.create({
   mealRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, paddingVertical: Spacing.md },
   mealLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flex: 1 },
   mealRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  mealTag: { paddingHorizontal: Spacing.sm, paddingVertical: 2, borderRadius: Radius.small, backgroundColor: Palette.gray100 },
+  mealTag: { paddingHorizontal: Spacing.sm, paddingVertical: 2, borderRadius: Radius.small, backgroundColor: Palette.gray200 },
   mealInfo: { flex: 1, gap: 2 },
   mealMacros: { paddingBottom: Spacing.md, paddingLeft: Spacing.xs },
 
@@ -2705,7 +2705,7 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     fontSize: 18,
     lineHeight: 26,
-    color: Palette.gray900,
+    color: Palette.gray800,
     textAlignVertical: 'top',
   },
   gramsRow: {
@@ -2725,7 +2725,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     paddingHorizontal: Spacing.md,
   },
-  searchInput: { flex: 1, fontSize: 16, color: Palette.gray900 },
+  searchInput: { flex: 1, fontSize: 16, color: Palette.gray800 },
   searchItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -2802,11 +2802,11 @@ const styles = StyleSheet.create({
   // 리뷰 값 직접 편집
   reviewEditBtn: { position: 'absolute', top: Spacing.md, right: Spacing.md, flexDirection: 'row', alignItems: 'center', gap: 2, zIndex: 1 },
   reviewNameInput: { minWidth: 160 },
-  reviewNameInputText: { fontSize: 20, fontWeight: '700', color: Palette.gray900, textAlign: 'center' },
+  reviewNameInputText: { fontSize: 20, fontWeight: '700', color: Palette.gray800, textAlign: 'center' },
   reviewKcalInput: { minWidth: 96 },
   reviewKcalInputText: { fontSize: 32, fontWeight: '700', color: Palette.primary, textAlign: 'center' },
   reviewMacroInput: { minWidth: 56 },
-  reviewMacroInputText: { fontSize: 16, fontWeight: '600', color: Palette.gray900, textAlign: 'center' },
+  reviewMacroInputText: { fontSize: 16, fontWeight: '600', color: Palette.gray800, textAlign: 'center' },
 
   // 리뷰 화면 재설계 — 음식 카드
   reviewFoodCard: {

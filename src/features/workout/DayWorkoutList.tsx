@@ -28,7 +28,7 @@ const COMPLETION_LABEL: Record<CompletionStatus, string> = {
 const COMPLETION_COLOR: Record<CompletionStatus, string> = {
   completed: Palette.primary,
   partial: Palette.warning,
-  missed: Palette.gray500,
+  missed: Palette.gray600,
 };
 
 function iconFor(bodyPart: WorkoutBodyPart | null): LucideIcon {

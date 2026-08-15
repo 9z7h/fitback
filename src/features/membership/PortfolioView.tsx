@@ -140,7 +140,7 @@ export function MembershipPortfolioCard({ item, onPress }: { item: PortfolioItem
   const pct = Math.min(100, Math.round(value.progressPct));
 
   return (
-    <Card onPress={onPress} accentColor={expiring ? Palette.warning : expired ? Palette.gray300 : Palette.primary}>
+    <Card onPress={onPress} accentColor={expiring ? Palette.warning : expired ? Palette.gray400 : Palette.primary}>
       <View style={styles.cardHead}>
         <View style={styles.badges}>
           <View style={styles.typeBadge}>
@@ -149,15 +149,15 @@ export function MembershipPortfolioCard({ item, onPress }: { item: PortfolioItem
             </ThemedText>
           </View>
           {expired ? (
-            <View style={[styles.dBadge, { backgroundColor: Palette.gray100 }]}>
+            <View style={[styles.dBadge, { backgroundColor: Palette.gray200 }]}>
               <ThemedText type="label" themeColor="textSecondary">
                 만료
               </ThemedText>
             </View>
           ) : (
             <View style={[styles.dBadge, expiring && { backgroundColor: `${Palette.warning}1A` }]}>
-              <Icon icon={CalendarClock} size={11} color={expiring ? Palette.warning : Palette.gray500} />
-              <ThemedText type="label" style={{ color: expiring ? Palette.warning : Palette.gray500 }}>
+              <Icon icon={CalendarClock} size={11} color={expiring ? Palette.warning : Palette.gray600} />
+              <ThemedText type="label" style={{ color: expiring ? Palette.warning : Palette.gray600 }}>
                 D-{Math.max(0, d)}
               </ThemedText>
             </View>
@@ -171,7 +171,7 @@ export function MembershipPortfolioCard({ item, onPress }: { item: PortfolioItem
         {line}
       </ThemedText>
       <View style={styles.miniTrack}>
-        <View style={[styles.miniFill, { width: `${pct}%`, backgroundColor: expired ? Palette.gray300 : Palette.primary }]} />
+        <View style={[styles.miniFill, { width: `${pct}%`, backgroundColor: expired ? Palette.gray400 : Palette.primary }]} />
       </View>
     </Card>
   );
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 28,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
     overflow: 'hidden',
     justifyContent: 'center',
   },
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     gap: 2,
     padding: Spacing.sm,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
   },
   cta: { marginTop: 2 },
 
@@ -229,11 +229,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 3,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 2,
     borderRadius: Radius.small,
   },
-  miniTrack: { height: 6, borderRadius: 3, backgroundColor: Palette.gray100, overflow: 'hidden', marginTop: Spacing.sm },
+  miniTrack: { height: 6, borderRadius: 3, backgroundColor: Palette.gray200, overflow: 'hidden', marginTop: Spacing.sm },
   miniFill: { height: '100%', borderRadius: 3 },
 });

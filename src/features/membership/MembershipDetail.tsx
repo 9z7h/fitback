@@ -82,7 +82,7 @@ export function MembershipDetail({
       <View style={styles.header}>
         <ThemedText type="h2">{m.name}</ThemedText>
         <Pressable onPress={onClose} hitSlop={8} accessibilityLabel="닫기">
-          <Icon icon={X} size={24} color={Palette.gray500} />
+          <Icon icon={X} size={24} color={Palette.gray600} />
         </Pressable>
       </View>
 
@@ -108,7 +108,7 @@ export function MembershipDetail({
               <View
                 style={[
                   styles.barFill,
-                  { width: `${pct}%`, backgroundColor: expired ? Palette.gray300 : Palette.primary },
+                  { width: `${pct}%`, backgroundColor: expired ? Palette.gray400 : Palette.primary },
                 ]}
               />
               <View style={[styles.marker, { left: '75%' }]} />
@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 24,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
     overflow: 'hidden',
     justifyContent: 'center',
   },

@@ -20,7 +20,7 @@ export function RecordCard({ label, value, onPress, children }: RecordCardProps)
       style={({ pressed }) => [styles.card, Elevation.level1, pressed && styles.pressed]}>
       <View style={styles.head}>
         <ThemedText style={styles.label}>{label}</ThemedText>
-        <IconArrowChevron size={16} color={Palette.gray300} />
+        <IconArrowChevron size={16} color={Palette.gray400} />
       </View>
       <ThemedText style={styles.value}>{value}</ThemedText>
       {children}
@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.medium,
     fontWeight: '500',
     letterSpacing: -0.45,
-    color: Palette.gray500,
+    color: Palette.gray600,
   },
   value: {
-    color: Palette.gray900,
+    color: Palette.gray800,
     fontSize: 20,
     fontFamily: FontFamily.bold,
     fontWeight: '700',

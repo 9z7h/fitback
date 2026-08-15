@@ -11,7 +11,7 @@ export function HelpButton({
   title,
   paragraphs,
   size = 14,
-  color = Palette.gray300,
+  color = Palette.gray400,
 }: {
   title: string;
   paragraphs: string[];
@@ -31,7 +31,7 @@ export function HelpButton({
             <View style={styles.head}>
               <ThemedText type="h2">{title}</ThemedText>
               <Pressable onPress={() => setOpen(false)} hitSlop={8} accessibilityLabel="닫기">
-                <Icon icon={X} size={20} color={Palette.gray500} />
+                <Icon icon={X} size={20} color={Palette.gray600} />
               </Pressable>
             </View>
             {paragraphs.map((p, i) => (

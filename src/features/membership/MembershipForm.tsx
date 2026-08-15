@@ -236,7 +236,7 @@ export function MembershipForm({ onClose, onSuccess }: { onClose: () => void; on
       <View style={styles.header}>
         <ThemedText type="h2">회원권 등록</ThemedText>
         <Pressable onPress={onClose} hitSlop={8} accessibilityLabel="닫기">
-          <Icon icon={X} size={24} color={Palette.gray500} />
+          <Icon icon={X} size={24} color={Palette.gray600} />
         </Pressable>
       </View>
 
@@ -398,7 +398,7 @@ export function MembershipForm({ onClose, onSuccess }: { onClose: () => void; on
                 <Icon
                   icon={centerCoord ? Check : MapPin}
                   size={16}
-                  color={centerCoord ? Palette.profit : Palette.gray500}
+                  color={centerCoord ? Palette.profit : Palette.gray600}
                 />
                 <ThemedText type="caption" themeColor="textSecondary">
                   {centerCoord
@@ -447,7 +447,7 @@ export function MembershipForm({ onClose, onSuccess }: { onClose: () => void; on
             <View style={styles.header}>
               <ThemedText type="h2">센터 검색</ThemedText>
               <Pressable onPress={() => setSearchModalOpen(false)} hitSlop={8} accessibilityLabel="닫기">
-                <Icon icon={X} size={24} color={Palette.gray500} />
+                <Icon icon={X} size={24} color={Palette.gray600} />
               </Pressable>
             </View>
             <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
@@ -459,7 +459,7 @@ export function MembershipForm({ onClose, onSuccess }: { onClose: () => void; on
                   returnKeyType="search"
                   autoFocus
                   placeholder="주소·장소 검색 (예: 강남 피트니스)"
-                  placeholderTextColor={Palette.gray300}
+                  placeholderTextColor={Palette.gray400}
                   style={[styles.input, styles.searchInput]}
                 />
                 <Pressable
@@ -500,7 +500,7 @@ export function MembershipForm({ onClose, onSuccess }: { onClose: () => void; on
                   key={`${r.lat}-${r.lng}-${i}`}
                   onPress={() => pickPlace(r)}
                   style={({ pressed }) => [styles.resultRow, pressed && styles.pressed]}>
-                  <Icon icon={MapPin} size={16} color={Palette.gray500} />
+                  <Icon icon={MapPin} size={16} color={Palette.gray600} />
                   <View style={styles.resultText}>
                     <ThemedText type="captionBold">{r.name}</ThemedText>
                     {r.address ? (
@@ -609,7 +609,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     fontSize: 16,
     fontFamily: 'Pretendard',
-    color: Palette.gray900,
+    color: Palette.gray800,
     backgroundColor: Palette.bgSurface,
     minHeight: 52,
     justifyContent: 'center',
@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: Palette.gray300,
+    borderColor: Palette.gray400,
     alignItems: 'center',
     justifyContent: 'center',
   },

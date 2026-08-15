@@ -1,50 +1,51 @@
 /**
- * FitBack SpeechBubble — Figma Speech_Bubble. AI 코치 말풍선.
- * 꼬리(tail) 도형은 SVG 없이 정확히 재현할 수 없어 현재는 미구현.
- * variant로 방향만 받아 정렬을 결정하고, 추후 꼬리 추가 시 확장한다.
+ * FitBack SpeechBubble — Figma SpeechBubble(1436:6015). 하단 중앙(살짝 좌측)에 꼬리가 달린 말풍선.
+ * 박스(라운드 사각형)와 꼬리(SVG)를 분리해서 내용 길이에 따라 너비가 가변하게 구현.
  */
 import type { ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
 import { ThemedText } from '@/components/themed-text';
 import { Elevation, Palette, Radius, Spacing } from '@/constants/theme';
 
-type SpeechBubbleVariant = 'tail-left' | 'tail-right';
-
-const ALIGN: Record<SpeechBubbleVariant, ViewStyle['alignSelf']> = {
-  'tail-left': 'flex-start',
-  'tail-right': 'flex-end',
-};
-
 export function SpeechBubble({
-  variant = 'tail-left',
   children,
   style,
 }: {
-  variant?: SpeechBubbleVariant;
   /** 말풍선 내용 — 문자열이면 자동으로 ThemedText로 감싼다 */
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
 }) {
   return (
-    <View style={[styles.bubble, { alignSelf: ALIGN[variant] }, Elevation.level2, style]}>
-      {typeof children === 'string' ? (
-        <ThemedText type="bodySemibold" style={styles.text}>
-          {children}
-        </ThemedText>
-      ) : (
-        children
-      )}
+    <View style={[styles.wrap, style]}>
+      <View style={[styles.box, Elevation.level2]}>
+        {typeof children === 'string' ? (
+          <ThemedText type="bodySemibold" style={styles.text}>
+            {children}
+          </ThemedText>
+        ) : (
+          children
+        )}
+      </View>
+      <Svg width={9} height={7} viewBox="0 0 8.084 6.1667" style={styles.tail}>
+        <Path
+          d="M8.084 0L4.9082 5.5C4.5233 6.1667 3.5607 6.1667 3.1758 5.5L0 0Z"
+          fill={Palette.bgSurfaceTranslucent}
+        />
+      </Svg>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  bubble: {
-    backgroundColor: Palette.bgSurface,
+  wrap: { alignItems: 'center' },
+  box: {
+    backgroundColor: Palette.bgSurfaceTranslucent,
     borderRadius: Radius.small,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: Spacing.xs,
   },
-  text: { color: Palette.gray900 },
+  tail: { marginTop: -1 },
+  text: { color: Palette.gray800 },
 });

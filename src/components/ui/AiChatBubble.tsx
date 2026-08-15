@@ -93,7 +93,7 @@ export function AiChatBubble({
               accessibilityRole="button"
               accessibilityLabel="닫기"
               style={({ pressed }) => [pressed && styles.pressed]}>
-              <X size={20} color={Palette.gray500} strokeWidth={2} />
+              <X size={20} color={Palette.gray600} strokeWidth={2} />
             </Pressable>
           ) : null}
         </View>
@@ -117,7 +117,7 @@ export function AiChatBubble({
 
 const styles = StyleSheet.create({
   pressed: { opacity: 0.6 },
-  text: { color: Palette.gray900 },
+  text: { color: Palette.gray800 },
 
   // ── floatingButton ──
   floating: {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   userChat: {
     backgroundColor: Palette.bgSurface,
     borderWidth: 1,
-    borderColor: Palette.gray200,
+    borderColor: Palette.gray300,
     borderTopRightRadius: Radius.small,
   },
 
@@ -167,6 +167,6 @@ const styles = StyleSheet.create({
     ...Typography.subtitle,
     fontFamily: FontFamily.bold,
     fontWeight: '700',
-    color: Palette.gray900,
+    color: Palette.gray800,
   },
 });

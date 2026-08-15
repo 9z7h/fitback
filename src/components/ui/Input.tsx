@@ -21,17 +21,17 @@ import { Palette, Radius, Spacing, Typography } from '@/constants/theme';
 type InputState = 'normal' | 'pressed' | 'selected' | 'filled';
 
 const FIELD_STYLE: Record<InputState, ViewStyle> = {
-  normal: { backgroundColor: Palette.bgSurface, borderWidth: 1, borderColor: Palette.gray200, height: 56 },
+  normal: { backgroundColor: Palette.bgSurface, borderWidth: 1, borderColor: Palette.gray300, height: 56 },
   pressed: { backgroundColor: Palette.bgSurface, borderWidth: 1, borderColor: Palette.primary, height: 56 },
-  selected: { backgroundColor: Palette.bgSurface, borderWidth: 1, borderColor: Palette.gray200, height: 56 },
-  filled: { backgroundColor: Palette.gray50, borderWidth: 0, height: 52 },
+  selected: { backgroundColor: Palette.bgSurface, borderWidth: 1, borderColor: Palette.gray300, height: 56 },
+  filled: { backgroundColor: Palette.gray200, borderWidth: 0, height: 52 },
 };
 
 const PLACEHOLDER_COLOR: Record<InputState, string> = {
-  normal: Palette.gray500,
-  pressed: Palette.gray500,
-  selected: Palette.gray500,
-  filled: Palette.gray400,
+  normal: Palette.gray600,
+  pressed: Palette.gray600,
+  selected: Palette.gray600,
+  filled: Palette.gray500,
 };
 
 export function Input({
@@ -59,7 +59,7 @@ export function Input({
 
   const field = (
     <View style={[styles.field, FIELD_STYLE[resolved], style]}>
-      {resolved === 'filled' ? <Search size={20} color={Palette.gray400} strokeWidth={2} /> : null}
+      {resolved === 'filled' ? <Search size={20} color={Palette.gray500} strokeWidth={2} /> : null}
       <TextInput
         style={[styles.input, textStyle]}
         value={value}
@@ -78,7 +78,7 @@ export function Input({
       />
       {resolved === 'filled' && onClear ? (
         <Pressable onPress={onClear} accessibilityRole="button">
-          <X size={24} color={Palette.gray400} strokeWidth={2} />
+          <X size={24} color={Palette.gray500} strokeWidth={2} />
         </Pressable>
       ) : null}
     </View>
@@ -99,7 +99,7 @@ export function Input({
 
 const styles = StyleSheet.create({
   labeled: { width: '100%', gap: Spacing.xs },
-  label: { color: Palette.gray500 },
+  label: { color: Palette.gray600 },
   field: {
     width: '100%',
     flexDirection: 'row',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     ...Typography.body,
-    color: Palette.gray900,
+    color: Palette.gray800,
     padding: 0,
   },
 });

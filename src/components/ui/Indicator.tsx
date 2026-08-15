@@ -25,7 +25,7 @@ export function Indicator({
       {Array.from({ length: count }, (_, i) => (
         <View
           key={i}
-          style={[styles.dot, { backgroundColor: i === activeIndex ? Palette.gray900 : Palette.gray300 }]}
+          style={[styles.dot, { backgroundColor: i === activeIndex ? Palette.gray600 : Palette.gray400 }]}
         />
       ))}
     </View>

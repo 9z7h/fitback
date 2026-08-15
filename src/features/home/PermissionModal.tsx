@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 44,
   },
-  primaryOff: { backgroundColor: Palette.gray300 },
+  primaryOff: { backgroundColor: Palette.gray400 },
   ghost: { alignItems: 'center', paddingVertical: Spacing.sm },
 });

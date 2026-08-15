@@ -249,7 +249,7 @@ export function IconArrowUp({ color, size = 24 }: IconProps) {
 }
 
 export function IconArrowChevron({
-  color = Palette.gray400,
+  color = Palette.gray500,
   size = 20,
   direction = 'right',
 }: {

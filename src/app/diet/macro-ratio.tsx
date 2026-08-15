@@ -107,7 +107,7 @@ export default function MacroRatioScreen() {
             accessibilityRole="button"
             accessibilityLabel="뒤로 가기"
             style={({ pressed }) => [styles.iconBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={ChevronLeft} size={24} color={Palette.gray900} />
+            <Icon icon={ChevronLeft} size={24} color={Palette.gray800} />
           </Pressable>
           <ThemedText type="subtitle">탄단지 비율 조정</ThemedText>
           <View style={styles.iconBtn} />
@@ -119,7 +119,7 @@ export default function MacroRatioScreen() {
           </View>
         ) : !profileReady || kcal == null ? (
           <View style={styles.center}>
-            <Icon icon={CircleAlert} size={40} color={Palette.gray400} />
+            <Icon icon={CircleAlert} size={40} color={Palette.gray500} />
             <ThemedText type="h2" style={styles.blockTitle}>
               프로필을 먼저 입력해주세요
             </ThemedText>
@@ -253,7 +253,7 @@ function MacroRatioRow({
             accessibilityRole="button"
             accessibilityLabel={`${label} 비율 줄이기`}
             style={({ pressed }) => [styles.stepBtn, pressed && styles.stepBtnPressed]}>
-            <Icon icon={Minus} size={16} color={canDecrease ? Palette.gray900 : Palette.gray300} />
+            <Icon icon={Minus} size={16} color={canDecrease ? Palette.gray800 : Palette.gray400} />
           </Pressable>
           <ThemedText type="bodySemibold" style={styles.stepValue}>
             {value}%
@@ -264,7 +264,7 @@ function MacroRatioRow({
             accessibilityRole="button"
             accessibilityLabel={`${label} 비율 늘리기`}
             style={({ pressed }) => [styles.stepBtn, pressed && styles.stepBtnPressed]}>
-            <Icon icon={Plus} size={16} color={canIncrease ? Palette.gray900 : Palette.gray300} />
+            <Icon icon={Plus} size={16} color={canIncrease ? Palette.gray800 : Palette.gray400} />
           </Pressable>
         </View>
         <ThemedText type="captionBold" themeColor="textSecondary">

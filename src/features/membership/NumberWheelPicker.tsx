@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: Palette.lineDefault,
   },
-  cancel: { color: Palette.gray500 },
+  cancel: { color: Palette.gray600 },
   done: { color: Palette.primary },
   wheels: { flexDirection: 'row', height: ITEM_HEIGHT * VISIBLE, paddingHorizontal: Spacing.md },
   column: { flex: 1 },

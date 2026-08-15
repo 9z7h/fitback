@@ -12,17 +12,17 @@ import { Palette, Radius, Spacing, Typography } from '@/constants/theme';
 type ChipSize = 'large' | 'medium_a' | 'medium_b' | 'state' | 'day';
 
 const CHIP_BG: Record<ChipSize, string> = {
-  large: Palette.gray200,
-  medium_a: Palette.gray200,
+  large: Palette.gray300,
+  medium_a: Palette.gray300,
   medium_b: Palette.bgMuted,
   state: Palette.primaryLight,
   day: Palette.overlayWhite16,
 };
 
 const CHIP_FG: Record<ChipSize, string> = {
-  large: Palette.gray500,
-  medium_a: Palette.gray500,
-  medium_b: Palette.gray500,
+  large: Palette.gray600,
+  medium_a: Palette.gray600,
+  medium_b: Palette.gray600,
   state: Palette.primary,
   day: Palette.white,
 };
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: 2,
     height: 2,
     borderRadius: Radius.full,
-    backgroundColor: Palette.gray300,
+    backgroundColor: Palette.gray400,
   },
 
   // ── size box ──

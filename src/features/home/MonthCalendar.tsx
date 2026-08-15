@@ -37,9 +37,9 @@ const TYPE_META: { key: FilterKey; label: string; color: string }[] = [
   { key: 'workout', label: '운동', color: Palette.primary },
   { key: 'diet', label: '식단', color: Palette.warning },
   { key: 'visit', label: '방문', color: Palette.success },
-  { key: 'custom', label: '기타', color: Palette.gray400 },
+  { key: 'custom', label: '기타', color: Palette.gray500 },
 ];
-const typeColor = (k: FilterKey) => TYPE_META.find((t) => t.key === k)?.color ?? Palette.gray400;
+const typeColor = (k: FilterKey) => TYPE_META.find((t) => t.key === k)?.color ?? Palette.gray500;
 const typeLabel = (k: FilterKey) => TYPE_META.find((t) => t.key === k)?.label ?? '기타';
 
 /** 타입 태그 칩 (기록·일정 항목 앞에 부착). */
@@ -159,7 +159,7 @@ function DayRecordList({ date, onNavigate }: { date: string; onNavigate: () => v
               <ThemedText type="caption" style={styles.recText} numberOfLines={1}>
                 {m.mealType} · 단백질 {m.protein}g
               </ThemedText>
-              <Icon icon={ChevronRight} size={16} color={Palette.gray300} />
+              <Icon icon={ChevronRight} size={16} color={Palette.gray400} />
             </Pressable>
           ))}
         </View>
@@ -215,7 +215,7 @@ function ScheduleSection({ date, items }: { date: string; items: Schedule[] }) {
                   {s.source === 'ai' ? ' · AI' : ''}
                 </ThemedText>
                 <Pressable onPress={() => del.mutate(s.id)} hitSlop={6} accessibilityRole="button" accessibilityLabel="삭제">
-                  <Icon icon={Trash2} size={15} color={Palette.gray300} />
+                  <Icon icon={Trash2} size={15} color={Palette.gray400} />
                 </Pressable>
               </View>
             );
@@ -232,7 +232,7 @@ function ScheduleSection({ date, items }: { date: string; items: Schedule[] }) {
               key={p.key}
               onPress={() => setType(p.key)}
               style={[styles.typeChip, on && { backgroundColor: `${p.color}1A`, borderColor: p.color }]}>
-              <ThemedText type="label" style={{ color: on ? p.color : Palette.gray500 }}>
+              <ThemedText type="label" style={{ color: on ? p.color : Palette.gray600 }}>
                 {p.label}
               </ThemedText>
             </Pressable>
@@ -354,7 +354,7 @@ export function MonthCalendar({ onClose }: { onClose: () => void }) {
       <View style={styles.topBar}>
         <ThemedText type="h2">일정 캘린더</ThemedText>
         <Pressable onPress={onClose} hitSlop={8} accessibilityRole="button" accessibilityLabel="닫기">
-          <Icon icon={X} size={22} color={Palette.gray500} />
+          <Icon icon={X} size={22} color={Palette.gray600} />
         </Pressable>
       </View>
 
@@ -375,13 +375,13 @@ export function MonthCalendar({ onClose }: { onClose: () => void }) {
       <ScrollView contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         <View style={styles.monthNav}>
           <Pressable onPress={() => shift(-1)} hitSlop={8} accessibilityRole="button" accessibilityLabel="이전 달">
-            <Icon icon={ChevronLeft} size={22} color={Palette.gray500} />
+            <Icon icon={ChevronLeft} size={22} color={Palette.gray600} />
           </Pressable>
           <ThemedText type="captionBold">
             {year}년 {month}월
           </ThemedText>
           <Pressable onPress={() => shift(1)} hitSlop={8} accessibilityRole="button" accessibilityLabel="다음 달">
-            <Icon icon={ChevronRight} size={22} color={Palette.gray500} />
+            <Icon icon={ChevronRight} size={22} color={Palette.gray600} />
           </Pressable>
         </View>
 
@@ -427,7 +427,7 @@ export function MonthCalendar({ onClose }: { onClose: () => void }) {
                   accessibilityRole="button"
                   accessibilityState={{ selected: on }}>
                   <View style={[styles.dot, { backgroundColor: c.color }]} />
-                  <ThemedText type="label" style={{ color: on ? c.color : Palette.gray400 }}>
+                  <ThemedText type="label" style={{ color: on ? c.color : Palette.gray500 }}>
                     {c.label}
                   </ThemedText>
                 </Pressable>
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: ScreenPadding,
     marginBottom: Spacing.sm,
-    backgroundColor: Palette.gray100,
+    backgroundColor: Palette.gray200,
     borderRadius: Radius.small,
     padding: 3,
   },
@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 5,
     borderWidth: 1.5,
-    borderColor: Palette.gray300,
+    borderColor: Palette.gray400,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -558,5 +558,5 @@ const styles = StyleSheet.create({
   addRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, marginTop: Spacing.sm },
   addInput: { flex: 1 },
   addBtn: { width: 38, height: 38, borderRadius: Radius.small, backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center' },
-  addBtnOff: { backgroundColor: Palette.gray300 },
+  addBtnOff: { backgroundColor: Palette.gray400 },
 });

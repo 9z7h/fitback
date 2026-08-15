@@ -72,8 +72,8 @@
 | `#6490ff` | `Palette.secondary` | ✓ (8/12 갱신) |
 | `#bd7bf8` | `Palette.tertiary` | ✓ (8/12 신규 추가) |
 | `#ffcc00` | `Palette.warning` | ✓ (8/12 갱신) |
-| `#f2f4f7` | `Palette.bgBase` / `Palette.bgMuted` / `Palette.gray50` | ✓ (8/12 갱신) |
-| `#272e3e` | `Palette.gray900` / `Palette.loss` | ✓ (8/12 갱신) |
+| `#f2f4f7` | `Palette.bgBase` / `Palette.bgMuted` / `Palette.gray200` | ✓ (8/12 갱신) |
+| `#272e3e` | `Palette.gray800` / `Palette.loss` | ✓ (8/12 갱신) |
 | `#c0c3cf` | `Palette.iconPrimary` | ✓ (8/12 신규 추가) |
 
 ---

@@ -14,7 +14,7 @@ function InfoRow({ icon, label, value }: { icon: typeof Ruler; label: string; va
   return (
     <View style={styles.row}>
       <View style={styles.rowLeft}>
-        <Icon icon={icon} size={16} color={Palette.gray500} />
+        <Icon icon={icon} size={16} color={Palette.gray600} />
         <ThemedText type="caption" themeColor="textSecondary">
           {label}
         </ThemedText>
@@ -81,7 +81,7 @@ export default function MyScreen() {
             onPress={() => supabase.auth.signOut()}
             style={({ pressed }) => [styles.logout, pressed && styles.pressed]}
             accessibilityRole="button">
-            <Icon icon={LogOut} size={16} color={Palette.gray500} />
+            <Icon icon={LogOut} size={16} color={Palette.gray600} />
             <ThemedText type="caption" themeColor="textSecondary">
               로그아웃
             </ThemedText>

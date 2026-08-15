@@ -22,7 +22,7 @@ export function CoachTipCard({ children }: { children: ReactNode }) {
 const styles = StyleSheet.create({
   card: {
     marginTop: Spacing.md,
-    backgroundColor: Palette.gray200,
+    backgroundColor: Palette.gray300,
     borderRadius: Radius.card,
     borderWidth: 0.5,
     borderColor: Palette.lineDefault,

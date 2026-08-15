@@ -34,7 +34,7 @@ export const RISK_COLORS: Record<RiskLevel, string> = {
   danger: Palette.loss, // 적자(못 쓰면 손실)
   warning: Palette.warning,
   safe: Palette.profit, // 흑자(페이스 충분)
-  neutral: Palette.gray500,
+  neutral: Palette.gray600,
 };
 
 // 색 단독 의존 금지(접근성): 아이콘 + 텍스트 라벨 + 색 3중 표기 (Lucide).
@@ -177,14 +177,14 @@ export function summarize(
 export function ddayBadge(risk: RiskInfo): { label: string; color: string } {
   const expired = risk.remainingDays <= 0;
   const color = expired
-    ? Palette.gray300
+    ? Palette.gray400
     : risk.level === 'danger'
       ? RISK_COLORS.danger
       : risk.level === 'warning'
         ? RISK_COLORS.warning
         : risk.level === 'safe'
           ? RISK_COLORS.safe
-          : Palette.gray500;
+          : Palette.gray600;
   return { label: expired ? '만료' : `D-${formatNumber(risk.remainingDays)}`, color };
 }
 

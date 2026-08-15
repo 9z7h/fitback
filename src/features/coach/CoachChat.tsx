@@ -266,7 +266,7 @@ function DietLogButton({
                 status === 'saving' && { opacity: 0.4 },
               ]}
               accessibilityRole="button">
-              <ThemedText type="captionBold" style={{ color: hasMeals ? Palette.primary : Palette.gray300 }}>
+              <ThemedText type="captionBold" style={{ color: hasMeals ? Palette.primary : Palette.gray400 }}>
                 {t}
               </ThemedText>
             </Pressable>
@@ -295,7 +295,7 @@ const dietLogStyles = StyleSheet.create({
     paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm,
     backgroundColor: Palette.bgSurface,
   },
-  chipDisabled: { borderColor: Palette.gray300, backgroundColor: Palette.bgSurface },
+  chipDisabled: { borderColor: Palette.gray400, backgroundColor: Palette.bgSurface },
   savedRow: {
     flexDirection: 'row', alignItems: 'center', gap: Spacing.xs,
     padding: Spacing.md, backgroundColor: Palette.successLight,
@@ -313,7 +313,7 @@ function ResponseBody({ response }: { response: AppResponse }) {
         <View style={styles.responseCardHead}>
           <ThemedText type="captionBold">{focus_part} 루틴</ThemedText>
           <View style={styles.miniTag}>
-            <ThemedText type="label" style={{ color: Palette.gray500 }}>
+            <ThemedText type="label" style={{ color: Palette.gray600 }}>
               {focus_part} · {duration_min}분
             </ThemedText>
           </View>
@@ -383,7 +383,7 @@ function ResponseBody({ response }: { response: AppResponse }) {
           <ThemedText type="captionBold">분석 결과</ThemedText>
           <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 2 }}>
             <ThemedText type="label" themeColor="textSecondary">총 </ThemedText>
-            <ThemedText type="subtitle" style={{ color: Palette.gray900 }}>{total_kcal}</ThemedText>
+            <ThemedText type="subtitle" style={{ color: Palette.gray800 }}>{total_kcal}</ThemedText>
             <ThemedText type="label" themeColor="textSecondary"> kcal</ThemedText>
           </View>
         </View>
@@ -865,7 +865,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
             hitSlop={8}
             accessibilityRole="button"
             accessibilityLabel="뒤로">
-            <Icon icon={ArrowLeft} size={22} color={Palette.gray500} />
+            <Icon icon={ArrowLeft} size={22} color={Palette.gray600} />
           </Pressable>
           <ThemedText type="subtitle">이전 대화</ThemedText>
           <View style={{ width: 22 }} />
@@ -883,7 +883,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
                   <ThemedText type="label" themeColor="textSecondary">{fmtSessionTime(s.updatedAt)}</ThemedText>
                 </Pressable>
                 <Pressable onPress={() => removeSession(s.id)} hitSlop={8} accessibilityRole="button" accessibilityLabel="삭제">
-                  <Icon icon={Trash2} size={16} color={Palette.gray500} />
+                  <Icon icon={Trash2} size={16} color={Palette.gray600} />
                 </Pressable>
               </View>
             ))
@@ -905,10 +905,10 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
           </View>
           <View style={styles.topRight}>
             <Pressable onPress={openHistory} hitSlop={8} accessibilityRole="button" accessibilityLabel="이전 대화 보기">
-              <Icon icon={History} size={20} color={Palette.gray500} />
+              <Icon icon={History} size={20} color={Palette.gray600} />
             </Pressable>
             <Pressable onPress={onClose} hitSlop={8} accessibilityRole="button" accessibilityLabel="닫기">
-              <Icon icon={X} size={22} color={Palette.gray500} />
+              <Icon icon={X} size={22} color={Palette.gray600} />
             </Pressable>
           </View>
         </View>
@@ -979,7 +979,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
             <Pressable
               onPress={() => handlePhotoSelect('library')}
               style={({ pressed }) => [styles.photoSheetBtn, pressed && styles.pressed]}>
-              <Icon icon={Camera} size={18} color={Palette.gray700} />
+              <Icon icon={Camera} size={18} color={Palette.gray800} />
               <ThemedText type="captionBold">앨범에서 선택</ThemedText>
             </Pressable>
             <Pressable
@@ -1002,10 +1002,10 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
       <View style={styles.topBar}>
         <View style={styles.topRight}>
           <Pressable onPress={() => setView('welcome')} hitSlop={8} accessibilityRole="button" accessibilityLabel="뒤로">
-            <Icon icon={ArrowLeft} size={22} color={Palette.gray500} />
+            <Icon icon={ArrowLeft} size={22} color={Palette.gray600} />
           </Pressable>
           <Pressable onPress={openHistory} hitSlop={8} accessibilityRole="button" accessibilityLabel="이전 대화 보기">
-            <Icon icon={History} size={20} color={Palette.gray500} />
+            <Icon icon={History} size={20} color={Palette.gray600} />
           </Pressable>
         </View>
         <View style={styles.topCenter}>
@@ -1222,13 +1222,13 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
                     key={opt}
                     onPress={() => wcHandleSelect(opt)}
                     style={({ pressed }) => [styles.wcOptionBtn, styles.wcOptionBtnOutline, pressed && styles.pressed]}>
-                    <ThemedText type="captionBold" style={{ color: Palette.gray900 }}>{opt}</ThemedText>
+                    <ThemedText type="captionBold" style={{ color: Palette.gray800 }}>{opt}</ThemedText>
                   </Pressable>
                 ))}
                 <Pressable
                   onPress={() => setWcShowCustom(true)}
                   style={({ pressed }) => [styles.wcOptionBtn, styles.wcOptionBtnDashed, pressed && styles.pressed]}>
-                  <ThemedText type="captionBold" style={{ color: Palette.gray500 }}>기타 (직접입력)</ThemedText>
+                  <ThemedText type="captionBold" style={{ color: Palette.gray600 }}>기타 (직접입력)</ThemedText>
                 </Pressable>
               </View>
             )}
@@ -1453,8 +1453,8 @@ const styles = StyleSheet.create({
   wcProgressDot: { width: 20, height: 4, borderRadius: 2 },
   wcOptionBtn: { paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md, borderRadius: Radius.small, alignItems: 'center' },
   wcOptionBtnOutline: { borderWidth: 1, borderColor: Palette.lineDefault, backgroundColor: Palette.bgSurface },
-  wcOptionBtnDashed: { borderWidth: 1, borderStyle: 'dashed', borderColor: Palette.gray300, backgroundColor: Palette.bgSurface },
-  wcCustomInput: { borderWidth: 1, borderColor: Palette.lineDefault, borderRadius: Radius.small, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: 15, color: Palette.gray900, backgroundColor: Palette.bgSurface },
+  wcOptionBtnDashed: { borderWidth: 1, borderStyle: 'dashed', borderColor: Palette.gray400, backgroundColor: Palette.bgSurface },
+  wcCustomInput: { borderWidth: 1, borderColor: Palette.lineDefault, borderRadius: Radius.small, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: 15, color: Palette.gray800, backgroundColor: Palette.bgSurface },
   wcCta: { height: 48, borderRadius: Radius.button, alignItems: 'center', justifyContent: 'center' },
   wcGhost: { height: 40, alignItems: 'center', justifyContent: 'center' },
 
@@ -1480,6 +1480,6 @@ const styles = StyleSheet.create({
     width: 38, height: 38, borderRadius: Radius.full,
     backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center',
   },
-  sendBtnDisabled: { backgroundColor: Palette.gray300 },
+  sendBtnDisabled: { backgroundColor: Palette.gray400 },
   pressed: { opacity: 0.6 },
 });

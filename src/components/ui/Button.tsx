@@ -16,8 +16,8 @@ type ButtonVariant = 'primary' | 'secondary' | 'quick' | 'more' | 'disable' | 'c
 const BTN_BG: Record<ButtonVariant, string> = {
   primary: Palette.primary,
   secondary: Palette.bgSurface,
-  quick: Palette.gray200,
-  more: Palette.gray200,
+  quick: Palette.gray300,
+  more: Palette.gray300,
   disable: Palette.iconPrimary,
   chat: Palette.bgBase,
   card: Palette.bgSurface,
@@ -26,21 +26,21 @@ const BTN_BG: Record<ButtonVariant, string> = {
 const BTN_PRESSED: Record<ButtonVariant, string> = {
   primary: Palette.primaryHover,
   secondary: Palette.bgSurface,
-  quick: Palette.gray300,
-  more: Palette.gray300,
+  quick: Palette.gray400,
+  more: Palette.gray400,
   disable: Palette.iconPrimary,
-  chat: Palette.gray200,
+  chat: Palette.gray300,
   card: Palette.bgMuted,
 };
 
 const BTN_FG: Record<ButtonVariant, string> = {
   primary: Palette.white,
   secondary: Palette.primary,
-  quick: Palette.gray500,
-  more: Palette.gray500,
-  disable: Palette.gray700,
-  chat: Palette.gray900,
-  card: Palette.gray900,
+  quick: Palette.gray600,
+  more: Palette.gray600,
+  disable: Palette.gray800,
+  chat: Palette.gray800,
+  card: Palette.gray800,
 };
 
 export function Button({
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   // ── card 내부 ──
   cardInner: { width: '100%', flex: 1, gap: Spacing.sm },
   cardHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  cardLabel: { ...Typography.body, color: Palette.gray500 },
+  cardLabel: { ...Typography.body, color: Palette.gray600 },
   cardValue: { ...Typography.subtitle, fontFamily: FontFamily.bold, fontWeight: '700' },
   cardPill: {
     alignSelf: 'flex-start',
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.m,
     paddingVertical: Spacing.xs,
   },
-  cardPillText: { ...Typography.label, color: Palette.gray500 },
+  cardPillText: { ...Typography.label, color: Palette.gray600 },
 });
 
 const BOX_STYLE: Record<ButtonVariant, StyleProp<ViewStyle>> = {

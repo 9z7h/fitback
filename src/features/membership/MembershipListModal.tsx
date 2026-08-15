@@ -63,7 +63,7 @@ export function MembershipListModal({ visible, onClose }: { visible: boolean; on
                   </ThemedText>
                 </Pressable>
                 <Pressable onPress={onClose} hitSlop={8} accessibilityLabel="닫기">
-                  <Icon icon={X} size={24} color={Palette.gray500} />
+                  <Icon icon={X} size={24} color={Palette.gray600} />
                 </Pressable>
               </View>
             </View>

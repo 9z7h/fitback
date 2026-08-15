@@ -13,16 +13,16 @@ const BOX_STYLE: Record<InfoBoxVariant, ViewStyle> = {
   primary: {
     flex: 1,
     minHeight: 72,
-    borderColor: Palette.gray200,
+    borderColor: Palette.gray300,
     justifyContent: 'center',
     alignItems: 'center',
     gap: Spacing.xs,
   },
-  secondary: { flex: 1, borderColor: Palette.gray200, paddingVertical: Spacing.sm, gap: Spacing.sm },
+  secondary: { flex: 1, borderColor: Palette.gray300, paddingVertical: Spacing.sm, gap: Spacing.sm },
   tertiary: {
     flex: 1,
     minHeight: 40,
-    borderColor: Palette.gray50,
+    borderColor: Palette.gray200,
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.sm,
@@ -39,9 +39,9 @@ export function InfoBox({
 }: {
   variant?: InfoBoxVariant;
   label: string;
-  /** 강조 값 (16px SemiBold gray900) */
+  /** 강조 값 (16px SemiBold gray800) */
   valueMain: string;
-  /** 보조 값 (16px Medium gray500) — primary에서 주로 사용 */
+  /** 보조 값 (16px Medium gray600) — primary에서 주로 사용 */
   valueSub?: string;
   /** 부모 폭을 100%로 채움 (기본값은 flex:1) */
   fill?: boolean;
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.m,
   },
   fill: { width: '100%', flex: 1 },
-  label: { color: Palette.gray500 },
+  label: { color: Palette.gray600 },
   valueRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  valueMain: { color: Palette.gray900 },
-  valueSub: { color: Palette.gray500 },
+  valueMain: { color: Palette.gray800 },
+  valueSub: { color: Palette.gray600 },
 });

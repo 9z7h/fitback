@@ -84,10 +84,10 @@ export default function RecordScreen() {
           <Pressable
             onPress={() => router.back()}
             style={({ pressed }) => [styles.iconBtn, { opacity: pressed ? 0.6 : 1 }]}>
-            <Icon icon={ChevronLeft} size={24} color={Palette.gray900} />
+            <Icon icon={ChevronLeft} size={24} color={Palette.gray800} />
           </Pressable>
           <ThemedText type="subtitle">오운완 기록</ThemedText>
-          <ThemedText type="captionBold" style={{ color: Palette.gray500 }}>
+          <ThemedText type="captionBold" style={{ color: Palette.gray600 }}>
             3 / 4
           </ThemedText>
         </View>
@@ -102,7 +102,7 @@ export default function RecordScreen() {
               <Icon icon={Check} size={14} color={Palette.white} strokeWidth={2} />
             </View>
             <View style={{ flex: 1 }}>
-              <ThemedText type="captionBold" style={{ color: Palette.gray900 }}>
+              <ThemedText type="captionBold" style={{ color: Palette.gray800 }}>
                 운동 진행 중이에요!
               </ThemedText>
               <ThemedText type="small" themeColor="textSecondary">
@@ -162,7 +162,7 @@ export default function RecordScreen() {
               value={memo}
               onChangeText={(t) => setMemo(t.slice(0, 120))}
               placeholder="오늘의 컨디션, 운동 느낌 등을 기록해보세요."
-              placeholderTextColor={Palette.gray400}
+              placeholderTextColor={Palette.gray500}
               multiline
               style={styles.memoInput}
             />
@@ -216,7 +216,7 @@ function ItemRow({
           suffix="세트"
           onChange={(v) => onPatch({ sets: v })}
         />
-        <ThemedText type="body" style={{ color: Palette.gray500 }}>
+        <ThemedText type="body" style={{ color: Palette.gray600 }}>
           ×
         </ThemedText>
         <Stepper
@@ -239,7 +239,7 @@ function ItemRow({
           <Icon
             icon={Check}
             size={16}
-            color={item.done ? Palette.white : Palette.gray500}
+            color={item.done ? Palette.white : Palette.gray600}
           />
         </Pressable>
       </View>
@@ -445,7 +445,7 @@ const styles = StyleSheet.create({
     margin: 0,
     textAlign: 'center',
     ...Typography.labelBold,
-    color: Palette.gray900,
+    color: Palette.gray800,
     backgroundColor: 'transparent',
     borderWidth: 0,
     // 웹 기본 outline 제거
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
   },
   memoInput: {
     minHeight: 60,
-    color: Palette.gray900,
+    color: Palette.gray800,
     ...Typography.label,
     textAlignVertical: 'top',
   },
