@@ -2,6 +2,7 @@
  * FitBack AiChatBubble — Figma Ai 섹션(Ai_Card / Ai_Chat / Ai_Ploating_Button / User_Chat) 통합.
  * variant 하나로 처리하며 variant별 컴포넌트 분리 금지.
  */
+import { LinearGradient } from 'expo-linear-gradient';
 import { X, Zap } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import {
@@ -81,24 +82,30 @@ export function AiChatBubble({
 
   if (variant === 'card') {
     return (
-      <View style={[styles.card, Elevation.level2, alignSelf ? { alignSelf } : null, style]}>
-        <View style={styles.cardHead}>
-          <View style={styles.cardTitleWrap}>
-            <Zap size={20} color={Palette.primary} strokeWidth={2} />
-            <ThemedText style={styles.cardTitle}>{title}</ThemedText>
+      <LinearGradient
+        colors={[Palette.primary, Palette.secondary]}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
+        style={[styles.cardBorder, Elevation.level2, alignSelf ? { alignSelf } : null, style]}>
+        <View style={styles.card}>
+          <View style={styles.cardHead}>
+            <View style={styles.cardTitleWrap}>
+              <Zap size={20} color={Palette.primary} strokeWidth={2} />
+              <ThemedText style={styles.cardTitle}>{title}</ThemedText>
+            </View>
+            {onClose ? (
+              <Pressable
+                onPress={onClose}
+                accessibilityRole="button"
+                accessibilityLabel="닫기"
+                style={({ pressed }) => [pressed && styles.pressed]}>
+                <X size={20} color={Palette.gray600} strokeWidth={2} />
+              </Pressable>
+            ) : null}
           </View>
-          {onClose ? (
-            <Pressable
-              onPress={onClose}
-              accessibilityRole="button"
-              accessibilityLabel="닫기"
-              style={({ pressed }) => [pressed && styles.pressed]}>
-              <X size={20} color={Palette.gray600} strokeWidth={2} />
-            </Pressable>
-          ) : null}
+          {content}
         </View>
-        {content}
-      </View>
+      </LinearGradient>
     );
   }
 
@@ -150,8 +157,13 @@ const styles = StyleSheet.create({
   },
 
   // ── card ──
-  card: {
+  // 외곽 그라데이션 테두리 — 안쪽 카드는 1px 두께만큼 패딩된 자리에 앉는다.
+  cardBorder: {
     width: '100%',
+    borderRadius: Radius.card,
+    padding: 1,
+  },
+  card: {
     backgroundColor: Palette.primaryLight,
     borderRadius: Radius.card,
     padding: Spacing.md,

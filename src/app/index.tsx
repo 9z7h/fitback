@@ -215,7 +215,7 @@ export default function HomeScreen() {
 
               {/* TODO: useMemberships 연결 */}
               <RecordTile title="회원권" value="3개" onPress={() => router.navigate('/membership')}>
-                <Chip size="day" style={styles.recordChip}>
+                <Chip size="large" style={styles.recordChip}>
                   D-20
                 </Chip>
               </RecordTile>

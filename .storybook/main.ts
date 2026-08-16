@@ -34,6 +34,15 @@ const config: StorybookConfig = {
             find: /^react-native\/Libraries\/Utilities\/codegenNativeComponent$/,
             replacement: path.resolve(__dirname, './stubs/codegenNativeComponent.js'),
           },
+          // expo-blur/build/index.js가 확장자 없이 './BlurView'를 import하는데, resolve.extensions의
+          // .web.js 우선순위를 안 타고 네이티브 BlurView.js를 그대로 잡는다(react-native-svg와 동일한
+          // rolldown-vite 이슈) — 네이티브 BlurView.js는 expo-modules-core(SharedRef 등 네이티브 전용
+          // export)를 끌어와 의존성 사전번들링 자체가 깨진다. 딥 상대경로 alias는 안 먹혀서(스캔 단계
+          // 자체 리졸버가 무시하는 듯) 패키지 진입점 자체를 스텁으로 치환한다.
+          {
+            find: /^expo-blur$/,
+            replacement: path.resolve(__dirname, './stubs/expo-blur.web.js'),
+          },
           { find: '@', replacement: path.resolve(__dirname, '../src') },
         ],
         // .web.js를 우선 매칭 안 하면 react-native-svg(lucide-react-native가 내부적으로 씀) 같은 패키지가

@@ -12,9 +12,9 @@ import { Palette, Radius, Spacing, Typography } from '@/constants/theme';
 type ChipSize = 'large' | 'medium_a' | 'medium_b' | 'state' | 'day';
 
 const CHIP_BG: Record<ChipSize, string> = {
-  large: Palette.gray300,
-  medium_a: Palette.gray300,
-  medium_b: Palette.bgMuted,
+  large: Palette.gray200,
+  medium_a: Palette.gray200,
+  medium_b: Palette.gray200,
   state: Palette.primaryLight,
   day: Palette.overlayWhite16,
 };
