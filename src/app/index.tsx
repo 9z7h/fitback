@@ -132,7 +132,7 @@ export default function HomeScreen() {
                 </View>
               </View>
 
-              <View style={styles.infoRow}>
+              <View style={[styles.infoRow, styles.infoRowGap]}>
                 <InfoBox
                   label="남은 방문"
                   valueMain={MEMBERSHIP.remainingVisits}
@@ -142,7 +142,7 @@ export default function HomeScreen() {
               </View>
 
               {/* TODO: 회원권 캐러셀 연결 시 count/activeIndex 동적화 */}
-              <Indicator count={2} activeIndex={0} />
+              <Indicator count={2} activeIndex={0} style={styles.indicatorGap} />
 
               {/* TODO: CheckInFlow 연결 */}
               <Button variant="primary" onPress={() => {}}>
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   scrollView: { flex: 1 },
   body: {
     paddingHorizontal: ScreenPadding,
-    paddingTop: GNB_HEIGHT + Spacing.md,
+    paddingTop: GNB_HEIGHT + Spacing.sm,
     paddingBottom: BottomTabInset + Spacing.lg,
     gap: Spacing.lg,
   },
@@ -336,6 +336,9 @@ const styles = StyleSheet.create({
   },
 
   infoRow: { flexDirection: 'row', gap: Spacing.sm },
+  // 부모(membershipBody) gap이 20(Spacing.card)이라 -12(Spacing.m)만큼 당겨서 8px로 맞춘다.
+  infoRowGap: { marginTop: -Spacing.m },
+  indicatorGap: { marginTop: -Spacing.m },
 
   // ── AI 코칭 ──
 
@@ -403,7 +406,8 @@ const styles = StyleSheet.create({
   },
 
   // ── 빠른 기록 ──
-  quickButton: { alignSelf: 'center', marginVertical: Spacing.xxl },
+  // 부모(body) gap이 24(Spacing.lg)라 위쪽은 20(Spacing.card)만 더해 44px로 맞춘다.
+  quickButton: { alignSelf: 'center', marginTop: Spacing.card, marginBottom: Spacing.xxl },
 
   // ── 플로팅 AI ──
   floatingAi: {

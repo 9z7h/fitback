@@ -58,7 +58,7 @@ export function WeekStatusCard({ selectedDate }: { selectedDate?: string }) {
   return (
     <ThemedView
       type="backgroundElement"
-      style={[styles.card, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+      style={[styles.card, { borderColor: Palette.gray300 }, Elevation.level1]}>
       <View style={styles.titleRow}>
         <ThemedText type="smallBold">이번 주 홈트 현황</ThemedText>
         {data && (

@@ -21,9 +21,9 @@ export const Palette = {
   // Background
   bgBase: '#F2F4F7',
   bgSurface: '#FFFFFF',
-  bgSurfaceTranslucent: 'rgba(255, 255, 255, 0.75)', // Figma TabBar — 반투명 표면(블러 위)
   bgMuted: '#F2F4F7',
   overlayWhite16: 'rgba(255, 255, 255, 0.16)', // Figma overlay/100 — Chip size=day 등 dark 배경 위 오버레이
+  overlayWhite200: 'rgba(255, 255, 255, 0.75)', // Figma overlay/200 — TabBar 글래스 틴트, SpeechBubble 반투명 표면
 
   // Semantic — UI 상태
   success: '#22C55E',
@@ -57,9 +57,7 @@ export const Palette = {
   tintPurple: '#7C6CF0',   // 저녁
   tintIndigo: '#8E9BFF',   // 칼로리 그래프 그라디언트
 
-  // Line / Border
-  lineDefault: 'rgba(0, 0, 0, 0.07)',
-  lineStrong: 'rgba(0, 0, 0, 0.15)',
+  // Line / Border — 모든 디바이더·테두리는 gray300으로 통일(2026-08-17)
   linePrimary: '#6675FF',
   borderStrong: '#6B7280', // Figma border/strong — 아이콘 stroke, 강조 라인
   iconPrimary: '#C0C3CF', // Figma icon/primary — 비활성/기본 아이콘 색
@@ -153,8 +151,39 @@ export const Radius = {
 
 // ── 8. Elevation ──────────────────────────────────────────
 // 네이티브 shadow* + web boxShadow 동시 제공.
-export const Elevation: Record<'level1' | 'level2' | 'sticky', ViewStyle> = {
-  // Level 1 · Card — 회원권·기록·추천 카드
+// Figma "효과 스타일 › shadow" (s/m/l) — 전부 #111827, offset(0,2), blur 12, opacity만 단계적으로 증가.
+export const Elevation: Record<'shadowS' | 'shadowM' | 'shadowL' | 'level1' | 'level2' | 'sticky', ViewStyle> = {
+  shadowS: Platform.select({
+    web: { boxShadow: '0 2px 12px rgba(17,24,39,0.04)' } as ViewStyle,
+    default: {
+      shadowColor: '#111827',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.04,
+      shadowRadius: 12,
+      elevation: 2,
+    },
+  }) as ViewStyle,
+  shadowM: Platform.select({
+    web: { boxShadow: '0 2px 12px rgba(17,24,39,0.08)' } as ViewStyle,
+    default: {
+      shadowColor: '#111827',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 12,
+      elevation: 3,
+    },
+  }) as ViewStyle,
+  shadowL: Platform.select({
+    web: { boxShadow: '0 2px 12px rgba(17,24,39,0.16)' } as ViewStyle,
+    default: {
+      shadowColor: '#111827',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.16,
+      shadowRadius: 12,
+      elevation: 5,
+    },
+  }) as ViewStyle,
+  // Level 1 · Card — 회원권·기록·추천 카드 (= shadow/s, 레거시 이름 유지)
   level1: Platform.select({
     web: { boxShadow: '0 2px 12px rgba(17,24,39,0.04)' } as ViewStyle,
     default: {

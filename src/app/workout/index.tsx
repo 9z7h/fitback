@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.button,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     height: 48,
     flexDirection: 'row',
     alignItems: 'center',

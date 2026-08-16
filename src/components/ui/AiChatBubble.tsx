@@ -66,7 +66,7 @@ export function AiChatBubble({
         accessibilityRole="button"
         style={({ pressed }) => [
           styles.floating,
-          Elevation.level2,
+          Elevation.shadowL,
           alignSelf ? { alignSelf } : null,
           pressed && styles.pressed,
           style,
@@ -86,7 +86,7 @@ export function AiChatBubble({
         colors={[Palette.primary, Palette.secondary]}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
-        style={[styles.cardBorder, Elevation.level2, alignSelf ? { alignSelf } : null, style]}>
+        style={[styles.cardBorder, alignSelf ? { alignSelf } : null, style]}>
         <View style={styles.card}>
           <View style={styles.cardHead}>
             <View style={styles.cardTitleWrap}>

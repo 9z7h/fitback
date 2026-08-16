@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
     borderBottomWidth: 0.5,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   cancel: { color: Palette.gray600 },
   done: { color: Palette.primary },

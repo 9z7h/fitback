@@ -130,7 +130,7 @@ export function Button({
       style={({ pressed }) => [
         styles.base,
         BOX_STYLE[variant],
-        variant === 'card' && Elevation.level1,
+        variant === 'card' && Elevation.shadowS,
         {
           backgroundColor: forcedDisable
             ? BTN_BG.disable

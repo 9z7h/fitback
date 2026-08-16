@@ -19,7 +19,7 @@ export function SpeechBubble({
 }) {
   return (
     <View style={[styles.wrap, style]}>
-      <View style={[styles.box, Elevation.level2]}>
+      <View style={[styles.box, Elevation.shadowM]}>
         {typeof children === 'string' ? (
           <ThemedText type="bodySemibold" style={styles.text}>
             {children}
@@ -31,7 +31,7 @@ export function SpeechBubble({
       <Svg width={9} height={7} viewBox="0 0 8.084 6.1667" style={styles.tail}>
         <Path
           d="M8.084 0L4.9082 5.5C4.5233 6.1667 3.5607 6.1667 3.1758 5.5L0 0Z"
-          fill={Palette.bgSurfaceTranslucent}
+          fill={Palette.overlayWhite200}
         />
       </Svg>
     </View>
@@ -41,7 +41,7 @@ export function SpeechBubble({
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center' },
   box: {
-    backgroundColor: Palette.bgSurfaceTranslucent,
+    backgroundColor: Palette.overlayWhite200,
     borderRadius: Radius.small,
     paddingHorizontal: Spacing.sm,
     paddingVertical: Spacing.xs,

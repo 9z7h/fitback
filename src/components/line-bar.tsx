@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   lineBar: {
     width: '100%',
     height: StyleSheet.hairlineWidth,
-    backgroundColor: Palette.lineDefault,
+    backgroundColor: Palette.gray300,
     marginVertical: Spacing.card,
   },
 });

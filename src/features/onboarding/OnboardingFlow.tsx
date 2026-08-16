@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.md,
     gap: Spacing.sm,
     borderTopWidth: 0.5,
-    borderTopColor: Palette.lineDefault,
+    borderTopColor: Palette.gray300,
     backgroundColor: Palette.bgBase,
   },
   backBtn: { alignItems: 'center', paddingVertical: Spacing.sm },

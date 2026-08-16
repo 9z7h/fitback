@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
     borderRadius: Radius.button,
     borderWidth: 1,
-    borderColor: Palette.lineStrong,
+    borderColor: Palette.gray300,
     marginTop: Spacing.sm,
   },
   pressed: { opacity: 0.6 },

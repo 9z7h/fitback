@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
   field: { gap: Spacing.xs },
   input: {
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.small,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   editSave: { backgroundColor: Palette.primary },
   toggleRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.md },
   toggleText: { flex: 1, gap: 2 },
-  divider: { height: 0.5, backgroundColor: Palette.lineDefault, marginVertical: Spacing.md },
+  divider: { height: 0.5, backgroundColor: Palette.gray300, marginVertical: Spacing.md },
   pressed: { opacity: 0.6 },
   overlay: { flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.4)', alignItems: 'center', justifyContent: 'center', padding: ScreenPadding },
   dialog: { width: '100%', maxWidth: 360, backgroundColor: Palette.bgSurface, borderRadius: Radius.card, padding: Spacing.lg, gap: Spacing.sm },

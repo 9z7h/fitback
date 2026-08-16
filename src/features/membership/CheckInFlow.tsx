@@ -918,7 +918,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     paddingVertical: Spacing.sm,
     borderTopWidth: 0.5,
-    borderTopColor: Palette.lineDefault,
+    borderTopColor: Palette.gray300,
   },
   resultText: { flex: 1, gap: 2 },
 
@@ -937,7 +937,7 @@ const styles = StyleSheet.create({
   },
   timeIconOn: { backgroundColor: Palette.primary },
   timeRight: { alignItems: 'flex-end', gap: 2 },
-  divider: { height: 0.5, backgroundColor: Palette.lineDefault, marginVertical: Spacing.sm },
+  divider: { height: 0.5, backgroundColor: Palette.gray300, marginVertical: Spacing.sm },
 
   modeRow: {
     flexDirection: 'row',
@@ -946,7 +946,7 @@ const styles = StyleSheet.create({
     padding: Spacing.md,
     borderRadius: Radius.card,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
   },
   modeRowOn: { borderColor: Palette.primary, backgroundColor: Palette.primaryLight },
@@ -1023,7 +1023,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
     borderRadius: Radius.button,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
   },
   popupBtn: { marginTop: Spacing.md, alignSelf: 'stretch' },
 });

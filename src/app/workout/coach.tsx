@@ -357,7 +357,7 @@ export default function CoachScreen() {
                 onPress={() => handleSelectMode('preset')}
                 style={({ pressed }) => [
                   styles.modeCard,
-                  { borderColor: Palette.lineDefault, opacity: pressed ? 0.85 : 1 },
+                  { borderColor: Palette.gray300, opacity: pressed ? 0.85 : 1 },
                 ]}>
                 <View style={[styles.modeIcon, { backgroundColor: Palette.primaryLight }]}>
                   <Dumbbell color={Palette.primary} size={24} />
@@ -374,7 +374,7 @@ export default function CoachScreen() {
                 onPress={() => handleSelectMode('custom')}
                 style={({ pressed }) => [
                   styles.modeCard,
-                  { borderColor: Palette.lineDefault, opacity: pressed ? 0.85 : 1 },
+                  { borderColor: Palette.gray300, opacity: pressed ? 0.85 : 1 },
                 ]}>
                 <View style={[styles.modeIcon, { backgroundColor: Palette.bgMuted }]}>
                   <Sliders color={Palette.gray600} size={24} />
@@ -392,7 +392,7 @@ export default function CoachScreen() {
                 onPress={() => handleSelectMode('dev')}
                 style={({ pressed }) => [
                   styles.modeCard,
-                  { borderColor: Palette.lineDefault, opacity: pressed ? 0.85 : 1 },
+                  { borderColor: Palette.gray300, opacity: pressed ? 0.85 : 1 },
                 ]}>
                 <View style={[styles.modeIcon, { backgroundColor: Palette.bgMuted }]}>
                   <Wrench color={Palette.gray600} size={24} />
@@ -448,7 +448,7 @@ export default function CoachScreen() {
               type="backgroundElement"
               style={[
                 styles.resultCard,
-                { borderColor: Palette.lineDefault },
+                { borderColor: Palette.gray300 },
                 Elevation.level1,
               ]}>
               <View style={[styles.aiBadge, { backgroundColor: Palette.primaryLight }]}>
@@ -471,7 +471,7 @@ export default function CoachScreen() {
                     style={[
                       styles.exerciseRow,
                       idx !== 0 && {
-                        borderTopColor: Palette.lineDefault,
+                        borderTopColor: Palette.gray300,
                         borderTopWidth: StyleSheet.hairlineWidth,
                       },
                     ]}>

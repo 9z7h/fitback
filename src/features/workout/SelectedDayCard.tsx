@@ -59,7 +59,7 @@ export function SelectedDayCard({
         {header}
         <ThemedView
           type="backgroundElement"
-          style={[styles.card, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+          style={[styles.card, { borderColor: Palette.gray300 }, Elevation.level1]}>
           <View style={styles.center}>
             <ActivityIndicator color={Palette.primary} />
           </View>
@@ -129,7 +129,7 @@ export function SelectedDayFeedback({ date }: { date: string }) {
   return (
     <ThemedView
       type="backgroundElement"
-      style={[styles.feedbackCard, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+      style={[styles.feedbackCard, { borderColor: Palette.gray300 }, Elevation.level1]}>
       <View style={[styles.feedbackBadge, { backgroundColor: Palette.primaryLight }]}>
         <ThemedText type="smallBold" style={{ color: Palette.primary }}>
           💬 AI 피드백 ({formatDateKo(date)})

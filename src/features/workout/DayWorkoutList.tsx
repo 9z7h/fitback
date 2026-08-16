@@ -63,7 +63,7 @@ export function DayWorkoutList({ date }: { date: string }) {
   return (
     <ThemedView
       type="backgroundElement"
-      style={[styles.card, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+      style={[styles.card, { borderColor: Palette.gray300 }, Elevation.level1]}>
       <ThemedText type="smallBold">{formatDateKo(date)} 홈트했어요!</ThemedText>
 
       {isLoading && (
@@ -89,7 +89,7 @@ export function DayWorkoutList({ date }: { date: string }) {
               style={[
                 styles.row,
                 idx !== 0 && {
-                  borderTopColor: Palette.lineDefault,
+                  borderTopColor: Palette.gray300,
                   borderTopWidth: StyleSheet.hairlineWidth,
                 },
               ]}>

@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.modal, // §9 카드 반경 20
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.card,
   },
   cardPressed: { opacity: 0.85 },

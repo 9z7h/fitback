@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
   fieldLabel: { marginTop: Spacing.sm },
   input: {
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.small,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
@@ -478,7 +478,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.small,
     backgroundColor: Palette.primaryLight,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     gap: Spacing.xs,
   },
   devTitle: { color: Palette.gray800 },

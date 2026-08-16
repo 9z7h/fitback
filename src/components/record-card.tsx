@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     padding: Spacing.card,
     gap: Spacing.xs,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     minHeight: 140,
     overflow: 'hidden',
   },

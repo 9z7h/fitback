@@ -125,7 +125,7 @@ export default function RecordScreen() {
                 styles.allCheck,
                 {
                   backgroundColor: allDone ? Palette.primary : Palette.bgSurface,
-                  borderColor: allDone ? Palette.primary : Palette.lineStrong,
+                  borderColor: allDone ? Palette.primary : Palette.gray300,
                 },
               ]}>
               {allDone ? <Icon icon={Check} size={14} color={Palette.white} /> : null}
@@ -232,7 +232,7 @@ function ItemRow({
             styles.doneBtn,
             {
               backgroundColor: item.done ? Palette.primary : Palette.bgSurface,
-              borderColor: item.done ? Palette.primary : Palette.lineStrong,
+              borderColor: item.done ? Palette.primary : Palette.gray300,
               opacity: pressed ? 0.8 : 1,
             },
           ]}>
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
     marginTop: Spacing.md,
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
     gap: Spacing.sm,
   },
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     backgroundColor: Palette.bgSurface,
     flex: 1,
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
     marginTop: Spacing.md,
     gap: Spacing.sm,

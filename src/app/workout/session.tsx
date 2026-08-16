@@ -708,7 +708,7 @@ export default function SessionScreen() {
           <View
             style={[
               styles.audioCard,
-              { borderColor: Palette.lineDefault },
+              { borderColor: Palette.gray300 },
               Elevation.level1,
             ]}>
             <View style={styles.audioHeaderRow}>
@@ -836,7 +836,7 @@ export default function SessionScreen() {
               onPress={handleReplay}
               style={({ pressed }) => [
                 styles.subBtn,
-                { borderColor: Palette.lineDefault, opacity: pressed ? 0.6 : 1 },
+                { borderColor: Palette.gray300, opacity: pressed ? 0.6 : 1 },
               ]}>
               <ThemedText type="smallBold">
                 다시 듣기
@@ -846,7 +846,7 @@ export default function SessionScreen() {
               onPress={handleSkip}
               style={({ pressed }) => [
                 styles.subBtn,
-                { borderColor: Palette.lineDefault, opacity: pressed ? 0.6 : 1 },
+                { borderColor: Palette.gray300, opacity: pressed ? 0.6 : 1 },
               ]}>
               <ThemedText type="smallBold">
                 건너뛰기
@@ -860,7 +860,7 @@ export default function SessionScreen() {
               }}
               style={({ pressed }) => [
                 styles.subBtn,
-                { borderColor: Palette.lineDefault, opacity: pressed ? 0.6 : 1 },
+                { borderColor: Palette.gray300, opacity: pressed ? 0.6 : 1 },
               ]}>
               <ThemedText type="smallBold">
                 속도 {rate}x

@@ -21,7 +21,7 @@ export function MembershipCard({
   return (
     <View style={[styles.card, style]}>
       <View style={styles.header}>{header}</View>
-      <View style={[styles.body, Elevation.level1]}>{children}</View>
+      <View style={[styles.body, Elevation.shadowL]}>{children}</View>
     </View>
   );
 }

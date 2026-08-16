@@ -1192,7 +1192,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
                 {WC_STEPS.map((_, i) => (
                   <View
                     key={i}
-                    style={[styles.wcProgressDot, { backgroundColor: i <= wcStepIdx ? Palette.primary : Palette.lineDefault }]}
+                    style={[styles.wcProgressDot, { backgroundColor: i <= wcStepIdx ? Palette.primary : Palette.gray300 }]}
                   />
                 ))}
               </View>
@@ -1270,7 +1270,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: ScreenPadding,
     paddingVertical: Spacing.md,
     borderBottomWidth: 0.5,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   topCenter: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   topRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
@@ -1282,7 +1282,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.sm,
     borderRadius: Radius.button,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
   },
   historyMain: { flex: 1, gap: 2 },
@@ -1342,7 +1342,7 @@ const styles = StyleSheet.create({
     gap: Spacing.xs,
     backgroundColor: Palette.white,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
     paddingVertical: Spacing.sm,
@@ -1371,13 +1371,13 @@ const styles = StyleSheet.create({
   // Response
   responseCard: {
     backgroundColor: Palette.bgSurface,
-    borderWidth: 0.5, borderColor: Palette.lineDefault,
+    borderWidth: 0.5, borderColor: Palette.gray300,
     borderRadius: Radius.button, padding: Spacing.md,
     gap: Spacing.sm, maxWidth: '92%',
   },
   responseCardHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   miniTag: {
-    borderWidth: 0.5, borderColor: Palette.lineStrong,
+    borderWidth: 0.5, borderColor: Palette.gray300,
     borderRadius: Radius.full, paddingHorizontal: Spacing.sm, paddingVertical: 2,
   },
   exerciseRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
@@ -1404,7 +1404,7 @@ const styles = StyleSheet.create({
   // Photo card
   photoComment: {
     marginTop: Spacing.xs, paddingTop: Spacing.xs,
-    borderTopWidth: 0.5, borderTopColor: Palette.lineDefault,
+    borderTopWidth: 0.5, borderTopColor: Palette.gray300,
   },
 
   // 추천 액션 칩(퀵 리플라이) — 모든 칩은 흰 배경으로 통일. (새 칩도 이 스타일을 재사용)
@@ -1427,14 +1427,14 @@ const styles = StyleSheet.create({
 
   // Photo source sheet
   photoSheet: {
-    borderTopWidth: 0.5, borderTopColor: Palette.lineDefault,
+    borderTopWidth: 0.5, borderTopColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
     paddingHorizontal: ScreenPadding, paddingTop: Spacing.sm, paddingBottom: Spacing.md,
     gap: Spacing.xs,
   },
   photoSheetHandle: {
     width: 36, height: 4, borderRadius: 2,
-    backgroundColor: Palette.lineStrong,
+    backgroundColor: Palette.gray300,
     alignSelf: 'center', marginBottom: Spacing.sm,
   },
   photoSheetBtn: {
@@ -1452,14 +1452,14 @@ const styles = StyleSheet.create({
   wcProgressTrack: { flexDirection: 'row', gap: 5 },
   wcProgressDot: { width: 20, height: 4, borderRadius: 2 },
   wcOptionBtn: { paddingVertical: Spacing.sm, paddingHorizontal: Spacing.md, borderRadius: Radius.small, alignItems: 'center' },
-  wcOptionBtnOutline: { borderWidth: 1, borderColor: Palette.lineDefault, backgroundColor: Palette.bgSurface },
+  wcOptionBtnOutline: { borderWidth: 1, borderColor: Palette.gray300, backgroundColor: Palette.bgSurface },
   wcOptionBtnDashed: { borderWidth: 1, borderStyle: 'dashed', borderColor: Palette.gray400, backgroundColor: Palette.bgSurface },
-  wcCustomInput: { borderWidth: 1, borderColor: Palette.lineDefault, borderRadius: Radius.small, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: 15, color: Palette.gray800, backgroundColor: Palette.bgSurface },
+  wcCustomInput: { borderWidth: 1, borderColor: Palette.gray300, borderRadius: Radius.small, paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, fontSize: 15, color: Palette.gray800, backgroundColor: Palette.bgSurface },
   wcCta: { height: 48, borderRadius: Radius.button, alignItems: 'center', justifyContent: 'center' },
   wcGhost: { height: 40, alignItems: 'center', justifyContent: 'center' },
 
   // Bottom input section
-  inputSection: { borderTopWidth: 0.5, borderTopColor: Palette.lineDefault },
+  inputSection: { borderTopWidth: 0.5, borderTopColor: Palette.gray300 },
   intentPanel: {
     paddingHorizontal: ScreenPadding, paddingTop: Spacing.md, paddingBottom: Spacing.sm, gap: Spacing.sm,
   },
@@ -1468,7 +1468,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: ScreenPadding, paddingTop: Spacing.sm, paddingBottom: Spacing.xs, gap: Spacing.xs,
   },
   chip: {
-    flexShrink: 0, borderWidth: 0.5, borderColor: Palette.lineStrong,
+    flexShrink: 0, borderWidth: 0.5, borderColor: Palette.gray300,
     backgroundColor: Palette.white,
     paddingHorizontal: Spacing.md, paddingVertical: Spacing.sm, borderRadius: Radius.full,
   },

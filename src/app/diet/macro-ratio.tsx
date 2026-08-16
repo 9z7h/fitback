@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     backgroundColor: Palette.bgMuted,
   },

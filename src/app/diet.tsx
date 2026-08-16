@@ -941,7 +941,7 @@ function RecordModal({
                       styles.mealChip,
                       selected
                         ? { backgroundColor: Palette.primary, borderColor: Palette.primary }
-                        : { backgroundColor: Palette.bgSurface, borderColor: Palette.lineDefault },
+                        : { backgroundColor: Palette.bgSurface, borderColor: Palette.gray300 },
                     ]}>
                     <Txt variant="body" weight="600" color={selected ? Palette.white : Palette.gray800}>{t}</Txt>
                   </Pressable>
@@ -1417,7 +1417,7 @@ function ScoreGraph({ points }: { points: { label: string; score: number }[] }) 
             </Defs>
             {[0, 0.5, 1].map((g) => {
               const gy = PAD + g * (H - 2 * PAD);
-              return <Line key={g} x1={0} y1={gy} x2={w} y2={gy} stroke={Palette.lineDefault} strokeWidth={1} />;
+              return <Line key={g} x1={0} y1={gy} x2={w} y2={gy} stroke={Palette.gray300} strokeWidth={1} />;
             })}
             <Path d={area} fill="url(#scoreFill)" />
             <Path d={line} stroke={Palette.primary} strokeWidth={2.5} fill="none" strokeLinejoin="round" strokeLinecap="round" />
@@ -2267,7 +2267,7 @@ const styles = StyleSheet.create({
   },
   workoutLead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, paddingHorizontal: Spacing.md },
   workoutCell: { flex: 1, alignItems: 'center' },
-  workoutDivider: { width: StyleSheet.hairlineWidth, alignSelf: 'stretch', backgroundColor: Palette.lineStrong, marginVertical: 4 },
+  workoutDivider: { width: StyleSheet.hairlineWidth, alignSelf: 'stretch', backgroundColor: Palette.gray300, marginVertical: 4 },
 
   // 스크롤 영역 + 상단 페이드
   scrollWrap: { flex: 1, position: 'relative' },
@@ -2306,7 +2306,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.lg,
     gap: Spacing.sm,
     ...Elevation.level1,
@@ -2333,7 +2333,7 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 2,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.small,
     paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.sm,
@@ -2350,7 +2350,7 @@ const styles = StyleSheet.create({
   track: { height: 6, borderRadius: Radius.full, backgroundColor: Palette.gray200, overflow: 'hidden' },
   fill: { height: '100%', borderRadius: Radius.full },
 
-  sectionDivider: { height: StyleSheet.hairlineWidth, backgroundColor: Palette.lineDefault, marginTop: Spacing.lg },
+  sectionDivider: { height: StyleSheet.hairlineWidth, backgroundColor: Palette.gray300, marginTop: Spacing.lg },
 
   // 트레이너 AI 피드백 (리뷰 화면)
   coachCard: {
@@ -2387,7 +2387,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
     gap: Spacing.sm,
     ...Elevation.level1,
@@ -2463,7 +2463,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
     paddingBottom: Spacing.sm,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Palette.lineDefault,
+    borderTopColor: Palette.gray300,
   },
   resultSecondaryBtn: {
     flex: 1,
@@ -2472,7 +2472,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
   },
   resultPrimaryBtn: { flex: 1, height: 52, borderRadius: Radius.button, alignItems: 'center', justifyContent: 'center' },
@@ -2485,7 +2485,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     paddingVertical: Spacing.md,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   addMoreBtn: {
     flexDirection: 'row',
@@ -2532,7 +2532,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.xs,
     borderRadius: Radius.full,
     borderWidth: 1,
-    borderColor: Palette.lineStrong,
+    borderColor: Palette.gray300,
     backgroundColor: 'transparent',
   },
   chipAdd: { marginLeft: 2 },
@@ -2595,7 +2595,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
     gap: Spacing.xs,
   },
@@ -2633,7 +2633,7 @@ const styles = StyleSheet.create({
   kcalTitle: { marginTop: Spacing.md, marginLeft: Spacing.xs, marginBottom: -Spacing.sm },
   listCard: { paddingVertical: 0 },
   listState: { alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, paddingVertical: Spacing.lg },
-  divider: { height: StyleSheet.hairlineWidth, backgroundColor: Palette.lineDefault },
+  divider: { height: StyleSheet.hairlineWidth, backgroundColor: Palette.gray300 },
   mealRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: Spacing.sm, paddingVertical: Spacing.md },
   mealLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, flex: 1 },
   mealRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
@@ -2658,7 +2658,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: ScreenPadding,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   recTab: {
     flex: 1,
@@ -2733,7 +2733,7 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     paddingVertical: Spacing.md,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   searchEmpty: { textAlign: 'center', paddingVertical: Spacing.xl, alignItems: 'center' },
   starBtn: { padding: Spacing.xs },
@@ -2813,7 +2813,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.lg,
     gap: Spacing.md,
     ...Elevation.level1,
@@ -2848,7 +2848,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     overflow: 'hidden',
   },
@@ -2860,7 +2860,7 @@ const styles = StyleSheet.create({
     height: 40,
     paddingHorizontal: Spacing.sm,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     gap: 2,
   },
@@ -2870,7 +2870,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.lg,
     gap: Spacing.sm,
     ...Elevation.level1,
@@ -2909,7 +2909,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.md,
     paddingHorizontal: Spacing.sm,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     backgroundColor: Palette.bgSurface,
   },
@@ -2926,7 +2926,7 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
     paddingVertical: Spacing.md,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     borderRadius: Radius.button,
     backgroundColor: Palette.bgSurface,
   },
@@ -2944,7 +2944,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.lg,
     gap: 0,
     ...Elevation.level1,
@@ -2955,7 +2955,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingVertical: Spacing.sm,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Palette.lineDefault,
+    borderBottomColor: Palette.gray300,
   },
   nutriDetailToggleBtn: {
     flexDirection: 'row',
@@ -2971,7 +2971,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.button,
     borderWidth: 1,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     overflow: 'hidden',
     ...Elevation.level1,
   },

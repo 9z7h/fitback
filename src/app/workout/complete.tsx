@@ -329,7 +329,7 @@ export default function CompleteScreen() {
             <View style={styles.statsRow}>
               <ThemedView
                 type="backgroundElement"
-                style={[styles.statCard, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+                style={[styles.statCard, { borderColor: Palette.gray300 }, Elevation.level1]}>
                 <Clock color={Palette.primary} size={20} />
                 <ThemedText type="small" themeColor="textSecondary">
                   운동 시간
@@ -338,7 +338,7 @@ export default function CompleteScreen() {
               </ThemedView>
               <ThemedView
                 type="backgroundElement"
-                style={[styles.statCard, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+                style={[styles.statCard, { borderColor: Palette.gray300 }, Elevation.level1]}>
                 <Flame color={Palette.warning} size={20} />
                 <ThemedText type="small" themeColor="textSecondary">
                   칼로리
@@ -347,7 +347,7 @@ export default function CompleteScreen() {
               </ThemedView>
               <ThemedView
                 type="backgroundElement"
-                style={[styles.statCard, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+                style={[styles.statCard, { borderColor: Palette.gray300 }, Elevation.level1]}>
                 <CheckCircle2 color={Palette.profit} size={20} />
                 <ThemedText type="small" themeColor="textSecondary">
                   완료여부
@@ -360,7 +360,7 @@ export default function CompleteScreen() {
 
             <ThemedView
               type="backgroundElement"
-              style={[styles.feedbackCard, { borderColor: Palette.lineDefault }, Elevation.level1]}>
+              style={[styles.feedbackCard, { borderColor: Palette.gray300 }, Elevation.level1]}>
               <View style={[styles.feedbackBadge, { backgroundColor: Palette.primaryLight }]}>
                 <ThemedText type="smallBold" style={{ color: Palette.primary }}>
                   💬 AI 피드백
@@ -477,7 +477,7 @@ export default function CompleteScreen() {
                       styles.memoInput,
                       {
                         backgroundColor: theme.backgroundElement,
-                        borderColor: Palette.lineDefault,
+                        borderColor: Palette.gray300,
                         color: theme.text,
                       },
                     ]}
@@ -532,7 +532,7 @@ export default function CompleteScreen() {
                   styles.flex1,
                   {
                     backgroundColor: pressed ? Palette.gray200 : Palette.bgMuted,
-                    borderColor: Palette.lineDefault,
+                    borderColor: Palette.gray300,
                     borderWidth: StyleSheet.hairlineWidth,
                   },
                 ]}>

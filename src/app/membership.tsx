@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.sm,
     borderRadius: Radius.full,
     borderWidth: 1,
-    borderColor: Palette.lineStrong,
+    borderColor: Palette.gray300,
   },
   authButtonPressed: { opacity: 0.6 },
   modalRoot: { flex: 1, backgroundColor: Palette.bgBase },

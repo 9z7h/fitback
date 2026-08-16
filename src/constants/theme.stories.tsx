@@ -20,7 +20,7 @@ const COLOR_GROUPS: { title: string; keys: (keyof typeof Palette)[] }[] = [
   { title: 'Neutral', keys: ['gray800', 'gray600', 'gray500', 'gray400', 'gray300', 'gray200', 'white'] },
   { title: 'Coach', keys: ['coachAccent'] },
   { title: 'Diet', keys: ['tintOrange', 'tintYellow', 'tintPurple', 'tintIndigo'] },
-  { title: 'Line / Border', keys: ['lineDefault', 'lineStrong', 'linePrimary', 'borderStrong', 'iconPrimary'] },
+  { title: 'Line / Border', keys: ['linePrimary', 'borderStrong', 'iconPrimary'] },
 ];
 
 const groupedKeys = new Set(COLOR_GROUPS.flatMap((g) => g.keys));

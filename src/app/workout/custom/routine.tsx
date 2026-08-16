@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
   },
   rowThumb: {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
     borderWidth: 0.5,
-    borderColor: Palette.lineDefault,
+    borderColor: Palette.gray300,
     padding: Spacing.md,
     marginTop: Spacing.lg,
   },

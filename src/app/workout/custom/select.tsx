@@ -212,7 +212,7 @@ function ChipRow({
               styles.chip,
               {
                 backgroundColor: on ? Palette.primary : Palette.bgSurface,
-                borderColor: on ? Palette.primary : Palette.lineDefault,
+                borderColor: on ? Palette.primary : Palette.gray300,
                 opacity: pressed ? 0.8 : 1,
               },
             ]}>
@@ -265,7 +265,7 @@ function ExerciseCard({
       style={({ pressed }) => [
         styles.exCard,
         {
-          borderColor: selected ? Palette.primary : Palette.lineDefault,
+          borderColor: selected ? Palette.primary : Palette.gray300,
           backgroundColor: selected ? Palette.primaryLight : Palette.bgSurface,
           opacity: pressed ? 0.85 : 1,
         },
@@ -276,7 +276,7 @@ function ExerciseCard({
             styles.checkCircle,
             {
               backgroundColor: selected ? Palette.primary : Palette.bgSurface,
-              borderColor: selected ? Palette.primary : Palette.lineStrong,
+              borderColor: selected ? Palette.primary : Palette.gray300,
             },
           ]}>
           {selected ? <Icon icon={Check} size={14} color={Palette.white} /> : null}
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.sm,
     paddingBottom: Spacing.sm,
     borderTopWidth: 0.5,
-    borderTopColor: Palette.lineDefault,
+    borderTopColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
   },
   trayChip: {
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     // 네이티브: NativeTabs 가 자체 inset 처리 → 0. 웹: JS fixed 탭 바 높이만큼 보정.
     paddingBottom: Platform.OS === 'web' ? BottomTabInset : 0,
     borderTopWidth: 0.5,
-    borderTopColor: Palette.lineDefault,
+    borderTopColor: Palette.gray300,
     backgroundColor: Palette.bgSurface,
   },
 });
