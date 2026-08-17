@@ -36,7 +36,7 @@ export const Card: Story = {
   args: {
     variant: 'card',
     title: '오늘의 코치 팁',
-    message: '오늘 가면 회당 실비용이 ₩11,200까지 내려가요. 퇴근길에 20분만 들러볼까요?',
+    message: '오늘 가면 회당 실비용이 11,200원까지 내려가요. 퇴근길에 20분만 들러볼까요?',
     onClose: () => {},
   },
 };

@@ -82,7 +82,7 @@ function SplashScreen({ opacity }: { opacity: Animated.Value }) {
   return (
     <Animated.View style={[splashStyles.overlay, { opacity }]}>
       <LinearGradient
-        colors={[Palette.primary, Palette.primaryHover]}
+        colors={[Palette.primary, Palette.primaryPressed]}
         style={splashStyles.container}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}

@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 32,
     borderRadius: Radius.small,
-    backgroundColor: Palette.gray400,
+    backgroundColor: Palette.gray300,
     overflow: 'hidden',
   },
   fill: {

@@ -28,7 +28,7 @@ export function MembershipCard({
   value: PortfolioValue;
   onPress?: () => void;
 }) {
-  const expired = risk.remainingDays <= 0;
+  const expired = risk.isExpired;
   const { label: ddayLabel, color: ddayColor } = ddayBadge(risk);
 
   const pct = Math.min(100, Math.round(value.progressPct));

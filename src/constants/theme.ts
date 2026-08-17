@@ -11,11 +11,11 @@ import { Platform, type TextStyle, type ViewStyle } from 'react-native';
 export const Palette = {
   // Primary & Secondary (인디고)
   primary: '#6675FF',
-  primaryHover: '#5566F7',
   primaryPressed: '#4957D8',
   primaryLight: '#F0F1FF',
   secondary: '#6490FF',
   blue200: '#D0DEFF', // Figma variable blue/200 — Gauge(prograss) 채움색
+  blue100: '#E0E3FF', // Figma ExerciseGraph 그래프 종점 도트 바깥 링
   tertiary: '#BD7BF8',
 
   // Background
@@ -47,15 +47,6 @@ export const Palette = {
   gray300: '#E7E9F1',
   gray200: '#F2F4F7',
   white: '#FFFFFF',
-
-  // Coach banner — "운동" 강조 (코치 배너 전용, 인디고 위 노란 포인트)
-  coachAccent: '#FFF700',
-
-  // Diet — 매크로·끼니 구분 틴트 (diet.tsx 전용)
-  tintOrange: '#F5A623',   // 단백질·아침·간식
-  tintYellow: '#F2B807',   // 탄수화물·점심
-  tintPurple: '#7C6CF0',   // 저녁
-  tintIndigo: '#8E9BFF',   // 칼로리 그래프 그라디언트
 
   // Line / Border — 모든 디바이더·테두리는 gray300으로 통일(2026-08-17)
   linePrimary: '#6675FF',

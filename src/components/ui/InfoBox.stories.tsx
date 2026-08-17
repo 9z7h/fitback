@@ -21,7 +21,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { variant: 'primary', label: '회당 실비용', valueMain: '₩12,500', valueSub: '/ 1회' },
+  args: { variant: 'primary', label: '회당 실비용', valueMain: '12,500원', valueSub: '/ 1회' },
 };
 
 export const Secondary: Story = {
@@ -33,7 +33,7 @@ export const Tertiary: Story = {
 };
 
 export const PrimaryWithoutSub: Story = {
-  args: { variant: 'primary', label: '결제 금액', valueMain: '₩540,000' },
+  args: { variant: 'primary', label: '결제 금액', valueMain: '540,000원' },
 };
 
 export const SecondaryWithSub: Story = {
@@ -45,7 +45,7 @@ export const TertiaryWithSub: Story = {
 };
 
 export const Fill: Story = {
-  args: { variant: 'primary', label: '회수한 금액', valueMain: '₩320,000', valueSub: '/ ₩540,000', fill: true },
+  args: { variant: 'primary', label: '회수한 금액', valueMain: '320,000원', valueSub: '/ 540,000원', fill: true },
 };
 
 const styles = StyleSheet.create({

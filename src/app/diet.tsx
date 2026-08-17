@@ -50,7 +50,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Defs, Line, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
-const COACH_CHARACTER = require('../../assets/images/Chat.png') as number;
+const COACH_CHARACTER = require('../../assets/images/Ai_Ploating_Button.png') as number;
 
 import { IconArrowChevron } from '@/components/icons';
 import { Input } from '@/components/ui';
@@ -205,8 +205,8 @@ const MACRO_META = [
 
 // 매크로별 아이콘·색 (다음 식사 추천 표시용)
 const MACRO_ICON: Record<'protein' | 'carb' | 'fat', { icon: IconName; color: string }> = {
-  protein: { icon: 'local-fire-department', color: Palette.tintOrange },
-  carb: { icon: 'bolt', color: Palette.tintYellow },
+  protein: { icon: 'local-fire-department', color: Palette.error },
+  carb: { icon: 'bolt', color: Palette.warning },
   fat: { icon: 'water-drop', color: '#6675FF' },
 };
 
@@ -370,7 +370,7 @@ function CalorieBar({ consumed, goal, burned }: { consumed: number; goal: number
           <Svg width="100%" height="100%">
             <Defs>
               <LinearGradient id="calGrad" x1="0" y1="0" x2="1" y2="0">
-                <Stop offset="0" stopColor={Palette.tintIndigo} />
+                <Stop offset="0" stopColor={Palette.secondary} />
                 <Stop offset="1" stopColor="#6675FF" />
               </LinearGradient>
             </Defs>
@@ -1446,8 +1446,8 @@ function MacroRatioBar({ carb, protein, fat }: { carb: number; protein: number; 
   const pPct = Math.round((proteinKcal / total) * 100);
   const fPct = 100 - cPct - pPct;
   const segments = [
-    { key: 'c', label: `탄${cPct}%`, pct: cPct, color: Palette.tintYellow },
-    { key: 'p', label: `단${pPct}%`, pct: pPct, color: Palette.tintOrange },
+    { key: 'c', label: `탄${cPct}%`, pct: cPct, color: Palette.warning },
+    { key: 'p', label: `단${pPct}%`, pct: pPct, color: Palette.error },
     { key: 'f', label: `지${fPct}%`, pct: fPct, color: '#6675FF' },
   ];
   return (
@@ -1536,8 +1536,8 @@ function ResultView({
 
           <View style={styles.resultMacroInline}>
             {([
-              { key: 'c', label: '탄', val: draft.carb, color: Palette.tintYellow },
-              { key: 'p', label: '단', val: draft.protein, color: Palette.tintOrange },
+              { key: 'c', label: '탄', val: draft.carb, color: Palette.warning },
+              { key: 'p', label: '단', val: draft.protein, color: Palette.error },
               { key: 'f', label: '지', val: draft.fat, color: '#6675FF' },
             ] as const).map((m) => (
               <View key={m.key} style={styles.resultMacroChip}>

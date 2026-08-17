@@ -53,11 +53,11 @@ export function InfoBox({
         {label}
       </ThemedText>
       <View style={styles.valueRow}>
-        <ThemedText type="bodySemibold" style={styles.valueMain}>
+        <ThemedText type="bodySemibold" style={styles.valueMain} numberOfLines={1}>
           {valueMain}
         </ThemedText>
         {valueSub ? (
-          <ThemedText type="body" style={styles.valueSub}>
+          <ThemedText type="body" style={styles.valueSub} numberOfLines={1}>
             {valueSub}
           </ThemedText>
         ) : null}
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
   fill: { width: '100%', flex: 1 },
   label: { color: Palette.gray600 },
-  valueRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  valueMain: { color: Palette.gray800 },
-  valueSub: { color: Palette.gray600 },
+  valueRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs, maxWidth: '100%' },
+  valueMain: { color: Palette.gray800, flexShrink: 1 },
+  valueSub: { color: Palette.gray600, flexShrink: 1 },
 });

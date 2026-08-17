@@ -21,9 +21,10 @@ export function formatNumber(n: number): string {
   return neg ? `-${s}` : s;
 }
 
-/** 원화 표기: ₩10,000 */
+// ₩(U+20A9) 글리프가 Pretendard 폰트 파일에서 깨져서(옆 글자에 가로줄이 겹쳐 보임 — 폰트 자체 버그,
+// CSS 아님) 기호 대신 '원' 접미사로 표기한다. 예: 10000 → "10,000원"
 export function won(n: number): string {
-  return `₩${formatNumber(n)}`;
+  return `${formatNumber(n)}원`;
 }
 
 // ── spec: 회원권 위험 통계 ────────────────────────────────
@@ -54,6 +55,8 @@ export interface RiskInfo {
   usedSessions: number;
   remainingSessions: number | null;
   remainingDays: number;
+  /** 진짜 만료 여부(종료일 지남, daysLeft<0). useMemberships.deriveStatus와 경계 통일. */
+  isExpired: boolean;
   costPerSession: number;
   valueUsed: number;
   valueAtRisk: number;
@@ -67,7 +70,9 @@ export interface RiskInfo {
 
 /** spec 3장: 페이스 기반 위험. 분모 0 가드. free(횟수 없음)는 neutral. */
 export function computeRisk(m: Membership, visitsThisMonth: number): RiskInfo {
-  const remainingDays = Math.max(0, daysLeft(m.endDate));
+  const rawDaysLeft = daysLeft(m.endDate);
+  const remainingDays = Math.max(0, rawDaysLeft);
+  const isExpired = rawDaysLeft < 0;
   const hasSessions = m.maxVisits != null;
   const total = m.maxVisits;
   const used = m.usedVisits;
@@ -111,6 +116,7 @@ export function computeRisk(m: Membership, visitsThisMonth: number): RiskInfo {
     usedSessions: used,
     remainingSessions: remaining,
     remainingDays,
+    isExpired,
     costPerSession,
     valueUsed,
     valueAtRisk,
@@ -157,7 +163,7 @@ export function summarize(
   for (const { risk: r, monthlyVisits, name } of items) {
     s[r.level] += 1;
     s.valueUsedThisMonth += monthlyVisits * r.costPerSession;
-    const expired = r.remainingDays <= 0 && (r.remainingSessions ?? 0) > 0;
+    const expired = r.isExpired && (r.remainingSessions ?? 0) > 0;
     if (expired) {
       s.lost += r.valueAtRisk; // 복구 불가
     } else if (r.level === 'danger') {
@@ -175,7 +181,7 @@ export function summarize(
 
 /** D-day 배지 표시값 — 라벨(D-N / 만료) + 색(페이스 3단계: 위험/주의/안전, 그 외 회색). */
 export function ddayBadge(risk: RiskInfo): { label: string; color: string } {
-  const expired = risk.remainingDays <= 0;
+  const expired = risk.isExpired;
   const color = expired
     ? Palette.gray400
     : risk.level === 'danger'

@@ -13,13 +13,11 @@ type Story = StoryObj<typeof meta>;
 // 여기 값을 바꿔도 반영 안 됨 — 색을 바꾸려면 theme.ts를 고칠 것. 새 키 추가 시 이 목록에
 // 넣지 않으면 "미분류" 섹션에 자동으로 잡힌다(누락 방지).
 const COLOR_GROUPS: { title: string; keys: (keyof typeof Palette)[] }[] = [
-  { title: 'Primary & Secondary', keys: ['primary', 'primaryHover', 'primaryPressed', 'primaryLight', 'secondary', 'tertiary'] },
+  { title: 'Primary & Secondary', keys: ['primary', 'primaryPressed', 'primaryLight', 'secondary', 'tertiary'] },
   { title: 'Background', keys: ['bgBase', 'bgSurface', 'bgMuted'] },
   { title: 'Semantic — UI 상태', keys: ['success', 'successLight', 'warning', 'error', 'errorLight'] },
   { title: 'Semantic — 손익 상태', keys: ['profit', 'profitLight', 'loss', 'lossLight'] },
   { title: 'Neutral', keys: ['gray800', 'gray600', 'gray500', 'gray400', 'gray300', 'gray200', 'white'] },
-  { title: 'Coach', keys: ['coachAccent'] },
-  { title: 'Diet', keys: ['tintOrange', 'tintYellow', 'tintPurple', 'tintIndigo'] },
   { title: 'Line / Border', keys: ['linePrimary', 'borderStrong', 'iconPrimary'] },
 ];
 
@@ -87,7 +85,7 @@ export const Neutral: Story = {
 };
 
 export const LineAndBorder: Story = {
-  render: () => <ColorGroups groups={[allGroups[7]]} />,
+  render: () => <ColorGroups groups={[allGroups[5]]} />,
 };
 
 // ── Spacing ─────────────────────────────────────────────
@@ -170,7 +168,7 @@ export const TypeScale: Story = {
               letterSpacing: style.letterSpacing,
             }}
           >
-            회당 실비용 ₩12,500
+            회당 실비용 12,500원
           </div>
         </div>
       ))}

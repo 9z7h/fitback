@@ -3,7 +3,7 @@
  * variant 하나로 처리하며 variant별 컴포넌트 분리 금지.
  */
 import { LinearGradient } from 'expo-linear-gradient';
-import { X, Zap } from 'lucide-react-native';
+import { X } from 'lucide-react-native';
 import type { ReactNode } from 'react';
 import {
   Image,
@@ -17,6 +17,7 @@ import {
 
 import { ThemedText } from '@/components/themed-text';
 import { Elevation, FontFamily, Palette, Radius, Spacing, Typography } from '@/constants/theme';
+import AiIconImage from '../../../assets/images/icon/Ai_icon.png';
 import AiPloatingButtonImage from '../../../assets/images/Ai_Ploating_Button.png';
 
 type AiChatBubbleVariant = 'floatingButton' | 'chat' | 'userChat' | 'card';
@@ -90,7 +91,7 @@ export function AiChatBubble({
         <View style={styles.card}>
           <View style={styles.cardHead}>
             <View style={styles.cardTitleWrap}>
-              <Zap size={20} color={Palette.primary} strokeWidth={2} />
+              <Image source={AiIconImage} style={styles.cardTitleIcon} resizeMode="contain" />
               <ThemedText style={styles.cardTitle}>{title}</ThemedText>
             </View>
             {onClose ? (
@@ -175,6 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   cardTitleWrap: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  cardTitleIcon: { width: 20, height: 20 },
   cardTitle: {
     ...Typography.subtitle,
     fontFamily: FontFamily.bold,

@@ -282,3 +282,18 @@ export function IconArrowCircle({
     </View>
   );
 }
+
+// Figma "Ai/Up"(1454:2528) — 채워진 위쪽 삼각형(상승 표시). 16x16 프레임 안에 벡터가
+// 중앙 정렬되지 않고 좌상단으로 치우쳐 있어(insets: 6.25%/6.7%/18.75%/6.7% + 12.5%/7.91%/0/7.91%
+// 중첩), translate로 그 위치를 그대로 재현한다.
+export function IconAiUp({ color = Palette.secondary, size = 16 }: { color?: string; size?: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <Path
+        transform="translate(2.168 2.5)"
+        d="M4.53333 0.75C5.11068 -0.25 6.55405 -0.25 7.1314 0.75L11.4615 8.25C12.0389 9.25 11.3172 10.5 10.1625 10.5H1.50224C0.347536 10.5 -0.37415 9.25 0.2032 8.25L4.53333 0.75Z"
+        fill={color}
+      />
+    </Svg>
+  );
+}

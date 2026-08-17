@@ -58,7 +58,7 @@ export const RoiProfit: Story = {
     icon: TrendingUp,
     color: Palette.profit,
     bg: Palette.profitLight,
-    children: '흑자 +₩32,000',
+    children: '흑자 +32,000원',
   },
 };
 
@@ -68,7 +68,7 @@ export const RoiLoss: Story = {
     icon: TrendingDown,
     color: Palette.loss,
     bg: Palette.lossLight,
-    children: '적자 -₩48,000',
+    children: '적자 -48,000원',
   },
 };
 

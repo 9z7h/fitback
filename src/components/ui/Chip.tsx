@@ -59,11 +59,15 @@ export function Chip({
   return (
     <View style={[styles.base, BOX_STYLE[size], { backgroundColor: bg ?? CHIP_BG[size] }, style]}>
       {IconCmp ? <IconCmp size={iconSize} color={fg} strokeWidth={2} /> : null}
-      <ThemedText style={[TEXT_STYLE[size], { color: fg }]}>{body}</ThemedText>
+      <ThemedText style={[TEXT_STYLE[size], styles.text, { color: fg }]} numberOfLines={1}>
+        {body}
+      </ThemedText>
       {size === 'medium_b' && secondaryLabel ? (
         <>
           <View style={styles.dot} />
-          <ThemedText style={[TEXT_STYLE[size], { color: fg }]}>{secondaryLabel}</ThemedText>
+          <ThemedText style={[TEXT_STYLE[size], styles.text, { color: fg }]} numberOfLines={1}>
+            {secondaryLabel}
+          </ThemedText>
         </>
       ) : null}
     </View>
@@ -75,9 +79,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-start',
+    maxWidth: '100%',
     gap: Spacing.xs,
     borderRadius: Radius.full,
   },
+  text: { flexShrink: 1 },
   dot: {
     width: 2,
     height: 2,

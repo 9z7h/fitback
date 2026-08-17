@@ -73,7 +73,7 @@ export function MembershipDetail({
 }) {
   const { data: visits, isLoading } = useMembershipVisits(m.id);
   const { label: ddayLabel, color: ddayColor } = ddayBadge(risk);
-  const expired = risk.remainingDays <= 0;
+  const expired = risk.isExpired;
   const pct = Math.min(100, Math.round(value.progressPct));
   const remainingVisits = Math.max(0, value.goalVisits - m.usedVisits);
 

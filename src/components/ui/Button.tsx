@@ -24,7 +24,7 @@ const BTN_BG: Record<ButtonVariant, string> = {
 };
 
 const BTN_PRESSED: Record<ButtonVariant, string> = {
-  primary: Palette.primaryHover,
+  primary: Palette.primaryPressed,
   secondary: Palette.bgSurface,
   quick: Palette.gray400,
   more: Palette.gray400,
@@ -88,11 +88,11 @@ export function Button({
   const body = variant === 'card' ? children : (label ?? children);
 
   const renderBody = (pressed: boolean) => {
-    // secondary는 pressed 시 텍스트·보더가 함께 primaryHover로 전환된다.
+    // secondary는 pressed 시 텍스트·보더가 함께 primaryPressed로 전환된다.
     const fg = forcedDisable
       ? BTN_FG.disable
       : variant === 'secondary' && pressed
-        ? Palette.primaryHover
+        ? Palette.primaryPressed
         : BTN_FG[variant];
     if (loading) return <ActivityIndicator color={fg} />;
     return variant === 'card' ? (
@@ -141,7 +141,7 @@ export function Button({
         !forcedDisable &&
           variant === 'secondary' && {
             borderWidth: 1,
-            borderColor: pressed ? Palette.primaryHover : Palette.primary,
+            borderColor: pressed ? Palette.primaryPressed : Palette.primary,
           },
         style,
       ]}>

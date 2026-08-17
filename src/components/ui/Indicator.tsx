@@ -17,6 +17,8 @@ export function Indicator({
   activeIndex: number;
   style?: StyleProp<ViewStyle>;
 }) {
+  if (count <= 1) return null;
+
   return (
     <View
       style={[styles.wrap, style]}

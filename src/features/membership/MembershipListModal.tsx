@@ -83,7 +83,7 @@ export function MembershipListModal({ visible, onClose }: { visible: boolean; on
                 const value = valueById.get(m.id)!;
                 const { label, color } = ddayBadge(risk);
                 const pct = Math.min(100, Math.round(value.progressPct));
-                const expired = risk.remainingDays <= 0;
+                const expired = risk.isExpired;
                 return (
                   <Card
                     key={m.id}
