@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.overlayWhite200,
     borderRadius: Radius.small,
     paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
+    paddingVertical: Spacing.half,
   },
   tail: { marginTop: -1 },
   text: { color: Palette.gray800 },

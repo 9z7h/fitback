@@ -78,9 +78,9 @@ export default function HomeScreen() {
       ? {
           title: '오늘 운동 가기',
           sub: primaryRisk.hasSessions
-            ? '오늘 출석시 '
+            ? '회원권 회수 '
             : `이번 달 ${primaryVisits}회 방문`,
-          highlight: primaryRisk.hasSessions ? `${won(primaryRisk.costPerSession)} 활용` : undefined,
+          highlight: primaryRisk.hasSessions ? `+${won(primaryRisk.costPerSession)}` : undefined,
           href: '/workout' as const,
           icon: DumbbellImage,
         }
@@ -171,7 +171,9 @@ export default function HomeScreen() {
               </View>
 
               <View style={styles.progressSection}>
-                <View style={[styles.bubbleAnchor, { width: `${primaryProgress}%` }]}>
+                {/* 말풍선 자체 너비보다 앵커가 좁으면 flex-end 정렬 때문에 왼쪽으로 넘친다 —
+                    실제 진행률과 별개로 앵커 폭만 최소/최대로 묶어 카드 밖으로 안 나가게 한다. */}
+                <View style={[styles.bubbleAnchor, { width: `${Math.min(92, Math.max(15, primaryProgress))}%` }]}>
                   <SpeechBubble>{`${primaryProgress}%`}</SpeechBubble>
                 </View>
                 <View style={styles.progressWrap}>
@@ -272,7 +274,7 @@ export default function HomeScreen() {
             <View style={styles.recordGrid}>
               <RecordTile
                 title="운동"
-                value={todayWorkout?.hasWorkout ? `${todayWorkout.durationMin}분` : '기록 없음'}
+                value={todayWorkout?.hasWorkout ? `${todayWorkout.durationMin}분` : '0분'}
                 onPress={() => router.navigate('/workout')}>
                 <ExerciseGraph
                   data={(thisWeekWorkouts ?? []).map((day) =>
@@ -363,7 +365,7 @@ function RecordTile({
         </ThemedText>
         <IconArrowChevron size={20} color={Palette.gray500} />
       </View>
-      <ThemedText type="h2" style={styles.recordValue} numberOfLines={1}>
+      <ThemedText type="subtitle" style={styles.recordValue} numberOfLines={1}>
         {value}
       </ThemedText>
       {children}
@@ -418,16 +420,24 @@ const styles = StyleSheet.create({
   todayRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
   todayText: { color: Palette.gray800 },
   todayGain: { color: Palette.secondary },
+  // marginTop은 레이아웃 높이에 반영돼 카드 전체가 늘어나므로, transform으로 시각적 위치만 내린다.
   avatarPlaceholder: {
-    width: 77,
-    height: 77,
+    width: 100,
+    height: 85,
+    transform: [{ translateY: Spacing.card }],
   },
 
   // ── 진행률 바 ──
   // 부모(membershipBody) gap이 20(Spacing.card)이라 -4(Spacing.xs)만큼 당겨서 16px로 맞춘다.
   progressSection: { marginTop: -Spacing.xs },
-  // 말풍선 꼬리가 게이지 바 위로 겹치도록 음수 마진으로 당긴다.
-  bubbleAnchor: { alignItems: 'flex-end', marginBottom: -Spacing.md },
+  // flow는 유지(공간을 그대로 차지)하면서 position:'relative'+zIndex로 다음 형제(progressWrap,
+  // 포지션 없음)보다 위 레이어에 그려서 꼬리가 바에 가려지지 않게 한다. marginBottom 음수로 겹침.
+  bubbleAnchor: {
+    alignItems: 'flex-end',
+    marginBottom: -Spacing.md,
+    position: 'relative',
+    zIndex: 10,
+  },
   progressWrap: { justifyContent: 'center' },
   coinBadge: {
     position: 'absolute',
@@ -475,9 +485,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   listThumbIcon: { width: 38, height: 38, marginTop: Spacing.half },
-  listTextWrap: { flex: 1, gap: Spacing.xs },
-  listTitle: { color: Palette.gray800 },
-  listSub: { ...Typography.caption, color: Palette.gray600 },
+  listTextWrap: { flex: 1, gap: 0 },
+  listTitle: {...Typography.bodySemibold, color: Palette.gray800 },
+  listSub: { ...Typography.label, color: Palette.gray600 },
   listSubHighlight: { color: Palette.secondary },
 
   // ── 기록 카드 그리드 ──
