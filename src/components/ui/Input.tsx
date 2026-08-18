@@ -41,6 +41,7 @@ export function Input({
   onChangeText,
   placeholder,
   onClear,
+  showIcon = true,
   style,
   textStyle,
   ...props
@@ -50,6 +51,8 @@ export function Input({
   /** 라벨 포함형(InputField_WithLabel). filled state에는 라벨이 없다. */
   label?: string;
   onClear?: () => void;
+  /** filled state 전용 검색 아이콘 표시 여부. 별도 전송 버튼 등이 있는 채팅 입력창에서는 false. */
+  showIcon?: boolean;
   style?: StyleProp<ViewStyle>;
   /** TextInput에 직접 적용할 텍스트 스타일 (기존 ui.tsx 호환) */
   textStyle?: StyleProp<TextStyle>;
@@ -59,7 +62,7 @@ export function Input({
 
   const field = (
     <View style={[styles.field, FIELD_STYLE[resolved], style]}>
-      {resolved === 'filled' ? <Search size={20} color={Palette.gray500} strokeWidth={2} /> : null}
+      {resolved === 'filled' && showIcon ? <Search size={20} color={Palette.gray500} strokeWidth={2} /> : null}
       <TextInput
         style={[styles.input, textStyle]}
         value={value}

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
-import { Apple, ArrowLeft, ArrowUp, Calendar, CalendarPlus, Camera, Check, Dumbbell, History, Sparkles, Trash2, TrendingUp, X, type LucideIcon } from 'lucide-react-native';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeft, ArrowUp, CalendarPlus, Camera, Check, History, Sparkles, Trash2 } from 'lucide-react-native';
+import { type ComponentType, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Animated,
@@ -14,10 +14,11 @@ import {
   View,
 } from 'react-native';
 
-const CHARACTER = require('../../../assets/images/Chat.png') as number;
+const CHARACTER = require('../../../assets/images/Ai_Ploating_Button.png') as number;
 
+import { IconArrowChevron, IconCalendar, IconCard, IconFit, IconFood, IconInfo, IconSearch } from '@/components/icons';
 import { ThemedText } from '@/components/themed-text';
-import { Icon, Input } from '@/components/ui';
+import { Button, Icon, Input } from '@/components/ui';
 import { Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { EVENTS, logEvent } from '@/features/analytics/events';
 import { useProfile } from '@/features/auth/useProfile';
@@ -53,18 +54,17 @@ interface ChatMsg {
 
 // ── Welcome screen option cards ──────────────────────────
 
-// 빠른 실행 칩 — 기능 동일, UI만 태그 칩. action으로 동작 분기.
+// 빠른 실행 칩 — Figma AI챗봇-진입(1344:4968) 4개 그대로. action으로 동작 분기.
 const WELCOME_OPTIONS: {
-  icon: LucideIcon;
+  icon: ComponentType<{ size?: number; color: string }>;
   label: string;
   action: 'workout' | 'photo' | 'message';
   message?: string;
 }[] = [
-  { icon: TrendingUp, label: '회원권 활용도', action: 'message', message: '내 회원권 활용도 어때?' },
-  { icon: Dumbbell, label: '오늘 운동 추천', action: 'workout' },
-  { icon: Apple, label: '식단 추천', action: 'message', message: '오늘 식단 추천해줘' },
-  { icon: Camera, label: '식단 사진 분석', action: 'photo' },
-  { icon: Calendar, label: '내 일정 확인', action: 'message', message: '이번 주 일정 알려줘' },
+  { icon: IconCard, label: '회원권 분석해줘', action: 'message', message: '회원권 분석해줘' },
+  { icon: IconFit, label: '오늘 운동 뭐할까', action: 'workout' },
+  { icon: IconFood, label: '오늘 뭘 먹을까', action: 'message', message: '오늘 뭘 먹을까' },
+  { icon: IconCalendar, label: '이번 주 운동 계획', action: 'message', message: '이번 주 운동 계획' },
 ];
 
 /** 히스토리 목록 시각 표기: "6/26 14:41" */
@@ -425,6 +425,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
   const userKey = profile?.id ?? 'local';
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<ChatSession[]>([]);
+  const [historyQuery, setHistoryQuery] = useState('');
 
   // 코치 진입 이벤트(1회)
   useEffect(() => {
@@ -455,6 +456,7 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
 
   function openHistory() {
     void loadSessions(userKey).then(setSessions);
+    setHistoryQuery('');
     setView('history');
   }
   function openSession(s: ChatSession) {
@@ -830,25 +832,23 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
   const inputBar = (
     <View style={styles.inputBar}>
       <Input
+        state="filled"
+        showIcon={false}
         value={input}
         onChangeText={setInput}
-        placeholder={isThinking ? 'AI 코치가 답변 중이에요…' : '무엇이든 물어보세요'}
+        placeholder={isThinking ? 'AI 코치가 답변 중이에요…' : '어떤 게 궁금하신가요?'}
         onSubmitEditing={() => send(input)}
         returnKeyType="send"
         editable={!isThinking}
         style={{ flex: 1, width: undefined }}
       />
-      <Pressable
+      <Button
+        variant="primary"
+        icon={ArrowUp}
+        iconOnly
         onPress={() => send(input)}
         disabled={!input.trim() || isThinking}
-        style={({ pressed }) => [
-          styles.sendBtn,
-          (!input.trim() || isThinking) && styles.sendBtnDisabled,
-          pressed && styles.pressed,
-        ]}
-        accessibilityRole="button" accessibilityLabel="보내기">
-        <Icon icon={ArrowUp} size={18} color={Palette.white} />
-      </Pressable>
+      />
     </View>
   );
 
@@ -870,13 +870,28 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
           <ThemedText type="subtitle">이전 대화</ThemedText>
           <View style={{ width: 22 }} />
         </View>
+        <View style={styles.historySearchWrap}>
+          <Input
+            state="filled"
+            value={historyQuery}
+            onChangeText={setHistoryQuery}
+            onClear={historyQuery ? () => setHistoryQuery('') : undefined}
+            placeholder="대화 검색"
+          />
+        </View>
         <ScrollView contentContainerStyle={styles.welcomeBody} showsVerticalScrollIndicator={false}>
-          {sessions.length === 0 ? (
-            <ThemedText type="caption" themeColor="textSecondary" style={styles.disclaimer}>
-              저장된 대화가 없어요.
-            </ThemedText>
-          ) : (
-            sessions.map((s) => (
+          {(() => {
+            const filtered = historyQuery.trim()
+              ? sessions.filter((s) => s.title.toLowerCase().includes(historyQuery.trim().toLowerCase()))
+              : sessions;
+            if (filtered.length === 0) {
+              return (
+                <ThemedText type="caption" themeColor="textSecondary" style={styles.disclaimer}>
+                  {historyQuery.trim() ? '검색 결과가 없어요.' : '저장된 대화가 없어요.'}
+                </ThemedText>
+              );
+            }
+            return filtered.map((s) => (
               <View key={s.id} style={styles.historyRow}>
                 <Pressable style={styles.historyMain} onPress={() => openSession(s)} accessibilityRole="button">
                   <ThemedText type="captionBold" numberOfLines={1}>{s.title}</ThemedText>
@@ -886,8 +901,8 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
                   <Icon icon={Trash2} size={16} color={Palette.gray600} />
                 </Pressable>
               </View>
-            ))
-          )}
+            ));
+          })()}
         </ScrollView>
       </KeyboardAvoidingView>
     );
@@ -898,70 +913,57 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
   if (view === 'welcome') {
     return (
       <KeyboardAvoidingView style={styles.root} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        {/* Figma AI챗봇-진입 topBar(1344:4978) — 뒤로(닫기 역할) + 타이틀 + 검색(이전 대화 검색) */}
         <View style={styles.topBar}>
-          <View style={styles.pill}>
-            <Icon icon={Sparkles} size={13} color={Palette.primary} />
-            <ThemedText type="label" style={{ color: Palette.primary }}>핏쌤</ThemedText>
-          </View>
-          <View style={styles.topRight}>
-            <Pressable onPress={openHistory} hitSlop={8} accessibilityRole="button" accessibilityLabel="이전 대화 보기">
-              <Icon icon={History} size={20} color={Palette.gray600} />
-            </Pressable>
+          <View style={styles.topLeft}>
             <Pressable onPress={onClose} hitSlop={8} accessibilityRole="button" accessibilityLabel="닫기">
-              <Icon icon={X} size={22} color={Palette.gray600} />
+              <IconArrowChevron direction="left" size={24} color={Palette.gray800} />
             </Pressable>
+            <ThemedText type="h2">AI 코치</ThemedText>
           </View>
+          <Pressable onPress={openHistory} hitSlop={8} accessibilityRole="button" accessibilityLabel="이전 대화 검색">
+            <IconSearch size={24} color={Palette.iconPrimary} />
+          </Pressable>
         </View>
 
         <ScrollView contentContainerStyle={styles.welcomeBody} showsVerticalScrollIndicator={false}>
-          {/* Avatar + greeting */}
-          <View style={styles.avatarRow}>
-            <View style={styles.avatarCircle}>
-              <Image source={CHARACTER} style={styles.avatarImg} resizeMode="contain" />
-            </View>
-            <View style={{ gap: 2 }}>
-              <ThemedText type="label" themeColor="textSecondary">안녕하세요!</ThemedText>
-              <ThemedText type="subtitle">회원권 활용도를 챙기는 AI 코치예요</ThemedText>
+          {/* Figma AI챗봇-진입(1344:4968) — 마스코트 + 헤드라인 + 빠른 실행 칩 4개, 세로 중앙 정렬 */}
+          <View style={styles.avatarBlock}>
+            <Image source={CHARACTER} style={styles.avatarImgLg} resizeMode="contain" />
+            <View style={styles.headlineGroup}>
+              <ThemedText type="h1" style={styles.headline}>오늘도 같이 운동해볼까요?</ThemedText>
+              <ThemedText type="body" themeColor="textSecondary" style={styles.subheadline}>
+                반가워요, 오늘도 회원권 활용을 시작해봐요.{'\n'}운동이 꾸준히 이어질 수 있도록 핏쌤이 함께해요!
+              </ThemedText>
             </View>
           </View>
 
-          {/* 코치 소개 — 첫 진입 시 무엇을 돕는지 안내 */}
-          <View style={styles.introCard}>
-            <ThemedText type="caption" style={styles.introText}>
-              저는 회원권이 그냥 사라지지 않게 옆에서 챙기는 코치예요.{'\n'}이런 걸 도와드려요.
-            </ThemedText>
-            <View style={styles.introList}>
-              <ThemedText type="caption" themeColor="textSecondary" style={styles.introText}>· 회원권 활용도·만료 — 얼마 남았고 얼마나 활용했는지</ThemedText>
-              <ThemedText type="caption" themeColor="textSecondary" style={styles.introText}>· 오늘 운동 추천 — 내 상황에 맞는 루틴(운동 라이브러리 기반)</ThemedText>
-              <ThemedText type="caption" themeColor="textSecondary" style={styles.introText}>· 식단 추천·사진 분석 — 목표에 맞춰</ThemedText>
-              <ThemedText type="caption" themeColor="textSecondary" style={styles.introText}>· 내 일정 확인 — 이번 주 뭐가 잡혀있는지</ThemedText>
-            </View>
-            <ThemedText type="caption" style={styles.introText}>무엇이든 편하게 물어보세요.</ThemedText>
-          </View>
-
-          {/* 빠른 실행 — 태그 칩 (가로 배열·넘치면 줄바꿈) */}
-          <ThemedText type="body" style={{ marginTop: Spacing.sm }}>무엇을 도와드릴까요?</ThemedText>
+          {/* 빠른 실행 — 태그 칩 2x2 */}
           <View style={styles.chipsWrap}>
-            {WELCOME_OPTIONS.map((opt) => (
-              <Pressable
-                key={opt.label}
-                style={({ pressed }) => [styles.welcomeChip, pressed && styles.pressed]}
-                onPress={() => {
-                  if (opt.action === 'workout') initWorkoutCoach();
-                  else if (opt.action === 'photo') setShowPhotoSource(true);
-                  else if (opt.message) send(opt.message);
-                }}
-                accessibilityRole="button">
-                <Icon icon={opt.icon} size={15} color={Palette.primary} />
-                <ThemedText type="captionBold">{opt.label}</ThemedText>
-              </Pressable>
-            ))}
+            {WELCOME_OPTIONS.map((opt) => {
+              const OptIcon = opt.icon;
+              return (
+                <Pressable
+                  key={opt.label}
+                  style={({ pressed }) => [styles.welcomeChip, pressed && styles.pressed]}
+                  onPress={() => {
+                    if (opt.action === 'workout') initWorkoutCoach();
+                    else if (opt.action === 'photo') setShowPhotoSource(true);
+                    else if (opt.message) send(opt.message);
+                  }}
+                  accessibilityRole="button">
+                  <OptIcon size={20} color={Palette.secondary} />
+                  <ThemedText type="body" style={styles.welcomeChipLabel}>{opt.label}</ThemedText>
+                </Pressable>
+              );
+            })}
           </View>
-
-          <ThemedText type="label" themeColor="textSecondary" style={styles.disclaimer}>
-            회원님의 운동·회원권 기록을 기반으로 답해요.{'\n'}AI 답변은 제한된 데이터에 근거하니 참고용으로 확인해 주세요.
-          </ThemedText>
         </ScrollView>
+
+        <View style={[styles.disclaimerRow, { marginBottom: Spacing.sm }]}>
+          <IconInfo size={16} color={Palette.gray400} />
+          <ThemedText type="label" themeColor="textSecondary">회원님의 기록을 바탕으로  AI 코칭해요.</ThemedText>
+        </View>
 
         {/* Photo source picker sheet */}
         {showPhotoSource && (
@@ -1269,11 +1271,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: ScreenPadding,
     paddingVertical: Spacing.md,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Palette.gray300,
   },
   topCenter: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
   topRight: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
+  topLeft: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm },
+  historySearchWrap: { paddingHorizontal: ScreenPadding, paddingTop: Spacing.md },
   historyRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1304,22 +1306,18 @@ const styles = StyleSheet.create({
     gap: Spacing.md,
     paddingBottom: Spacing.xl,
   },
-  avatarRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.md },
-  avatarCircle: {
-    width: 52, height: 52, borderRadius: 26,
-    backgroundColor: Palette.primaryLight,
-    overflow: 'hidden',
-    alignItems: 'center', justifyContent: 'center',
+  // Figma AI챗봇-진입: 마스코트(80x80, drop-shadow) + 헤드라인, 세로 중앙 정렬
+  // Figma 상단 마진 120px — Spacing 스케일에 없는 값(사용자 확인 완료, 예외 허용).
+  avatarBlock: { alignItems: 'center', gap: Spacing.xs, marginTop: 120 },
+  avatarImgLg: { width: 110, height: 110 },
+  headlineGroup: { alignItems: 'center', gap: Spacing.xs },
+  headline: { color: Palette.gray800, textAlign: 'center' },
+  subheadline: { textAlign: 'center' },
+  disclaimer: { textAlign: 'center', marginTop: Spacing.xs, lineHeight: 18 },
+  disclaimerRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.xs,
+    paddingHorizontal: ScreenPadding,
   },
-  avatarImg: { width: 52, height: 52 },
-  introCard: {
-    backgroundColor: Palette.primaryLight,
-    borderRadius: Radius.card,
-    padding: Spacing.md,
-    gap: Spacing.sm,
-  },
-  introText: { lineHeight: 22, letterSpacing: -0.3 },
-  introList: { gap: 8, marginVertical: Spacing.sm },
   roiCard: {
     borderRadius: Radius.card, padding: Spacing.md, gap: Spacing.sm,
   },
@@ -1334,20 +1332,24 @@ const styles = StyleSheet.create({
     backgroundColor: Palette.bgSurface,
   },
   progressFill: { height: 6 },
-  // 빠른 실행 칩 (흰 배경 · 메인컬러 아이콘 · 가로 wrap)
-  chipsWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
+  // 빠른 실행 칩 — Figma Btn_chat(gray200 배경, 텍스트/아이콘 gray800, pill), 2x2 wrap
+  chipsWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: Spacing.sm,
+    marginTop: Spacing.md,
+  },
   welcomeChip: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.xs,
-    backgroundColor: Palette.white,
-    borderWidth: 1,
-    borderColor: Palette.gray300,
+    backgroundColor: Palette.gray200,
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: Spacing.m,
   },
-  disclaimer: { textAlign: 'center', marginTop: Spacing.xs, lineHeight: 18 },
+  welcomeChipLabel: { color: Palette.gray800 },
 
   // Chat messages
   body: { padding: ScreenPadding, gap: Spacing.sm },
@@ -1459,7 +1461,7 @@ const styles = StyleSheet.create({
   wcGhost: { height: 40, alignItems: 'center', justifyContent: 'center' },
 
   // Bottom input section
-  inputSection: { borderTopWidth: 0.5, borderTopColor: Palette.gray300 },
+  inputSection: {},
   intentPanel: {
     paddingHorizontal: ScreenPadding, paddingTop: Spacing.md, paddingBottom: Spacing.sm, gap: Spacing.sm,
   },
@@ -1476,10 +1478,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', gap: Spacing.sm,
     paddingHorizontal: ScreenPadding, paddingTop: Spacing.sm, paddingBottom: Spacing.md,
   },
-  sendBtn: {
-    width: 38, height: 38, borderRadius: Radius.full,
-    backgroundColor: Palette.primary, alignItems: 'center', justifyContent: 'center',
-  },
-  sendBtnDisabled: { backgroundColor: Palette.gray400 },
   pressed: { opacity: 0.6 },
 });

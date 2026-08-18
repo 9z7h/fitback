@@ -51,6 +51,7 @@ export function Button({
   loading,
   icon = false,
   iconRight = false,
+  iconOnly = false,
   label,
   value,
   sublabel,
@@ -70,6 +71,8 @@ export function Button({
   icon?: LucideIcon | boolean;
   /** primary/secondary 우측 ChevronRight 표시 */
   iconRight?: boolean;
+  /** 문구 없이 아이콘만 56x56 원형(Figma Btn_Primary icon-only) — icon(LucideIcon) 필수. */
+  iconOnly?: boolean;
   /** variant="card" 상단 라벨 · 그 외 variant에서는 children 대신 쓰는 문구 */
   label?: string;
   /** variant="card" 큰 숫자 */
@@ -95,6 +98,7 @@ export function Button({
         ? Palette.primaryPressed
         : BTN_FG[variant];
     if (loading) return <ActivityIndicator color={fg} />;
+    if (iconOnly) return CustomIcon ? <CustomIcon size={24} color={fg} strokeWidth={2} /> : null;
     return variant === 'card' ? (
       <View style={styles.cardInner}>
         <View style={styles.cardHead}>
@@ -129,7 +133,7 @@ export function Button({
       accessibilityState={{ disabled: off }}
       style={({ pressed }) => [
         styles.base,
-        BOX_STYLE[variant],
+        iconOnly ? styles.iconOnlyBox : BOX_STYLE[variant],
         variant === 'card' && Elevation.shadowS,
         {
           backgroundColor: forcedDisable
@@ -185,6 +189,9 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingVertical: Spacing.m,
     paddingHorizontal: Spacing.md,
+  },
+  iconOnlyBox: {
+    width: 56, height: 56, borderRadius: Radius.button,
   },
   cardBox: {
     flex: 1,
