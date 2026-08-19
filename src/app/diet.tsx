@@ -53,7 +53,7 @@ import Svg, { Circle, Defs, Line, LinearGradient, Path, Rect, Stop } from 'react
 const COACH_CHARACTER = require('../../assets/images/Ai_Ploating_Button.png') as number;
 
 import { IconArrowChevron } from '@/components/icons';
-import { Input } from '@/components/ui';
+import { Button, Input } from '@/components/ui';
 
 // ── 아이콘 (design-system.md §아이콘: Lucide outline, 24px, stroke 1.5) ──────
 // MaterialIcons 이름 → Lucide 컴포넌트 매핑. 이름 문자열은 그대로 두고 Icon 래퍼로 렌더.
@@ -104,9 +104,9 @@ function Icon({
   return <C size={size} color={color} strokeWidth={2} style={style} />;
 }
 
-import { CoachTipCard } from '@/components/coach-tip-card';
 import { AiChatBubble } from '@/components/ui/AiChatBubble';
 import { Gnb } from '@/components/ui/Gnb';
+import { InfoBox } from '@/components/ui/InfoBox';
 import { sheetPresentation } from '@/components/modal-presentation';
 import { BottomTabInset, Elevation, Palette, Radius, ScreenPadding, Spacing, Typography } from '@/constants/theme';
 import { MyPanel } from '@/features/auth/MyPanel';
@@ -202,6 +202,34 @@ const MACRO_META = [
   { key: 'carb', label: '탄수화물' },
   { key: 'fat', label: '지방' },
 ] as const;
+
+// Figma(996:1086) 매크로 3카드 색 — 단백질=primary, 탄수화물=secondary, 지방=tertiary.
+const MACRO_STAT_COLOR: Record<(typeof MACRO_META)[number]['key'], string> = {
+  protein: Palette.primary,
+  carb: Palette.secondary,
+  fat: Palette.tertiary,
+};
+
+function MacroStatCard({
+  label,
+  value,
+  goal,
+  color,
+}: {
+  label: string;
+  value: number;
+  goal: number;
+  color: string;
+}) {
+  const pct = goal > 0 ? Math.round((value / goal) * 100) : 0;
+  return (
+    <View style={styles.macroStatCard}>
+      <Txt variant="body" weight="700" color={color}>{label}</Txt>
+      <Txt variant="body" weight="700" color={Palette.gray800}>{pct}%</Txt>
+      <Txt variant="label" color={Palette.gray600}>{value}g / {goal}g</Txt>
+    </View>
+  );
+}
 
 // 매크로별 아이콘·색 (다음 식사 추천 표시용)
 const MACRO_ICON: Record<'protein' | 'carb' | 'fat', { icon: IconName; color: string }> = {
@@ -336,6 +364,53 @@ function SemiGauge({
         <Txt variant="caption" weight="700" color={active ? status.color : Palette.gray600}>
           {active ? status.label : '등록 전'}
         </Txt>
+      </View>
+    </View>
+  );
+}
+
+// 원형 게이지 — Figma 식단(996:1086) Gauge. 0~1 비율을 원형 링으로. avatar 있으면 상단에 캐릭터 배지 겹침.
+function CircleGauge({
+  ratio,
+  size = 150,
+  centerLabel,
+  subLabel,
+  avatar,
+}: {
+  ratio: number;
+  size?: number;
+  centerLabel: string;
+  subLabel?: React.ReactNode;
+  avatar?: number;
+}) {
+  const strokeWidth = 13;
+  const r = (size - strokeWidth) / 2;
+  const c = size / 2;
+  const circumference = 2 * Math.PI * r;
+  const clamped = Math.min(Math.max(ratio, 0), 1);
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <Svg width={size} height={size}>
+        <Circle cx={c} cy={c} r={r} stroke={Palette.gray200} strokeWidth={strokeWidth} fill="none" />
+        <Circle
+          cx={c}
+          cy={c}
+          r={r}
+          stroke={Palette.primary}
+          strokeWidth={strokeWidth}
+          fill="none"
+          strokeDasharray={`${circumference} ${circumference}`}
+          strokeDashoffset={circumference * (1 - clamped)}
+          strokeLinecap="round"
+          transform={`rotate(-90 ${c} ${c})`}
+        />
+      </Svg>
+      <View style={styles.circleGaugeLabel}>
+        {avatar ? <Image source={avatar} style={styles.circleGaugeAvatar} resizeMode="contain" /> : null}
+        <Txt variant="h1" weight="700" color={Palette.gray800}>
+          {centerLabel}
+        </Txt>
+        {subLabel}
       </View>
     </View>
   );
@@ -1998,11 +2073,9 @@ export default function DietScreen() {
 
   const calorieGoal = target.kcal;
   const remaining = calorieGoal - totals.kcal;
-  const over = remaining < 0;
   // 운동 대비 섭취 게이지 — 섭취 ÷ (목표 + 운동소모). 활동 후(목표+소모)가 100%.
   const energyTarget = calorieGoal + burnedKcal;
   const intakeRatio = energyTarget > 0 ? totals.kcal / energyTarget : 0;
-  const energyStatus = balanceStatus(intakeRatio);
 
   // 헤더 한 줄 코멘트 — 운동 상태(운동 대비 섭취) + 식단 상태(매크로 균형)에 따라 변동
   const partLabel = workoutCtx.part ? PART_LABEL[workoutCtx.part] : null;
@@ -2069,25 +2142,19 @@ export default function DietScreen() {
         <View style={styles.scrollWrap}>
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
 
-          {/* ① 운동 맞춤 식단 가이드 — 게이지 + 매크로 + 버튼 */}
+          {/* ① 오늘 운동 맞춤 식단 — Figma(996:1086) 원형 게이지 + 매크로 3카드 + 식단 기록하기 */}
           <Card style={styles.guideCard}>
             <View style={styles.guideHead}>
-              <SemiGauge ratio={intakeRatio} status={energyStatus} active={hasLog} />
-              <View style={styles.guideTitleWrap}>
-                <Txt variant="body" color={Palette.gray600}>
-                  {stateHint}
-                </Txt>
-              </View>
+              <CircleGauge ratio={intakeRatio} centerLabel={`${Math.max(0, Math.round(intakeRatio * 100))}점`} avatar={COACH_CHARACTER} />
             </View>
             <View style={styles.macroRow}>
               {MACRO_META.map((m) => (
-                <MacroProgress
+                <MacroStatCard
                   key={m.key}
                   label={m.label}
                   value={totals[m.key]}
                   goal={target[m.key]}
-                  focused={focusMacro === m.key}
-                  caption={focusMacro === m.key && focusMacro ? FOCUS_CAPTION[focusMacro] : undefined}
+                  color={MACRO_STAT_COLOR[m.key]}
                 />
               ))}
             </View>
@@ -2099,73 +2166,67 @@ export default function DietScreen() {
               <Txt variant="caption" weight="600" color={Palette.primary}>탄단지 비율 직접 조정</Txt>
               <Icon name="chevron-right" size={16} color={Palette.primary} />
             </Pressable>
-            <View style={styles.guideBtnRow}>
-              <Pressable
-                style={styles.guideOutlineBtn}
-                onPress={() => { setCoachInitialMsg('오늘 식단 추천해줘'); setShowCoach(true); }}>
-                <Txt variant="body" weight="700" color={Palette.primary}>식단 추천</Txt>
-              </Pressable>
-              <Pressable
-                onPress={() => openRecord()}
-                style={({ pressed }) => [
-                  styles.guideFillBtn,
-                  { backgroundColor: pressed ? Palette.primaryPressed : Palette.primary },
-                ]}>
-                <Txt variant="body" weight="700" color="#FFFFFF">식단 등록</Txt>
-                <Icon name="add" size={20} color="#FFFFFF" />
-              </Pressable>
-            </View>
+            <Pressable
+              onPress={() => openRecord()}
+              style={({ pressed }) => [
+                styles.recordBtn,
+                { backgroundColor: pressed ? Palette.primaryPressed : Palette.primary },
+              ]}>
+              <Txt variant="body" weight="700" color="#FFFFFF">식단 기록하기</Txt>
+              <Icon name="add" size={20} color="#FFFFFF" />
+            </Pressable>
           </Card>
 
-          {/* ② 핏쌤의 한 마디 — 오늘 식단 AI 피드백 */}
-          <CoachTipCard>
-            {!hasLog ? (
-              <Txt variant="body" color={Palette.gray800}>{noLogTimeMsg()}</Txt>
-            ) : dailyFeedback.isPending ? (
-              <View style={styles.recLoading}>
-                <ActivityIndicator size="small" color={Palette.primary} />
-                <Txt variant="caption" color={Palette.gray600}>오늘 식단을 분석하고 있어요…</Txt>
-              </View>
-            ) : dailyFeedback.data ? (
-              (() => {
-                const { title, body } = splitCoach(dailyFeedback.data);
-                return (
-                  <>
-                    {title ? <Txt variant="body" weight="700" color={Palette.gray800} numberOfLines={2}>{title}</Txt> : null}
-                    {body ? <Txt variant="body" color={Palette.gray800}>{body}</Txt> : null}
-                  </>
-                );
-              })()
-            ) : null}
-          </CoachTipCard>
+          {/* ② 핏쌤 코칭 — 오늘 식단 AI 피드백 */}
+          <Pressable
+            onPress={() => { setCoachInitialMsg('오늘 식단 추천해줘'); setShowCoach(true); }}
+            accessibilityRole="button"
+            accessibilityLabel="핏쌤 코칭 열기">
+            <AiChatBubble variant="card" title="핏쌤 코칭">
+              {!hasLog ? (
+                <Txt variant="body" color={Palette.gray800}>{noLogTimeMsg()}</Txt>
+              ) : dailyFeedback.isPending ? (
+                <View style={styles.recLoading}>
+                  <ActivityIndicator size="small" color={Palette.primary} />
+                  <Txt variant="caption" color={Palette.gray600}>오늘 식단을 분석하고 있어요…</Txt>
+                </View>
+              ) : dailyFeedback.data ? (
+                (() => {
+                  const { title, body } = splitCoach(dailyFeedback.data);
+                  return (
+                    <>
+                      {title ? <Txt variant="body" weight="700" color={Palette.gray800} numberOfLines={2}>{title}</Txt> : null}
+                      {body ? <Txt variant="body" color={Palette.gray800}>{body}</Txt> : null}
+                    </>
+                  );
+                })()
+              ) : null}
+            </AiChatBubble>
+          </Pressable>
 
-          {/* ③ 오늘 어떤 거 드셨나요? */}
+          {/* ③ 오늘 식단 기록 */}
           <Txt variant="h2" weight="700" color={Palette.gray800} style={styles.sectionQHeader}>
-            오늘 어떤 거 드셨나요?
+            오늘 식단 기록
           </Txt>
 
-          {/* ④ 섭취 칼로리 + 끼니별 슬롯 */}
-          <Card style={{ gap: 0 }}>
-            <View style={styles.kcalHead}>
-              <View style={styles.flex1}>
-                <Txt variant="body" color={Palette.gray600}>
-                  {over
-                    ? `${(-remaining).toLocaleString()}kcal 초과예요`
-                    : `${remaining.toLocaleString()}kcal 더 먹어도 돼요`}
-                </Txt>
-                <View style={styles.kcalBig}>
-                  <Txt variant="h1" weight="700">
-                    {totals.kcal.toLocaleString()}
-                  </Txt>
-                  <Txt variant="body" color={Palette.gray600}>
-                    {' '}
-                    / {calorieGoal.toLocaleString()}kcal
-                  </Txt>
-                  <Icon name="info" size={16} color={Palette.gray400} style={styles.infoIcon} />
-                </View>
-              </View>
+          {/* ④ 섭취 칼로리 게이지 + 남은/태운 칼로리 + 끼니별 슬롯 */}
+          <Card style={{ gap: Spacing.md }}>
+            <View style={styles.guideHead}>
+              <CircleGauge
+                ratio={calorieGoal > 0 ? totals.kcal / calorieGoal : 0}
+                centerLabel={totals.kcal.toLocaleString()}
+                subLabel={
+                  <View style={styles.calorieGoalRow}>
+                    <Txt variant="body" color={Palette.gray600}>{calorieGoal.toLocaleString()}kcal</Txt>
+                    <Icon name="info" size={16} color={Palette.gray400} />
+                  </View>
+                }
+              />
             </View>
-            <CalorieBar consumed={totals.kcal} goal={calorieGoal} burned={burnedKcal} />
+            <View style={styles.kcalInfoRow}>
+              <InfoBox label="남은 칼로리" valueMain={`${Math.max(0, remaining).toLocaleString()}`} fill />
+              <InfoBox label="태운 칼로리" valueMain={`${burnedKcal.toLocaleString()}`} fill />
+            </View>
             {isLoading ? (
               <View style={styles.listState}>
                 <ActivityIndicator color={Palette.primary} />
@@ -2192,6 +2253,12 @@ export default function DietScreen() {
               </View>
             )}
           </Card>
+
+          {/* ── 빠른 기록 (홈과 동일 스펙) ── */}
+          {/* TODO: 빠른 기록 시트 연결 */}
+          <Button variant="quick" onPress={() => {}} style={styles.quickButton}>
+            빠른 기록
+          </Button>
 
         </ScrollView>
           <FadeTop />
@@ -2299,7 +2366,8 @@ const styles = StyleSheet.create({
   calCell: { width: `${100 / 7}%`, alignItems: 'center', justifyContent: 'center', paddingVertical: Spacing.xs },
   calDay: { width: 36, height: 36, borderRadius: Radius.full, alignItems: 'center', justifyContent: 'center' },
   // paddingTop = FadeTop 높이(Spacing.md) → 첫 콘텐츠가 그라데이션 아래에서 시작(가림 방지)
-  scroll: { paddingHorizontal: ScreenPadding, paddingTop: GNB_HEIGHT, paddingBottom: NAV_HEIGHT + Spacing.xxl + Spacing.md },
+  scroll: { paddingHorizontal: ScreenPadding, paddingTop: GNB_HEIGHT - 8, paddingBottom: NAV_HEIGHT + Spacing.xxl + Spacing.md },
+  quickButton: { alignSelf: 'center', marginTop: Spacing.xxl, marginBottom: Spacing.xxl },
   flex1: { flex: 1 },
 
   card: {
@@ -3024,4 +3092,34 @@ const styles = StyleSheet.create({
     marginTop: Spacing.lg,
     marginBottom: Spacing.xs + Spacing.sm,
   },
+
+  // 원형 게이지(Figma 996:1086)
+  circleGaugeLabel: { position: 'absolute', alignItems: 'center', gap: 2 },
+  circleGaugeAvatar: { width: 52, height: 52, marginBottom: Spacing.xs },
+  calorieGoalRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+
+  // 매크로 3카드
+  macroStatCard: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 2,
+    borderWidth: 1,
+    borderColor: Palette.gray300,
+    borderRadius: Radius.small,
+    paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.sm,
+  },
+
+  // 식단 기록하기 버튼
+  recordBtn: {
+    height: 56,
+    borderRadius: Radius.button,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.half,
+  },
+
+  // 남은/태운 칼로리
+  kcalInfoRow: { flexDirection: 'row', gap: Spacing.sm },
 });

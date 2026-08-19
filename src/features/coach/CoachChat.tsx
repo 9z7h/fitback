@@ -15,10 +15,14 @@ import {
 } from 'react-native';
 
 const CHARACTER = require('../../../assets/images/Ai_Ploating_Button.png') as number;
+const COIN_ICON = require('../../../assets/images/icon/coin_icon.png') as number;
 
 import { IconArrowChevron, IconCalendar, IconCard, IconFit, IconFood, IconInfo, IconSearch } from '@/components/icons';
 import { ThemedText } from '@/components/themed-text';
-import { Button, Icon, Input } from '@/components/ui';
+import { Button, Chip, Icon, Input } from '@/components/ui';
+import { Gauge } from '@/components/ui/Gauge';
+import { InfoBox } from '@/components/ui/InfoBox';
+import { SpeechBubble } from '@/components/ui/SpeechBubble';
 import { Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { EVENTS, logEvent } from '@/features/analytics/events';
 import { useProfile } from '@/features/auth/useProfile';
@@ -31,7 +35,7 @@ import { useDietSummary } from '@/features/coach/useDietSummary';
 import { pickFoodImage } from '@/features/diet/pickFoodImage';
 import { useHomeActivity } from '@/features/home/useHomeActivity';
 import { useAddSchedule, useSchedules, type ScheduleType } from '@/features/home/useSchedules';
-import { computeRisk, sortByRisk } from '@/features/membership/dashboard';
+import { computeRisk, ddayBadge, RISK_COLORS, RISK_META, sortByRisk, won, type RiskInfo } from '@/features/membership/dashboard';
 import { useMemberships } from '@/features/membership/useMemberships';
 import { fetchCoachCandidates } from '@/features/workout/exercises';
 import { prepareSessionAudio } from '@/features/workout/start-session';
@@ -135,6 +139,63 @@ const numStyles = StyleSheet.create({
     backgroundColor: Palette.primaryLight,
     alignItems: 'center', justifyContent: 'center',
   },
+});
+
+// 회원권 분석 카드 — Figma "AI챗봇-회원권 분석해줘"(1349:5167). 홈 화면과 동일한 실데이터·컴포넌트 재사용.
+function RoiCard({ risk }: { risk: RiskInfo }) {
+  const progress = Math.round((risk.hasSessions ? risk.sessionFilledRatio : risk.periodFilledRatio) * 100);
+  const dday = ddayBadge(risk);
+  const meta = RISK_META[risk.level];
+
+  return (
+    <View style={[styles.responseCard, roiStyles.card]}>
+      <View style={styles.responseCardHead}>
+        <View style={roiStyles.labelRow}>
+          <ThemedText type="body" style={roiStyles.label}>현재 활용</ThemedText>
+          <IconInfo size={16} color={Palette.gray400} />
+        </View>
+        <Chip size="state" icon={meta.icon} color={RISK_COLORS[risk.level]} label={meta.label} />
+      </View>
+      <ThemedText type="h1" style={roiStyles.amount}>
+        {risk.hasSessions ? won(risk.valueUsed) : `${risk.usedSessions}회`}
+      </ThemedText>
+
+      <View style={roiStyles.progressSection}>
+        <View style={[roiStyles.bubbleAnchor, { width: `${Math.min(94, Math.max(6, progress))}%` }]}>
+          <SpeechBubble>{`${progress}%`}</SpeechBubble>
+        </View>
+        <View style={roiStyles.progressWrap}>
+          <Gauge percent={progress} />
+          <Image source={COIN_ICON} style={roiStyles.coinBadge} resizeMode="contain" />
+        </View>
+      </View>
+
+      <View style={roiStyles.infoRow}>
+        <InfoBox
+          label={risk.hasSessions ? '남은 방문' : '이번 달 방문'}
+          valueMain={risk.hasSessions ? `${risk.remainingSessions ?? 0}회` : `${risk.usedSessions}회`}
+          valueSub={risk.hasSessions ? `/ ${risk.totalSessions ?? 0}회` : undefined}
+        />
+        <InfoBox
+          label={risk.hasSessions ? '남은 금액' : '남은 기간'}
+          valueMain={risk.hasSessions ? won(risk.valueAtRisk) : dday.label}
+        />
+      </View>
+    </View>
+  );
+}
+const roiStyles = StyleSheet.create({
+  card: { alignSelf: 'stretch', maxWidth: '100%' },
+  labelRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  label: { color: Palette.gray600 },
+  amount: { color: Palette.gray800 },
+  progressSection: { gap: Spacing.xs },
+  bubbleAnchor: { alignItems: 'flex-end', minWidth: '6%', maxWidth: '94%' },
+  progressWrap: { position: 'relative', justifyContent: 'center' },
+  coinBadge: {
+    position: 'absolute', right: Spacing.xs, width: Spacing.lg, height: Spacing.lg,
+  },
+  infoRow: { flexDirection: 'row', gap: Spacing.sm },
 });
 
 /** AI 추천(운동/식단)을 오늘 일정에 추가. source='ai'. */
@@ -926,7 +987,9 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
           </Pressable>
         </View>
 
-        <ScrollView contentContainerStyle={styles.welcomeBody} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          contentContainerStyle={[styles.welcomeBody, styles.welcomeBodyCenter]}
+          showsVerticalScrollIndicator={false}>
           {/* Figma AI챗봇-진입(1344:4968) — 마스코트 + 헤드라인 + 빠른 실행 칩 4개, 세로 중앙 정렬 */}
           <View style={styles.avatarBlock}>
             <Image source={CHARACTER} style={styles.avatarImgLg} resizeMode="contain" />
@@ -1090,6 +1153,11 @@ export function CoachChat({ onClose, initialMessage, initialCoachMessage }: { on
                   />
                 </View>
               )}
+
+              {/* 회원권 분석 카드 — general 인텐트 + roi 응답일 때만, 실데이터(risk/membership) 기반 */}
+              {m.response?.intent === 'general' && m.response.roi && risk ? (
+                <RoiCard risk={risk} />
+              ) : null}
 
               {/* Structured AI response */}
               {m.response ? (
@@ -1304,11 +1372,14 @@ const styles = StyleSheet.create({
   welcomeBody: {
     padding: ScreenPadding,
     gap: Spacing.md,
+  },
+  welcomeBodyCenter: {
+    flexGrow: 1,
+    justifyContent: 'center',
     paddingBottom: Spacing.xl,
   },
   // Figma AI챗봇-진입: 마스코트(80x80, drop-shadow) + 헤드라인, 세로 중앙 정렬
-  // Figma 상단 마진 120px — Spacing 스케일에 없는 값(사용자 확인 완료, 예외 허용).
-  avatarBlock: { alignItems: 'center', gap: Spacing.xs, marginTop: 120 },
+  avatarBlock: { alignItems: 'center', gap: Spacing.xs },
   avatarImgLg: { width: 110, height: 110 },
   headlineGroup: { alignItems: 'center', gap: Spacing.xs },
   headline: { color: Palette.gray800, textAlign: 'center' },

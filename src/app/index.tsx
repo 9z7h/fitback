@@ -158,10 +158,10 @@ export default function HomeScreen() {
                     {primaryRisk.hasSessions ? won(primaryRisk.valueUsed) : `${primaryVisits}회`}
                   </ThemedText>
                   <View style={styles.todayRow}>
-                    <ThemedText type="body" style={styles.todayText}>
+                    <ThemedText type="body" style={[styles.todayText, styles.todayTextFlex]}>
                       {primaryRisk.hasSessions ? '오늘 출석시 ' : '이번 달 방문 '}
                       <ThemedText type="body" style={styles.todayGain}>
-                        {primaryRisk.hasSessions ? `${won(primaryRisk.costPerSession)} 활용` : `${primaryVisits}회`}
+                        {primaryRisk.hasSessions ? `+${won(primaryRisk.costPerSession)}` : `${primaryVisits}회`}
                       </ThemedText>
                     </ThemedText>
                     <IconAiUp />
@@ -419,6 +419,7 @@ const styles = StyleSheet.create({
   summaryAmount: { color: Palette.gray800 },
   todayRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
   todayText: { color: Palette.gray800 },
+  todayTextFlex: { flexShrink: 1 },
   todayGain: { color: Palette.secondary },
   // marginTop은 레이아웃 높이에 반영돼 카드 전체가 늘어나므로, transform으로 시각적 위치만 내린다.
   avatarPlaceholder: {
