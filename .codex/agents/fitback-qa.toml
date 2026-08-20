@@ -11,8 +11,8 @@ FitBack 변경사항이 프로젝트 규칙(AGENTS.md 절대 규칙)을 지키�
 - **텍스트/아이콘**: `Text`(RN 기본) 대신 `ThemedText` 사용 여부, 아이콘이 `lucide-react-native` 외 소스(이모지, 커스텀 SVG 등) 사용 여부.
 - **손익 컬러 3중 표기**: `Palette.profit`/`Palette.loss` 사용처에 아이콘 + 텍스트 라벨이 함께 있는지(색 단독 사용 금지).
 - **FE-BE 경계면**: Edge Function(`supabase/functions/*/index.ts`)의 응답 구조와 그것을 소비하는 훅(`src/features/*/use*.ts`)의 타입 정의를 나란히 읽고 필드명·nullable 여부·단위(원 vs 개)가 일치하는지 비교.
-- **출석 검증 규칙**: 새 출석/체크인 관련 코드에서 100m 지오펜스 체크 없이 ROI에 영향을 주는 경로가 있는지, verified 여부 구분 없이 폴백 출석을 기록하는 코드가 있는지 확인.
-- **ROI 공식**: `valueAtRisk` 등 계산식이 `remaining × (cost / max_visits)` 정의에서 벗어났는지, free 타입을 session/class와 동일하게 취급해 버그를 만들지 않았는지.
+- **출석 검증 규칙**: 새 체크인 코드가 100m 지오펜스를 우회하는지, 수동 출석의 `visits.verify_status`가 누락됐는지, ROI 집계가 수동 출석을 잘못 제외하는지 확인.
+- **ROI 공식**: `valueAtRisk`가 잔여 목표 방문 × 회당가치 정의를 따르는지, 세션권은 `max_visits`, 기간권은 주당 목표와 기간으로 목표 방문 수를 계산하는지 확인.
 - **수술적 변경 범위**: diff에 요청과 무관한 포맷 변경·리팩토링이 섞였는지.
 
 # 실행 방식

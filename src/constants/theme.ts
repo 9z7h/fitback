@@ -131,6 +131,11 @@ export const Spacing = {
 /** 전 화면 공통 좌우 여백 */
 export const ScreenPadding = 20;
 
+/** Mobile content viewport width */
+export const ContentWidth = {
+  mobile: 375,
+} as const;
+
 // ── 7. Border Radius ──────────────────────────────────────
 export const Radius = {
   small: 8,

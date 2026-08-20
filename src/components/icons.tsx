@@ -297,3 +297,17 @@ export function IconAiUp({ color = Palette.secondary, size = 16 }: { color?: str
     </Svg>
   );
 }
+
+// Figma "Ai/ai_icon"(1632:2939) — 채워진 번개 모양(AI 표시). 16x16 프레임 안에서 12x16 박스로
+// 중앙 정렬된 뒤 다시 10.6%/6.27% 인셋되어 있어, translate로 그 위치를 그대로 재현한다.
+export function IconAi({ color = Palette.primary, size = 16 }: { color?: string; size?: number }) {
+  return (
+    <Svg width={size} height={size} viewBox="0 0 16 16" fill="none">
+      <Path
+        transform="translate(2.752 2.196)"
+        d="M5.99729 4.04963C5.99729 4.49146 6.35547 4.84963 6.79729 4.84963H9.69318C10.3438 4.84963 10.7223 5.58496 10.3443 6.11447L5.94838 12.2717C5.49611 12.9052 4.49729 12.5852 4.49729 11.8068V8.55872C4.49729 8.11689 4.13912 7.75872 3.69729 7.75872H0.80141C0.150795 7.75872 -0.227724 7.02339 0.150317 6.49388L4.5462 0.33668C4.99847 -0.296804 5.99729 0.0231596 5.99729 0.801524V4.04963Z"
+        fill={color}
+      />
+    </Svg>
+  );
+}

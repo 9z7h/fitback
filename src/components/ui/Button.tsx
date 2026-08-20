@@ -69,8 +69,8 @@ export function Button({
    * LucideIcon이면 기존 ui.tsx 방식(좌측에 해당 아이콘 렌더).
    */
   icon?: LucideIcon | boolean;
-  /** primary/secondary 우측 ChevronRight 표시 */
-  iconRight?: boolean;
+  /** boolean true면 우측 ChevronRight, LucideIcon이면 우측에 해당 아이콘 렌더. */
+  iconRight?: LucideIcon | boolean;
   /** 문구 없이 아이콘만 56x56 원형(Figma Btn_Primary icon-only) — icon(LucideIcon) 필수. */
   iconOnly?: boolean;
   /** variant="card" 상단 라벨 · 그 외 variant에서는 children 대신 쓰는 문구 */
@@ -87,6 +87,14 @@ export function Button({
   // icon prop 유니온 해석: boolean → chevron on/off, 컴포넌트 → 그대로 렌더.
   const showChevron = icon === true;
   const CustomIcon = typeof icon === 'boolean' ? undefined : icon;
+  const RightIcon = iconRight === true
+    ? ChevronRight
+    : typeof iconRight === 'boolean'
+      ? undefined
+      : iconRight;
+  const usesPrimaryIconSpec = variant === 'primary' || variant === 'secondary';
+  const iconSize = usesPrimaryIconSpec ? 24 : 20;
+  const hasButtonIcon = showChevron || Boolean(CustomIcon) || Boolean(RightIcon);
   // card는 label을 상단 라벨로 쓰므로 문구 대체 대상에서 제외한다.
   const body = variant === 'card' ? children : (label ?? children);
 
@@ -113,12 +121,17 @@ export function Button({
         ) : null}
       </View>
     ) : (
-      <View style={[styles.inner, INNER_ALIGN[variant]]}>
+      <View
+        style={[
+          styles.inner,
+          INNER_ALIGN[variant],
+          usesPrimaryIconSpec && hasButtonIcon ? styles.primaryIconInner : null,
+        ]}>
         {variant === 'chat' ? <Sparkles size={20} color={fg} strokeWidth={2} /> : null}
-        {showChevron ? <ChevronRight size={20} color={fg} strokeWidth={2} /> : null}
-        {CustomIcon ? <CustomIcon size={20} color={fg} strokeWidth={2} /> : null}
+        {showChevron ? <ChevronRight size={iconSize} color={fg} strokeWidth={2} /> : null}
+        {CustomIcon ? <CustomIcon size={iconSize} color={fg} strokeWidth={2} /> : null}
         <ThemedText style={[TEXT_STYLE[variant], { color: fg }]}>{body}</ThemedText>
-        {iconRight ? <ChevronRight size={20} color={fg} strokeWidth={2} /> : null}
+        {RightIcon ? <RightIcon size={iconSize} color={fg} strokeWidth={2} /> : null}
         {variant === 'quick' ? <IconPlusCircle size={20} color={Palette.iconPrimary} /> : null}
         {variant === 'more' ? <ChevronDown size={20} color={fg} strokeWidth={2} /> : null}
       </View>
@@ -160,6 +173,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inner: { flexDirection: 'row', alignItems: 'center', gap: Spacing.sm, width: '100%' },
+  primaryIconInner: { gap: Spacing.xs / 2 },
   alignCenter: { justifyContent: 'center' },
   alignSpread: { justifyContent: 'space-between' },
   alignStart: { justifyContent: 'flex-start', width: 'auto' },

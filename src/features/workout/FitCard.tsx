@@ -2,9 +2,9 @@
  * FitCard — Figma fit_card(1610:2927). 추천 루틴 카드: 부족 부위 칩 + 제목 + 센터명 +
  * 운동시간/종목/칼로리 InfoBox 3개. "핏쌤 추천 루틴하기" 캐러셀 아이템.
  */
-import { Sparkles } from 'lucide-react-native';
 import { Image, StyleSheet, View } from 'react-native';
 
+import { IconAi } from '@/components/icons';
 import { ThemedText } from '@/components/themed-text';
 import { Chip } from '@/components/ui';
 import { Indicator } from '@/components/ui/Indicator';
@@ -34,7 +34,7 @@ export function FitCard({
     <View style={[styles.card, { width }, Elevation.shadowS]}>
       <View style={styles.head}>
         <View style={styles.headText}>
-          <Chip size="state" icon={Sparkles} label={routine.chipLabel} />
+          <Chip size="state" icon={IconAi} label={routine.chipLabel} />
           <View style={styles.titleGroup}>
             <ThemedText type="subtitle" numberOfLines={1}>{routine.title}</ThemedText>
             <ThemedText type="body" style={styles.centerName} numberOfLines={1}>{centerName}</ThemedText>

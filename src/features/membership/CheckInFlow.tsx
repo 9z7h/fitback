@@ -19,6 +19,7 @@ import { ThemedView } from '@/components/themed-view';
 import { Button, Card, Icon, Input } from '@/components/ui';
 import { Palette, Radius, ScreenPadding, Spacing } from '@/constants/theme';
 import { EVENTS, logEvent } from '@/features/analytics/events';
+import { getCheckInEligibility } from '@/features/membership/checkInEligibility';
 import { won } from '@/features/membership/dashboard';
 import { perVisitValue, weeksBetween } from '@/features/membership/portfolio';
 import { ExerciseRecordForm } from '@/features/membership/ExerciseRecordForm';
@@ -159,12 +160,13 @@ export function CheckInFlow({
   onClose: () => void;
   initialMembershipId?: string;
 }) {
+  const eligibleMemberships = memberships.filter((membership) => getCheckInEligibility(membership).eligible);
   // 회원권 1개거나 특정 회원권 지정 진입이면 센터가기(select)를 건너뛰고 준비물부터 시작.
   const presetId =
-    initialMembershipId && memberships.some((m) => m.id === initialMembershipId)
+    initialMembershipId && eligibleMemberships.some((m) => m.id === initialMembershipId)
       ? initialMembershipId
-      : memberships.length === 1
-        ? memberships[0].id
+      : eligibleMemberships.length === 1
+        ? eligibleMemberships[0].id
         : null;
   const [step, setStep] = useState<Step>(presetId ? 'prepare' : 'select');
   const [selectedId, setSelectedId] = useState<string | null>(presetId);
@@ -431,7 +433,7 @@ export function CheckInFlow({
 
   // asExercise=true: 수동 출석 — 위치 미검증으로 기록하되 회수액은 반영(타깃 유저 기준 의도적 상향은 특이케이스).
   function checkIn(asExercise = false) {
-    if (!selected) return;
+    if (!selected || !getCheckInEligibility(selected).eligible) return;
     const verified = !asExercise;
     mutate(
       {
@@ -469,20 +471,35 @@ export function CheckInFlow({
       <ScrollView ref={scrollRef} contentContainerStyle={styles.body} showsVerticalScrollIndicator={false}>
         {step === 'select' ? (
           <>
-            <ThemedText type="body">어느 회원권으로 가시나요?</ThemedText>
-            {memberships.map((m) => (
-              <Card
-                key={m.id}
-                onPress={() => {
-                  setSelectedId(m.id);
-                  setStep('prepare');
-                }}>
-                <View style={styles.optionRow}>
-                  <ThemedText type="captionBold">{m.name}</ThemedText>
-                  <Icon icon={ChevronRight} size={20} color={Palette.gray400} />
-                </View>
-              </Card>
-            ))}
+            {eligibleMemberships.length > 0 ? (
+              <>
+                <ThemedText type="body">어느 회원권으로 가시나요?</ThemedText>
+                {eligibleMemberships.map((m) => (
+                  <Card
+                    key={m.id}
+                    onPress={() => {
+                      setSelectedId(m.id);
+                      setStep('prepare');
+                    }}>
+                    <View style={styles.optionRow}>
+                      <ThemedText type="captionBold">{m.name}</ThemedText>
+                      <Icon icon={ChevronRight} size={20} color={Palette.gray400} />
+                    </View>
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <>
+                <ThemedText type="h2">지금은 출석할 수 없어요</ThemedText>
+                <ThemedText type="body" themeColor="textSecondary">
+                  시작 전이거나 만료된 회원권, 또는 남은 횟수가 없는 회원권만 있어요.
+                </ThemedText>
+                <ThemedText type="caption" themeColor="textSecondary">
+                  회원권 상태는 회원권 관리에서 확인할 수 있어요.
+                </ThemedText>
+                <Button label="닫기" variant="secondary" onPress={onClose} />
+              </>
+            )}
           </>
         ) : null}
 

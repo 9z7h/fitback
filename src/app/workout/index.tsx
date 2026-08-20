@@ -172,9 +172,11 @@ export default function WorkoutScreen() {
   const [balanceWidth, setBalanceWidth] = useState(0);
   const [balanceIndex, setBalanceIndex] = useState(0);
   const onBalanceLayout = (e: LayoutChangeEvent) => setBalanceWidth(e.nativeEvent.layout.width);
+  const balanceCardWidth = balanceWidth > 0 ? balanceWidth - ScreenPadding * 2 : 0;
+  const balanceSnapInterval = balanceCardWidth + Spacing.sm;
   const onBalanceScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    if (!balanceWidth) return;
-    setBalanceIndex(Math.round(e.nativeEvent.contentOffset.x / balanceWidth));
+    if (!balanceSnapInterval) return;
+    setBalanceIndex(Math.round(e.nativeEvent.contentOffset.x / balanceSnapInterval));
   };
 
   return (
@@ -284,11 +286,13 @@ export default function WorkoutScreen() {
               <SectionTitle>이번 주 근육 밸런스</SectionTitle>
               <ArrowRight color={Palette.iconPrimary} size={20} />
             </View>
-            <View onLayout={onBalanceLayout}>
-              {balanceWidth > 0 ? (
+            <View onLayout={onBalanceLayout} style={styles.recBleed}>
+              {balanceCardWidth > 0 ? (
                 <ScrollView
                   horizontal
-                  pagingEnabled
+                  snapToInterval={balanceSnapInterval}
+                  decelerationRate="fast"
+                  contentContainerStyle={styles.recContent}
                   showsHorizontalScrollIndicator={false}
                   onMomentumScrollEnd={onBalanceScrollEnd}
                   onScrollEndDrag={onBalanceScrollEnd}
@@ -297,7 +301,7 @@ export default function WorkoutScreen() {
                   {BALANCE_CARDS.map(({ headline, cells }) => (
                     <MuscleBalanceCard
                       key={headline}
-                      width={balanceWidth}
+                      width={balanceCardWidth}
                       headline={headline}
                       pct={bodyPartTotal > 0 ? Math.round(((bodyParts?.[headline] ?? 0) / bodyPartTotal) * 100) : 0}
                       cells={cells}

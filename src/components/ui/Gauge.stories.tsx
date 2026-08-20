@@ -36,6 +36,10 @@ export const Full: Story = {
   args: { percent: 100 },
 };
 
+export const Circle: Story = {
+  args: { percent: 77, variant: 'circle' },
+};
+
 const styles = StyleSheet.create({
   frame: { width: 295, padding: Spacing.md },
 });

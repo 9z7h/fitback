@@ -68,7 +68,8 @@
     "storybook": "^8.6.18",
     "supabase": "^2.105.0",
     "typescript": "~6.0.3",
-    "vite": "^8.1.5"
+    "vite": "^8.1.5",
+    "vitest": "^4.1.11"
   },
   "scripts": {
     "start": "expo start",
@@ -78,6 +79,7 @@
     "web": "expo start --web",
     "build:web": "expo export --platform web",
     "lint": "expo lint",
+    "test": "vitest run",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "db:build": "node ./scripts/build-setup-sql.js",

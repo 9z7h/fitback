@@ -26,20 +26,16 @@ export function useCreateVisit() {
     mutationFn: async (input: NewVisitInput) => {
       if (!user) throw new Error('로그인이 필요합니다.');
       const { data, error } = await supabase
-        .from('visits')
-        .insert({
-          user_id: user.id,
-          membership_id: input.membershipId,
-          center_name: input.centerName ?? null,
-          status: 'checked_in',
-          method: input.method ?? null,
-          verify_status: input.verifyStatus ?? null,
-          recovered_amount: input.recoveredAmount ?? 0,
-          center_lat: input.centerLat ?? null,
-          center_lng: input.centerLng ?? null,
-          distance_m: input.distanceM ?? null,
+        .rpc('create_visit', {
+          p_membership_id: input.membershipId,
+          p_center_name: input.centerName ?? null,
+          p_method: input.method ?? null,
+          p_verify_status: input.verifyStatus ?? null,
+          p_recovered_amount: input.recoveredAmount ?? 0,
+          p_center_lat: input.centerLat ?? null,
+          p_center_lng: input.centerLng ?? null,
+          p_distance_m: input.distanceM ?? null,
         })
-        .select()
         .single();
       if (error) throw error;
       return data;

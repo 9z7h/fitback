@@ -3,7 +3,7 @@
  * 단일 컴포넌트 + size props.
  */
 import type { LucideIcon } from 'lucide-react-native';
-import type { ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { ThemedText } from '@/components/themed-text';
@@ -46,8 +46,8 @@ export function Chip({
   color?: string;
   /** 지정 시 size 프리셋 배경색을 덮어쓴다 (기존 ui.tsx 호환) */
   bg?: string;
-  /** medium_b / state 좌측 아이콘 */
-  icon?: LucideIcon;
+  /** medium_b / state 좌측 아이콘 — lucide 아이콘 또는 icons.tsx 커스텀 아이콘(IconAi 등) */
+  icon?: LucideIcon | ComponentType<{ size?: number; color?: string }>;
   /** medium_b 에서 가운데 점 구분자로 이어붙일 두 번째 문구 */
   secondaryLabel?: string;
   style?: StyleProp<ViewStyle>;
@@ -58,7 +58,7 @@ export function Chip({
 
   return (
     <View style={[styles.base, BOX_STYLE[size], { backgroundColor: bg ?? CHIP_BG[size] }, style]}>
-      {IconCmp ? <IconCmp size={iconSize} color={fg} strokeWidth={2} /> : null}
+      {IconCmp ? <IconCmp size={iconSize} color={fg} /> : null}
       <ThemedText style={[TEXT_STYLE[size], styles.text, { color: fg }]} numberOfLines={1}>
         {body}
       </ThemedText>

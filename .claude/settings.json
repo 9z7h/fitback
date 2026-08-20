@@ -33,6 +33,25 @@
             "command": "node .claude/hooks/check-story-exists.mjs"
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/track-changes.mjs"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-summary.mjs"
+          }
+        ]
       }
     ]
   },

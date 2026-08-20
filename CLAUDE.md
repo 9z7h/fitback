@@ -102,7 +102,8 @@
 
 ## 작업 원칙
 
-- 단계별 진행, 각 단계 후 사용자 확인. 크로스플랫폼 분기는 `Platform.OS` / `.web.tsx` / `.native.tsx`.
+- 요구사항이 명확하고 비파괴적인 bounded 변경은 별도 중간 승인 없이 구현·검증까지 자동 진행한다. 삭제·푸시·DB/RLS 정책 변경·모호한 요구사항처럼 되돌리기 어렵거나 제품 결정이 필요한 작업만 사용자 확인을 받는다.
+- 크로스플랫폼 분기는 `Platform.OS` / `.web.tsx` / `.native.tsx`.
 - Expo v56 공식 문서 우선(AGENTS.md). 상세 모델·결정 이력·검증 갭은 `docs/architecture.md` 참조.
 
 ## 하네스: FitBack 개발 에이전트 팀

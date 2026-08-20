@@ -39,7 +39,6 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
   type DimensionValue,
@@ -50,9 +49,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Circle, Defs, Line, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
 
-const COACH_CHARACTER = require('../../assets/images/Ai_Ploating_Button.png') as number;
-
 import { IconArrowChevron } from '@/components/icons';
+import { ThemedText } from '@/components/themed-text';
 import { Button, Input } from '@/components/ui';
 
 // ── 아이콘 (design-system.md §아이콘: Lucide outline, 24px, stroke 1.5) ──────
@@ -105,10 +103,11 @@ function Icon({
 }
 
 import { AiChatBubble } from '@/components/ui/AiChatBubble';
+import { Gauge } from '@/components/ui/Gauge';
 import { Gnb } from '@/components/ui/Gnb';
 import { InfoBox } from '@/components/ui/InfoBox';
 import { sheetPresentation } from '@/components/modal-presentation';
-import { BottomTabInset, Elevation, Palette, Radius, ScreenPadding, Spacing, Typography } from '@/constants/theme';
+import { BottomTabInset, ContentWidth, Elevation, Palette, Radius, ScreenPadding, Spacing, Typography } from '@/constants/theme';
 import { MyPanel } from '@/features/auth/MyPanel';
 import { useProfile } from '@/features/auth/useProfile';
 import { CoachChat } from '@/features/coach/CoachChat';
@@ -140,6 +139,8 @@ import {
   type MealType,
 } from '@/features/diet/useMeals';
 import { useTodayWorkoutLog } from '@/features/workout/useTodayWorkoutLog';
+
+const COACH_CHARACTER = require('../../assets/images/Ai_Ploating_Button.png') as number;
 
 const GNB_HEIGHT = 68; // 52 헤더 + 16 하단 패딩
 
@@ -173,11 +174,11 @@ function Txt({
   numberOfLines?: number;
 }) {
   return (
-    <Text
+    <ThemedText
       numberOfLines={numberOfLines}
       style={[Typography[variant], { color }, weight ? { fontWeight: weight } : null, style]}>
       {children}
-    </Text>
+    </ThemedText>
   );
 }
 
@@ -224,9 +225,9 @@ function MacroStatCard({
   const pct = goal > 0 ? Math.round((value / goal) * 100) : 0;
   return (
     <View style={styles.macroStatCard}>
-      <Txt variant="body" weight="700" color={color}>{label}</Txt>
-      <Txt variant="body" weight="700" color={Palette.gray800}>{pct}%</Txt>
-      <Txt variant="label" color={Palette.gray600}>{value}g / {goal}g</Txt>
+      <Txt variant="label" weight="700" color={color}>{label}</Txt>
+      <Txt variant="subtitle" weight="700" color={Palette.gray800}>{pct}%</Txt>
+      <Txt variant="caption" color={Palette.gray600}>{value}g / {goal}g</Txt>
     </View>
   );
 }
@@ -372,42 +373,25 @@ function SemiGauge({
 // 원형 게이지 — Figma 식단(996:1086) Gauge. 0~1 비율을 원형 링으로. avatar 있으면 상단에 캐릭터 배지 겹침.
 function CircleGauge({
   ratio,
-  size = 150,
   centerLabel,
   subLabel,
   avatar,
+  valueVariant,
+  accessibilityLabel,
 }: {
   ratio: number;
-  size?: number;
   centerLabel: string;
   subLabel?: React.ReactNode;
   avatar?: number;
+  valueVariant?: Variant;
+  accessibilityLabel?: string;
 }) {
-  const strokeWidth = 13;
-  const r = (size - strokeWidth) / 2;
-  const c = size / 2;
-  const circumference = 2 * Math.PI * r;
-  const clamped = Math.min(Math.max(ratio, 0), 1);
   return (
-    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-      <Svg width={size} height={size}>
-        <Circle cx={c} cy={c} r={r} stroke={Palette.gray200} strokeWidth={strokeWidth} fill="none" />
-        <Circle
-          cx={c}
-          cy={c}
-          r={r}
-          stroke={Palette.primary}
-          strokeWidth={strokeWidth}
-          fill="none"
-          strokeDasharray={`${circumference} ${circumference}`}
-          strokeDashoffset={circumference * (1 - clamped)}
-          strokeLinecap="round"
-          transform={`rotate(-90 ${c} ${c})`}
-        />
-      </Svg>
+    <View style={[styles.circleGauge, avatar ? styles.circleGaugeWithAvatar : null]}>
+      <Gauge percent={ratio * 100} variant="circle" accessibilityLabel={accessibilityLabel} />
       <View style={styles.circleGaugeLabel}>
         {avatar ? <Image source={avatar} style={styles.circleGaugeAvatar} resizeMode="contain" /> : null}
-        <Txt variant="h1" weight="700" color={Palette.gray800}>
+        <Txt variant={valueVariant ?? (avatar ? 'subtitle' : 'h1')} weight="700" color={Palette.gray800}>
           {centerLabel}
         </Txt>
         {subLabel}
@@ -513,47 +497,33 @@ function MealSlot({ type, meals, onPress }: { type: MealType; meals: Meal[]; onP
   const v = MEAL_VISUAL[type];
   const mine = meals.filter((m) => m.mealType === type);
   const has = mine.length > 0;
-  const name = mine.map((m) => m.name).join(', ');
+  const summary = has
+    ? `${mine[0].name}${mine.length > 1 ? ` 외 ${mine.length - 1}건` : ''}`
+    : '기록해주세요.';
   const kcal = mine.reduce((s, m) => s + m.kcal, 0);
-  const time = mine[0]?.time;
   return (
     <Pressable onPress={() => onPress(type)} style={styles.slotCard}>
-      {/* + 버튼 — 우상단 */}
       <View style={styles.slotAddCorner}>
-        <Icon name="add" size={18} color={has ? Palette.gray500 : Palette.primary} />
+        <Icon name={has ? 'chevron-right' : 'add'} size={24} color={Palette.iconPrimary} />
       </View>
 
-      {/* 아이콘 영역 */}
       <View style={styles.slotIconWrap}>
-        <View style={[styles.slotIconCircle, { backgroundColor: v.tint }]}>
+        <View style={styles.slotIconCircle}>
           {v.image ? (
-            <Image source={v.image} style={{ width: 34, height: 34 }} resizeMode="contain" />
+            <Image source={v.image} style={styles.slotIconImage} resizeMode="contain" />
           ) : (
-            <Icon name={v.icon} size={34} color={v.tint} />
+            <Icon name={v.icon} size={32} color={v.tint} />
           )}
         </View>
       </View>
 
-      {/* 하단 텍스트 */}
       <View style={styles.slotInfo}>
-        <Txt variant="body" weight="700" color={Palette.gray800}>{type}</Txt>
-        {has ? (
-          <>
-            <Txt variant="label" color={Palette.gray600} numberOfLines={1}>{name}</Txt>
-            <Txt variant="label" color={Palette.gray500}>{time} · {kcal} kcal</Txt>
-          </>
-        ) : (
-          <Txt variant="label" color={Palette.gray500}>아직 기록 없음</Txt>
-        )}
-      </View>
-
-      {/* 기록됨 뱃지 */}
-      {has && (
-        <View style={styles.slotBadge}>
-          <Icon name="check" size={10} color={Palette.success} />
-          <Txt variant="label" weight="600" color={Palette.success}>기록됨</Txt>
+        <Txt variant="subtitle" weight="bold" color={Palette.gray800}>{type}</Txt>
+        <Txt variant="label" color={Palette.gray600}>{kcal.toLocaleString()} kcal</Txt>
+        <View style={styles.slotSummaryPill}>
+          <Txt variant="label" color={Palette.gray600} numberOfLines={1}>{summary}</Txt>
         </View>
-      )}
+      </View>
     </Pressable>
   );
 }
@@ -1978,6 +1948,7 @@ function CalendarModal({
 
 // ── 화면 ────────────────────────────────────────────────────
 export default function DietScreen() {
+  const router = useRouter();
   // 기록 캘린더(화면 B) 식단 딥링크 — ?date=YYYY-MM-DD로 진입 시 해당 날짜로.
   const params = useLocalSearchParams<{ date?: string }>();
   const [selectedDate, setSelectedDate] = useState(() => params.date ?? isoOf(new Date()));
@@ -2022,7 +1993,6 @@ export default function DietScreen() {
   }
 
 
-  const router = useRouter();
 
   // 오늘 운동 로그 실연동 — 없으면 STEP_KCAL 폴백
   const workoutLog = useTodayWorkoutLog();
@@ -2145,9 +2115,19 @@ export default function DietScreen() {
           {/* ① 오늘 운동 맞춤 식단 — Figma(996:1086) 원형 게이지 + 매크로 3카드 + 식단 기록하기 */}
           <Card style={styles.guideCard}>
             <View style={styles.guideHead}>
-              <CircleGauge ratio={intakeRatio} centerLabel={`${Math.max(0, Math.round(intakeRatio * 100))}점`} avatar={COACH_CHARACTER} />
+              <CircleGauge
+                ratio={intakeRatio}
+                centerLabel={`${Math.max(0, Math.round(intakeRatio * 100))}점`}
+                avatar={COACH_CHARACTER}
+                valueVariant="h1"
+                accessibilityLabel="오늘의 식단 점수"
+              />
             </View>
-            <View style={styles.macroRow}>
+            <Pressable
+              onPress={() => router.push('/diet/macro-ratio')}
+              accessibilityRole="button"
+              accessibilityLabel="탄단지 비율 조정"
+              style={[styles.macroRow, styles.scoreMacroRow]}>
               {MACRO_META.map((m) => (
                 <MacroStatCard
                   key={m.key}
@@ -2157,24 +2137,10 @@ export default function DietScreen() {
                   color={MACRO_STAT_COLOR[m.key]}
                 />
               ))}
-            </View>
-            <Pressable
-              onPress={() => router.push('/diet/macro-ratio')}
-              hitSlop={4}
-              accessibilityRole="button"
-              style={styles.macroRatioLink}>
-              <Txt variant="caption" weight="600" color={Palette.primary}>탄단지 비율 직접 조정</Txt>
-              <Icon name="chevron-right" size={16} color={Palette.primary} />
             </Pressable>
-            <Pressable
-              onPress={() => openRecord()}
-              style={({ pressed }) => [
-                styles.recordBtn,
-                { backgroundColor: pressed ? Palette.primaryPressed : Palette.primary },
-              ]}>
-              <Txt variant="body" weight="700" color="#FFFFFF">식단 기록하기</Txt>
-              <Icon name="add" size={20} color="#FFFFFF" />
-            </Pressable>
+            <Button variant="primary" iconRight={Plus} onPress={() => openRecord()}>
+              식단 기록하기
+            </Button>
           </Card>
 
           {/* ② 핏쌤 코칭 — 오늘 식단 AI 피드백 */}
@@ -2210,11 +2176,12 @@ export default function DietScreen() {
           </Txt>
 
           {/* ④ 섭취 칼로리 게이지 + 남은/태운 칼로리 + 끼니별 슬롯 */}
-          <Card style={{ gap: Spacing.md }}>
+          <Card style={styles.calorieCard}>
             <View style={styles.guideHead}>
               <CircleGauge
                 ratio={calorieGoal > 0 ? totals.kcal / calorieGoal : 0}
                 centerLabel={totals.kcal.toLocaleString()}
+                accessibilityLabel="섭취 칼로리"
                 subLabel={
                   <View style={styles.calorieGoalRow}>
                     <Txt variant="body" color={Palette.gray600}>{calorieGoal.toLocaleString()}kcal</Txt>
@@ -2224,35 +2191,36 @@ export default function DietScreen() {
               />
             </View>
             <View style={styles.kcalInfoRow}>
-              <InfoBox label="남은 칼로리" valueMain={`${Math.max(0, remaining).toLocaleString()}`} fill />
-              <InfoBox label="태운 칼로리" valueMain={`${burnedKcal.toLocaleString()}`} fill />
+              <InfoBox variant="tertiary" label="남은 칼로리" valueMain={`${Math.max(0, remaining).toLocaleString()}`} fill />
+              <InfoBox variant="tertiary" label="태운 칼로리" valueMain={`${burnedKcal.toLocaleString()}`} fill />
             </View>
-            {isLoading ? (
-              <View style={styles.listState}>
-                <ActivityIndicator color={Palette.primary} />
-                <Txt variant="caption" color={Palette.gray600}>
-                  기록을 불러오는 중…
-                </Txt>
-              </View>
-            ) : isError ? (
-              <View style={styles.listState}>
-                <Txt variant="caption" color={Palette.gray600}>
-                  기록을 불러오지 못했어요.
-                </Txt>
-                <Pressable onPress={() => refetch()} hitSlop={8}>
-                  <Txt variant="caption" weight="600" color={Palette.primary}>
-                    다시 시도
-                  </Txt>
-                </Pressable>
-              </View>
-            ) : (
-              <View style={styles.slotGrid}>
-                {MEAL_TYPES.map((t) => (
-                  <MealSlot key={t} type={t} meals={meals} onPress={handleSlotPress} />
-                ))}
-              </View>
-            )}
           </Card>
+
+          {isLoading ? (
+            <View style={styles.listState}>
+              <ActivityIndicator color={Palette.primary} />
+              <Txt variant="caption" color={Palette.gray600}>
+                기록을 불러오는 중…
+              </Txt>
+            </View>
+          ) : isError ? (
+            <View style={styles.listState}>
+              <Txt variant="caption" color={Palette.gray600}>
+                기록을 불러오지 못했어요.
+              </Txt>
+              <Pressable onPress={() => refetch()} hitSlop={8}>
+                <Txt variant="caption" weight="600" color={Palette.primary}>
+                  다시 시도
+                </Txt>
+              </Pressable>
+            </View>
+          ) : (
+            <View style={styles.slotGrid}>
+              {MEAL_TYPES.map((t) => (
+                <MealSlot key={t} type={t} meals={meals} onPress={handleSlotPress} />
+              ))}
+            </View>
+          )}
 
           {/* ── 빠른 기록 (홈과 동일 스펙) ── */}
           {/* TODO: 빠른 기록 시트 연결 */}
@@ -2318,7 +2286,7 @@ export default function DietScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: Palette.bgBase },
-  safeArea: { flex: 1, width: '100%', maxWidth: 800, alignSelf: 'center', backgroundColor: Palette.bgBase },
+  safeArea: { flex: 1, width: '100%', maxWidth: ContentWidth.mobile, alignSelf: 'center', backgroundColor: Palette.bgBase },
 
   // 날짜 스트립 (하단 선 없음, 아래 영역과 24px 간격)
   dateStrip: { flexGrow: 0, backgroundColor: Palette.bgBase },
@@ -2366,7 +2334,12 @@ const styles = StyleSheet.create({
   calCell: { width: `${100 / 7}%`, alignItems: 'center', justifyContent: 'center', paddingVertical: Spacing.xs },
   calDay: { width: 36, height: 36, borderRadius: Radius.full, alignItems: 'center', justifyContent: 'center' },
   // paddingTop = FadeTop 높이(Spacing.md) → 첫 콘텐츠가 그라데이션 아래에서 시작(가림 방지)
-  scroll: { paddingHorizontal: ScreenPadding, paddingTop: GNB_HEIGHT - 8, paddingBottom: NAV_HEIGHT + Spacing.xxl + Spacing.md },
+  scroll: {
+    paddingHorizontal: ScreenPadding,
+    paddingTop: GNB_HEIGHT - Spacing.sm,
+    paddingBottom: NAV_HEIGHT + Spacing.xxl + Spacing.md,
+    gap: Spacing.m,
+  },
   quickButton: { alignSelf: 'center', marginTop: Spacing.xxl, marginBottom: Spacing.xxl },
   flex1: { flex: 1 },
 
@@ -2382,11 +2355,12 @@ const styles = StyleSheet.create({
 
   // 가이드 헤더
   aiHead: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
-  guideCard: { padding: Spacing.lg, gap: Spacing.md },
+  guideCard: { padding: Spacing.card, gap: Spacing.md },
   // 가이드 카드 ↔ 이 카드 사이 여백 8px (스크롤 gap 16 - 8)
   aiRecCard: { marginTop: -Spacing.sm },
-  // 가이드 카드 헤더 — 게이지 + '오늘의 식단' 타이틀을 상단 중앙 정렬 (여백 넉넉히)
-  guideHead: { alignItems: 'center', gap: Spacing.sm, paddingTop: Spacing.sm, paddingBottom: 0 },
+  // 가이드 카드 헤더 — 게이지 + '오늘의 식단' 타이틀을 상단 중앙 정렬.
+  // 카드 상단 ↔ 게이지 24px(guideCard padding 20 + 여기 4).
+  guideHead: { alignItems: 'center', gap: Spacing.sm, paddingTop: Spacing.xs, paddingBottom: 0 },
   // 타이틀 ↔ 코멘트는 바짝 붙임
   guideTitleWrap: { alignItems: 'center', gap: 2 },
 
@@ -2395,7 +2369,8 @@ const styles = StyleSheet.create({
   gaugeLabel: { position: 'absolute', bottom: 2, left: 0, right: 0, alignItems: 'center' },
 
   // 목표 매크로
-  macroRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: Spacing.md },
+  macroRow: { flexDirection: 'row', gap: Spacing.sm },
+  scoreMacroRow: { marginTop: Spacing.sm },
   // 각 매크로를 테두리만(배경 없음) 박스로
   macroCol: {
     flex: 1,
@@ -2655,47 +2630,44 @@ const styles = StyleSheet.create({
   slotGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.sm,
-    marginTop: Spacing.card,
+    gap: Spacing.m,
   },
   slotCard: {
-    width: '48.5%',
+    flexBasis: '48%',
+    flexGrow: 1,
     backgroundColor: Palette.bgSurface,
     borderRadius: Radius.card,
-    borderWidth: 1,
-    borderColor: Palette.gray300,
-    padding: Spacing.md,
-    gap: Spacing.xs,
+    padding: Spacing.card,
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.m,
+    ...Elevation.shadowS,
   },
   slotAddCorner: {
     position: 'absolute',
-    top: Spacing.sm,
-    right: Spacing.sm,
-    width: 28,
-    height: 28,
-    borderRadius: Radius.full,
-    backgroundColor: Palette.bgMuted,
+    top: Spacing.card,
+    right: Spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  slotIconWrap: { justifyContent: 'flex-start', alignItems: 'flex-start' },
+  slotIconWrap: { justifyContent: 'center', alignItems: 'center' },
   slotIconCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: Radius.card,
+    width: Spacing.xl,
+    height: Spacing.xl,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  slotInfo: { gap: 2 },
-  slotBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 2,
-    backgroundColor: Palette.successLight,
+  slotIconImage: { width: Spacing.xl, height: Spacing.xl },
+  slotInfo: { alignItems: 'center' },
+  slotSummaryPill: {
+    maxWidth: '100%',
+    marginTop: Spacing.xs / 2,
+    paddingHorizontal: Spacing.m,
+    paddingVertical: Spacing.xs,
+    backgroundColor: Palette.gray200,
     borderRadius: Radius.full,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: 3,
-    alignSelf: 'flex-start',
+    alignItems: 'center',
   },
   // 섹션 위 여백 32px (스크롤 gap 16 + marginTop 16)
   kcalTitle: { marginTop: Spacing.md, marginLeft: Spacing.xs, marginBottom: -Spacing.sm },
@@ -3055,13 +3027,6 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
   },
-  // 탄단지 비율 조정 진입 링크
-  macroRatioLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    gap: Spacing.xs,
-  },
   guideBtnRow: {
     flexDirection: 'row',
     gap: Spacing.sm,
@@ -3089,14 +3054,23 @@ const styles = StyleSheet.create({
   sectionQHeader: {
     fontSize: 18,
     marginHorizontal: Spacing.xs,
-    marginTop: Spacing.lg,
-    marginBottom: Spacing.xs + Spacing.sm,
+    marginTop: Spacing.md,
+    marginBottom: -Spacing.xs,
   },
 
-  // 원형 게이지(Figma 996:1086)
-  circleGaugeLabel: { position: 'absolute', alignItems: 'center', gap: 2 },
-  circleGaugeAvatar: { width: 52, height: 52, marginBottom: Spacing.xs },
+  // 원형 게이지(Figma 996:1086) — 고정 높이 프레임 없이 내부 Gauge 크기에 맞춰 자연스럽게 배치.
+  circleGauge: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  circleGaugeWithAvatar: {},
+  circleGaugeLabel: { position: 'absolute', bottom: 0, alignItems: 'center' },
+  circleGaugeAvatar: {
+    width: Spacing.md * 3 + Spacing.xs,
+    height: Spacing.md * 3 + Spacing.xs,
+  },
   calorieGoalRow: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  calorieCard: { gap: Spacing.md },
 
   // 매크로 3카드
   macroStatCard: {
@@ -3108,16 +3082,6 @@ const styles = StyleSheet.create({
     borderRadius: Radius.small,
     paddingVertical: Spacing.sm,
     paddingHorizontal: Spacing.sm,
-  },
-
-  // 식단 기록하기 버튼
-  recordBtn: {
-    height: 56,
-    borderRadius: Radius.button,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: Spacing.half,
   },
 
   // 남은/태운 칼로리

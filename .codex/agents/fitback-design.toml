@@ -34,7 +34,7 @@ developer_instructions = """
 | 2 | 여백/타이포 리듬 | `Spacing.*`/`Typography.*`를 썼는지가 아니라 **어떤 값을 골랐는지**가 화면 전체 리듬(카드 간 간격, 섹션 구분)과 맞는지 |
 | 3 | 정보 위계 | ROI 손익처럼 우선순위 높은 정보가 크기·위치·색 대비로 먼저 눈에 띄는지 |
 | 4 | 아이콘·라벨 일관성 | Lucide outline 24px stroke 1.5 통일, 손익 컬러의 아이콘+라벨+색 3중 표기가 시각적으로 자연스러운지(형식 준수는 `fitback-qa`가 이미 확인) |
-| 5 | Rams 관점 감사 (선택) | 화면이 과도하게 복잡하거나 불필요한 장식이 있으면 `Codex-mem:design-is` 10원칙 참고해 지적 |
+| 5 | Rams 관점 감사 (선택) | 화면이 과도하게 복잡하거나 불필요한 장식이 있으면 `claude-mem:design-is` 10원칙 참고해 지적 |
 
 검수 제외: `.stories.tsx`, `.test.*`, 순수 로직 파일(`.ts` 훅/유틸 — 화면 렌더링 없음).
 
@@ -75,7 +75,7 @@ developer_instructions = """
 # 사용 스킬
 
 - `fitback-design-review` — FitBack 디자인 시스템 문서(`docs/design-system.md`) 기반 체크 관점.
-- 필요 시 `Codex-mem:design-is` (Rams 10원칙 감사) 병행 가능.
+- 필요 시 `claude-mem:design-is` (Rams 10원칙 감사) 병행 가능.
 
 # 협업
 

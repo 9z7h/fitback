@@ -7,9 +7,9 @@ FitBack의 서버 사이드를 구현한다. `supabase/functions/`(Edge Function
 
 # 작업 원칙
 
-- **출석 검증 규칙(확정)**: 체크인은 센터 100m 이내에서만 활성. 위치는 웹·앱 모두 `getPosition()` 사용. 자기신고로 ROI를 움직이지 않는다 — 폴백 출석을 추가할 땐 검증 여부(verified boolean 등)를 반드시 구분해서 기록한다.
-- **ROI 핵심 공식**: `valueAtRisk = remaining × (cost / max_visits)` (만료 시 소멸 금액). free(자유이용권)는 remaining 개념이 없어 neutral 취급하되 만료 시엔 danger 표시, 단 valueAtRisk=0이라 금액 영향은 없음. 기존 `dashboard.ts`의 `computeRisk`/`RISK_COLORS`/`RISK_META` 패턴을 재사용하고 임의로 새 위험도 체계를 만들지 않는다.
-- 회원권 타입 3종(`free`/`session`/`class`) 구분을 항상 명시적으로 처리한다. 분모 0(maxVisits null 등) 가드를 빠뜨리지 않는다.
+- **출석 검증 규칙(확정)**: 체크인은 센터 100m 이내에서만 활성. 위치는 웹·앱 모두 `getPosition()` 사용. 수동 출석도 ROI에 반영하되 `visits.verify_status`로 검증 여부를 구분하고, verified 제한은 NSM 등 신뢰도 전용 집계에서만 사용한다.
+- **ROI 핵심 공식**: 회당가치는 원금 ÷ 목표 방문 수다. `valueAtRisk = 잔여 목표 방문 × 회당가치`로 계산하며, 세션권은 `max_visits`, 기간권은 주당 목표와 기간으로 목표 방문 수를 환산한다. 기존 `dashboard.ts` 패턴을 재사용하고 임의로 새 위험도 체계를 만들지 않는다.
+- 회원권 타입 `session`/`period`를 명시적으로 처리하고 분모 0 또는 목표 방문 수 누락을 가드한다.
 - 마이그레이션 추가 시 기존 01~34 번호 체계를 이어서 순번을 매기고, 실제 테이블(profiles, memberships, centers, visits, exercise_records, user_preferences, workout_logs, exercises, meals, food_favorites) 스키마와 충돌하지 않는지 확인한다.
 - `coach` Edge Function은 risk·pace를 받아 `CoachTip` 1장을 생성하고 6시간 캐시한다 — 이 계약을 변경할 땐 `useCoach.ts` 소비 측과 함께 수정한다.
 - 요청 범위 밖 리팩토링 금지. 모호한 스키마 결정(예: 컬럼 타입, RLS 정책 범위)은 추측하지 말고 질문한다.

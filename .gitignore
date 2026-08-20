@@ -28,6 +28,12 @@ yarn-error.*
 
 # macOS
 .DS_Store
+
+# Claude hooks scratch state
+.claude/.session-changes.log
+
+# Codex hooks scratch state
+.codex/.session-changes.log
 *.pem
 
 # JetBrains IDE
